@@ -1,0 +1,19 @@
+title: danielball.com
+description: >-
+  Welcome to the digital home of Daniel Ball.
+  Explore my portfolio to see the projects I've worked on and learn 
+  more about my professional journey.
+baseurl: ""
+url: "http://danielball.com"
+github_username:  dgnball
+linkedin_username: daniel-ball-consultant
+email: info@westsmith.co.uk
+
+
+header_pages:
+  - index.md
+  - portfolio.md
+  - journey.md
+  - skills.md
+
+theme: minima

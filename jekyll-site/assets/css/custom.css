@@ -1,0 +1,9 @@
+.headshot {
+  float: left;
+  margin: 0 10px 10px 0;
+}
+.carousel img {
+  flex: 0 0 auto;
+  width: 1cm;
+  margin-right: 10px;
+}
