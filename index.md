@@ -14,7 +14,7 @@ your software project.
 
 🌟 A strong track record in crafting solutions for a wide range of organizations
 
-🌟 20 years of experience in software development, agile management and system architecture. See my [journey](./journey)
+🌟 20 years of experience in software development, agile management and system architecture. See my [journey](journey.md)
 
 🌟 A lifelong dedication to learning and improving my skills
 
