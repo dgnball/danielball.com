@@ -26,9 +26,10 @@ your software project.
 
 ### Want to hire me?
 
-I work through my limited company, [Westsmith](https://westsmith.co.uk) on a contract or freelance basis.
+I work through my consultancy company, [Westsmith](https://westsmith.co.uk) on a contract or freelance basis.
 
-If you would like to discuss a project, please get in touch. The best place to reach me is on [LinkedIn](https://www.linkedin.com/in/daniel-ball-consultant/) or [info@westsmith.co.uk](mailto:info@westsmith.co.uk)
+If you would like to discuss a project, please get in touch. The best place to reach me is on [LinkedIn](https://www.linkedin.com/in/daniel-ball-consultant/), but you
+can also contact me by sending an email to [info@westsmith.co.uk](mailto:info@westsmith.co.uk)
 
 ### Noteworthy
 
@@ -53,13 +54,13 @@ If you would like to discuss a project, please get in touch. The best place to r
     <img src="/assets/images/logos/410px-Coat_of_Arms_of_the_University_of_Cambridge.svg.png" alt="University of Cambridge" style="margin-bottom: 2%;">
   </a>
   <a href="https://www.ons.gov.uk">
-    <img src="/assets/images/logos/ONS.png" alt="Office for National Statistics">
+    <img src="/assets/images/logos/ONS.png" alt="Office for National Statistics" style="margin-bottom: 2%;">
   </a>
   <a href="https://www.gov.uk/government/organisations/department-for-international-trade">
     <img src="/assets/images/logos/dfortrade.png" alt="Department for International Trade" style="margin-bottom: 2%;">
   </a>
   <a href="https://www.roke.co.uk">
-    <img src="/assets/images/logos/roke.png" alt="Roke">
+    <img src="/assets/images/logos/roke.png" alt="Roke" style="margin-bottom: 2%;">
   </a>
   <a href="https://www.emed.com/uk">
     <img src="/assets/images/logos/Babylon_Logo_Vertical_Violet_RGB.png" alt="Babylone health" style="margin-bottom: 2%;">
