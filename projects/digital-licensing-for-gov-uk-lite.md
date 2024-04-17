@@ -5,7 +5,7 @@ title: Digital Licensing for Gov.uk Lite
 
 ![paas.png](/assets/images/projects/paas.png)
 
-Working with the development team on [LITE](https://www.digitalmarketplace.service.gov.uk/digital-outcomes-and-specialists/opportunities/7191).
+Working with the development team on [LITE](https://www.gov.uk/government/publications/notice-to-exporters-202108-lite/nte-202108-lite).
 
 This is a web-based app for issuing export licenses being developed by the UK government.
 
