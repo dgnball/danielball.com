@@ -48,7 +48,7 @@ mixture of Java and C and runs on Linux. Overview of activities:
 
 ## 2013 - 2019
 
-<img src="/assets/images/journey/RM311.JPG">
+<img src="/assets/images/journey/RM311.jpg">
 
 I worked for [Roke Manor Research](https://www.roke.co.uk) for almost 6 years (headshot was taken on location). 
 This was one of my favourite places to work as the projects were extremely varied and the grounds were stunning.
