@@ -86,11 +86,11 @@ This two-year block in my career was when I broke away from longer-term engageme
 
 I worked for the following organisations:
 
-* Department for International Trade (DIT) on the [Digital Licensing for gov.uk (LITE)](https://www.gov.uk/guidance/export-licensing-system) project. Details are [here](/projects/digital-licensing-for-gov-uk-lite)
-* [Vodafone UK](https://www.vodafone.co.uk) via [MMT-digital](https://mmtdigital.co.uk/) as an SRE for their consumer-facing web assets. Details are [here](/projects/test-framework-for-vodafone-co-uk).
-* [Babylon Healthcare](https://www.babylonhealth.com) as a Python engineer. See the [Babylon Healthcare Symptom Checker](/projects/babylon-healthcare-symptom-checker) project.
-* [Hanzo](https://www.hanzo.co) as the solo developer on the [Illuminate Command Center Slack App](/projects/illuminate-command-center-slack-app) project.
-* [ONS](https://www.ons.gov.uk) as a Python developer. See the [ONS Supplementary Data Service](/projects/ons-supplementary-data-service) project.
+* Department for International Trade (DIT) on the [LITE](https://www.gov.uk/government/publications/notice-to-exporters-202108-lite/nte-202108-lite) project. Details are [here](/projects/digital-licensing-for-gov-uk-lite)
+* [Vodafone UK](https://www.vodafone.co.uk) via [MMT-digital](https://mmtdigital.co.uk/) as an SRE for their consumer-facing web assets. Details are [here](/projects/test-framework-for-vodafone-co-uk)
+* [Babylon Healthcare](https://www.babylonhealth.com) as a Python engineer. See the [Babylon Healthcare Symptom Checker](/projects/babylon-healthcare-symptom-checker) project
+* [Hanzo](https://www.hanzo.co) as the solo developer on the [Illuminate Command Center Slack App](/projects/illuminate-command-center-slack-app) project
+* [ONS](https://www.ons.gov.uk) as a Python developer. See the [ONS Supplementary Data Service](/projects/ons-supplementary-data-service) project
 
 ## 2023 - 2024
 
