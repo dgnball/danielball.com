@@ -1,3 +1,5 @@
+General instructions to set up Ruby and Jekyll on macOS:
+
 ```bash
 brew install rbenv
 echo 'eval "$(rbenv init -)"' >> ~/.zshrc
@@ -10,11 +12,8 @@ ruby -v
 gem install jekyll bundler
 ```
 
-To preview your Jekyll site locally, you'll need to serve it using Jekyll's built-in server, which will allow you to view the site in your web browser as if it were live online. Here’s how you can do it:
-
-Open Terminal or Command Prompt: Navigate to your project directory where your Jekyll site is located. You can do this using the cd (change directory) command followed by the path to your project directory. For example:
+To run locally, open Terminal or Command Prompt in the root of this repo and run the following:
 
 ```bash
-cd jekyll-site
 bundle exec jekyll serve --livereload
 ```
