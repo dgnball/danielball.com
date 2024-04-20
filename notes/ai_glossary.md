@@ -39,11 +39,11 @@ Despite the huge cost to build and its almost human-like capability, most LLMs c
 All that endless power is democratically available to everyone and has been for the last two years. I feel like this is fundamentally why AI has been hyped up so much recently.
 
 Relevant examples listed below are grouped by whether they are
-proprietary or open source (hosted on [Hugging Face](#hugging-face)). Each model is generally a family of models, and in each instance, I am referring to the latest or biggest unless specified otherwise.
+proprietary or open (hosted on [Hugging Face](#hugging-face)). Each model is generally a family of models, and in each instance, I am referring to the latest or biggest unless specified otherwise.
 
 All the models listed below are examples of **foundation models**. Foundation models are generally fine-tuned (turned into a **fine-tuned model**) before they can be used for applications like chatting or language translation. Without fine-tuning, models can be less useful and potentially dangerous.
 
-### Proprietary
+### Proprietary Models
 
 | Model  | Description                                                                                                          | Size (in parameters)                                    |
 |--------|----------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
@@ -54,7 +54,7 @@ All the models listed below are examples of **foundation models**. Foundation mo
 All three of these models are comparable and have various strengths and weaknesses. Different sources will claim that one is better than the others; however, Claude appears
 to beat the others in IQ tests and is often regarded as generally outperforming GPT and Gemini.
 
-### Open Source
+### Open Models
 
 These models are generally smaller than proprietary models, so they may be less capable but are still good
 enough for many applications. Because they are smaller, they don't require as large an investment to build
@@ -66,7 +66,7 @@ See [Hugging Face Models](https://huggingface.co/models) for a canonical listing
 |---------|-------------------------------------------------------------------------------------------------------------|-----------------------------|
 | BLOOM   | From Hugging Face.                                                                                          | 176 billion                 |
 | Llama   | Models from Meta.                                                                                           | 70 billion                  |
-| Mistral | Models from Mistral.                                                                                        | 141 billion (Mistral 8x22B) |
+| Mistral | Models from Mistral.                                                                                        | 141 billion (Mixtral 8x22B) |
 | Gemma   | Smaller models from Google built similarly to Gemini. Notable for being small enough to run at home.        | 7 Billion                   |
 
 ## Hugging Face
