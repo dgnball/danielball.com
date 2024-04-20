@@ -15,5 +15,6 @@ header_pages:
   - portfolio.md
   - journey.md
   - skills.md
+  - notes.md
 
 theme: minima
