@@ -54,11 +54,11 @@ All the models listed below are examples of **foundation models**. Foundation mo
 
 ### Proprietary
 
-| Model  | Description                                                                                                        | Size (in parameters)                                    |
-|--------|--------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-| GPT    | Models from "Open" AI (yes, the quotes are deliberate). Forms the backed to ChatGPT and Copilot (tools that I use) | 1.76 trillion (GPT4)                                    |
-| Gemini | Models from Google that power the Gemini assistant. Competes with GPT                                              | Unknown but rumoured to be 1.56 trillion (Gemini Ultra) |
-| Claude | From Anthropic. Reputation for being safe and ethical.                                                             | Unknown but rumoured to be 2 trillion (Claude 3 Opus)   |
+| Model  | Description                                                                                                         | Size (in parameters)                                    |
+|--------|---------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
+| GPT    | Models from "Open" AI (yes, the quotes are deliberate). Forms the backend to ChatGPT and Copilot (tools that I use) | 1.76 trillion (GPT4)                                    |
+| Gemini | Models from Google that power the Gemini assistant. Competes with GPT                                               | Unknown but rumoured to be 1.56 trillion (Gemini Ultra) |
+| Claude | From Anthropic. Reputation for being safe and ethical.                                                              | Unknown but rumoured to be 2 trillion (Claude 3 Opus)   |
 
 All three of these models are comparable and have various strengths and weaknesses. Different sources will claim that one of these are better than the other, however Claude appears
 to beat the others in IQ tests and is often regarded as generally outperforming GPT and Gemini.
