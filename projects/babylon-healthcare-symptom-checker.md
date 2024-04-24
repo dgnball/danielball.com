@@ -5,7 +5,7 @@ title: Babylon Healthcare Symptom Checker
 
 ![babylon-chat.png](/assets/images/projects/babylon-chat.png)
 
-Developing and maintaining backend Python and Flask-based microservices for a healthcare
+Developing backend Python and Flask-based microservices for a healthcare
 app. A large part of the work was helping with testing and software releases, which was
 safety critical, so involved a lot of different stakeholders and was process heavy. However, a
 lot of automation was used based on a wide variety of CI tools including Circle CI, Jenkins,
