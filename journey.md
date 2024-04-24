@@ -74,7 +74,7 @@ Whilst at IBM I worked on the following projects:
 - Creating Python-based test frameworks using Robot and PyTest
 - Mentoring developers on how to use AWS cloud services
 - Creating a monitoring solution for systems using OpenShift 
-- Business analyst for a team writing Go microservices running on kubernetes
+- Business analyst for a team writing Go microservices running on Kubernetes
 - Clean room requirements gathering, re-design, re-write and  system testing of an undocumented legacy feature
 - Improvements to multiple monitoring tools based on disparate technologies. These include Elasticsearch, Prometheus, Thanos, Grafana, Kibana and Nagios
 
