@@ -117,6 +117,8 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Relevance AI](https://relevanceai.com/agents) | Build AI agents                                                                            |
 | [LangChain](https://www.langchain.com)         | Seems like this is for building AI agents before the "AI agents" buzzword (could be wrong) |
 | [Hugging Face](https://huggingface.co/)        | Free AI resources, with the caveat that you will need to know how to use them              |
+| [Perplexity AI](https://www.perplexity.ai/)    | Free AI search engine designed to revolutionize the way you discover information           |
+
 
 ## Software development tools
 
