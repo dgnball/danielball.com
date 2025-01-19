@@ -38,6 +38,26 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Simply Static](https://wordpress.org/plugins/simply-static/) | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
 | [Shuffle](https://shuffle.dev)                                | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
 
+## Find ideas / problems / inspiration
+
+| The link                                                                                                     | My thoughts or just a description                  |
+|--------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
+| [Reddit](https://www.reddit.com/)                                                                            | Where people complain about things they don't like |
+| [Gummy Search](https://gummysearch.com/)                                                                     | Audience Research tool for Reddit                  |
+| [SparkToro](https://sparktoro.com/)                                                                          | Another audience Research tool                     |
+| [Google Trends](https://trends.google.com/trending)                                                          | What are people searching for                      |
+| [Indie Hackers Highest Revenue](https://www.indiehackers.com/products?sorting=highest-revenue)               | See what's been successful. Copy that success!     |
+| [acquire.com](https://acquire.com)                                                                           | View vetted business ideas. Copy that success!     |
+| [Slack forum](https://forums.slackcommunity.com/s/?language=en_US)                                           | Slack forum                                        |
+| [monday.com community](https://community.monday.com)                                                         | monday.com community                               |
+| [Hubsot community](https://community.hubspot.com/t5/HubSpot-Ideas/idb-p/HubSpot_Ideas)                       | Hubsot community                                   |
+| [Microsoft Teams community](https://techcommunity.microsoft.com/category/microsoftteams)                     | Microsoft Teams community                          |
+| [Atlassian community](https://community.atlassian.com/t5/Jira/ct-p/jira)                                     | Atlassian community                                |
+| [Google workspace community](https://www.googlecloudcommunity.com/gc/Google-Workspace/ct-p/google-workspace) | Google workspace community                         |
+| [Clickup community](https://feedback.clickup.com/feature-requests)                                           | Clickup community                                  |
+| [Discord community](https://support.discord.com/hc/en-us/community/topics)                                   | Discord community                                  |
+| [Salesforce community](https://ideas.salesforce.com/s/)                                                      | Salesforce community                               |
+
 
 ## Domain names
 
@@ -84,6 +104,7 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Introduction to Web Scraping](https://realpython.com/python-web-scraping-practical-introduction/)                   | A Practical Introduction to Web Scraping in Python                               |
 | [Learn how to use Figma](https://help.figma.com/hc/en-us/categories/23557013073047-Courses-tutorials-projects)       | Learn how to use Figma                                                           |
 | [Learn how to use Canva](https://www.canva.com/learn/how-to-canva-beginners-guide/)                                  | Learn how to use Canva                                                           |
+| [Greg Isenberg](https://www.youtube.com/@GregIsenberg)                                                               | This is the startup ideas YouTube channel                                        |
 
 
 ## AI
