@@ -24,7 +24,7 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Open Game Art](https://opengameart.org)                                       | All sorts of fun things like sound effects, sprites, 3d models, etc                                                 |
 
 
-## Websites
+## Building websites / landing pages
 
 | The link                                                      | My thoughts or just a description                                                                                                                              |
 |---------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
