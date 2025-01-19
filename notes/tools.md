@@ -44,7 +44,7 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 |--------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
 | [Reddit](https://www.reddit.com/)                                                                            | Where people complain about things they don't like |
 | [Gummy Search](https://gummysearch.com/)                                                                     | Audience Research tool for Reddit                  |
-| [SparkToro](https://sparktoro.com/)                                                                          | Another audience Research tool                     |
+| [SparkToro](https://sparktoro.com/)                                                                          | Another audience research tool                     |
 | [Google Trends](https://trends.google.com/trending)                                                          | What are people searching for                      |
 | [Indie Hackers Highest Revenue](https://www.indiehackers.com/products?sorting=highest-revenue)               | See what's been successful. Copy that success!     |
 | [acquire.com](https://acquire.com)                                                                           | View vetted business ideas. Copy that success!     |
