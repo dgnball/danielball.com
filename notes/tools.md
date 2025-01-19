@@ -21,7 +21,7 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Standard Colors](https://rich.readthedocs.io/en/stable/appendix/colors.html) | List of common colours, names, Hex and RGB values                                                                   |
 | [Canva](https://www.canva.com/)                                               | Create designs, videos, images, etc. Seems to be the tool of choice of new business to auto-generate visual content |
 | [Aseprite](https://www.aseprite.org)                                          | Animated sprite editor and pixel art tool                                                                           |
-| [Open Game Art](https://opengameart.org)                                      | All sorts of fung things like sound effects, sprites, 3d models, etc                                                |
+| [Open Game Art](https://opengameart.org)                                      | All sorts of fun things like sound effects, sprites, 3d models, etc                                                 |
 
 
 ## Websites
