@@ -24,7 +24,6 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Open Game Art](https://opengameart.org)                                       | All sorts of fun things like sound effects, sprites, 3d models, etc                                                 |
 | [Kenny](https://kenney.nl)                                                     | More free game art (is a nicer looking website than Open Game Art)                                                  |
 
-
 ## Building websites / landing pages
 
 | The link                                                      | My thoughts or just a description                                                                                                                              |
@@ -38,6 +37,7 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Publii](https://getpublii.com/)                              | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
 | [Simply Static](https://wordpress.org/plugins/simply-static/) | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
 | [Shuffle](https://shuffle.dev)                                | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
+| [Squarespace](https://www.squarespace.com)                    | If the above don't work out, I'll just use squarespace as I'm sure it'll be great for SEO and ease of use (but not free)                                       |
 
 ## Find ideas / problems / inspiration
 
@@ -59,6 +59,19 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Discord community](https://support.discord.com/hc/en-us/community/topics)                                   | Discord community                                  |
 | [Salesforce community](https://ideas.salesforce.com/s/)                                                      | Salesforce community                               |
 
+## Social / Marketing / Communications
+
+| The link                                               | My thoughts or just a description                                                    |
+|--------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [LinkedIn](https://www.linkedin.com/)                  | Find work, B2B selling, etc                                                          |
+| [Bluesky](https://bsky.app)                            | A friendlier alternative to Twitter/X                                                |
+| [Mastodon](https://mastodon.social/explore)            | Another alternative Twitter/X. Techie focused                                        |
+| [Later](https://later.com)                             | Marketing platform that was recommend to me. Haven't tried it yet                    |
+| [openvibe](https://openvibe.social)                    | Allows you to connect across Threads, Mastodon and Bluesky                           |
+| [Publer](https://publer.com)                           | Only tool I've found that supports every social media platform including those above |
+| [Slack](https://slack.com/)                            | Team chat or good for building an online community                                   |
+| [Discord](https://discord.com/)                        | Same as Slack but more focused on the gaming community                               |
+| [WhatsApp for Business](https://business.whatsapp.com) | Engage audiences, accelerate sales and drive better customer support                 |
 
 ## Domain names
 
