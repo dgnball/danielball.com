@@ -80,13 +80,19 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [TLD-LIST](https://tld-list.com)        | Price compare domain name registration and renewal |
 | [Spaceship](https://www.spaceship.com/) | Cheap domain registration with great interface     |
 
-## Hosting
+## Hosting / Cloud services / Monitoring
 
-| The link                           | My thoughts or just a description         |
-|------------------------------------|-------------------------------------------|
-| [IONOS](https://www.ionos.co.uk)   | Cheap VPS hosting (UK-based)              |
-| [Hetzner](https://www.hetzner.com) | More cheap VPS hosting                    |
-| [Coolify](https://coolify.io)      | Self hosted cloud services (To look at)   |
+| The link                                                                           | My thoughts or just a description                                                                                                                                     |
+|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [IONOS](https://www.ionos.co.uk)                                                   | Cheap VPS hosting (UK-based)                                                                                                                                          |
+| [Hetzner](https://www.hetzner.com)                                                 | More cheap VPS hosting                                                                                                                                                |
+| [New Relic](https://newrelic.com)                                                  | If you're using a VPS, you'll need to monitor server and app logs to see when things break. New Relic will do this for you... for free.                               |
+| [Coolify](https://coolify.io)                                                      | Self hosted cloud services (to look at)                                                                                                                               |
+| [Google Cloud Platform](https://cloud.google.com)                                  | Can be expensive cloud provicer. If we are talking about AWS vs Azure vs GCP, I prefer GCP                                                                            |
+| [Google Firestore](https://firebase.google.com/docs/firestore)                     | A free database as long as you don't mind No-SQL                                                                                                                      |
+| [Google Cloud Run](https://cloud.google.com/run)                                   | Free app hosting but found issues with cold starts so had to use a VPS when this became an issue                                                                      |
+| [Google Secret Manager](https://cloud.google.com/security/products/secret-manager) | Stores secrets and keys for free                                                                                                                                      |
+| [Firebase](https://firebase.google.com/)                                           | A set of Google services that help you create the "backend" components of an application more easily. It groups together the other Google services mentioned (above). |
 
 ## Project management / productivity / CRM
 
@@ -123,14 +129,14 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 
 ## AI
 
-| The link                                       | My thoughts or just a description                                                          |
-|------------------------------------------------|--------------------------------------------------------------------------------------------|
-| [Chat GPT](https://chatgpt.com)                | Proofreading, content generation, etc                                                      |
-| [Claude](https://claude.ai/)                   | Proofreading, content generation, etc                                                      |
-| [Relevance AI](https://relevanceai.com/agents) | Build AI agents                                                                            |
-| [LangChain](https://www.langchain.com)         | Seems like this is for building AI agents before the "AI agents" buzzword (could be wrong) |
-| [Hugging Face](https://huggingface.co/)        | Free AI resources, with the caveat that you will need to know how to use them              |
-| [Perplexity AI](https://www.perplexity.ai/)    | Free AI search engine designed to revolutionize the way you discover information           |
+| The link                                         | My thoughts or just a description                                                          |
+|--------------------------------------------------|--------------------------------------------------------------------------------------------|
+| [Chat GPT](https://chatgpt.com)                  | Proofreading, content generation, etc                                                      |
+| [Claude](https://claude.ai/)                     | Proofreading, content generation, etc                                                      |
+| [Relevance AI](https://relevanceai.com/agents)   | Build AI agents                                                                            |
+| [LangChain](https://www.langchain.com)           | Seems like this is for building AI agents before the "AI agents" buzzword (could be wrong) |
+| [Hugging Face](https://huggingface.co/)          | Free AI resources, with the caveat that you will need to know how to use them              |
+| [Perplexity AI](https://www.perplexity.ai/)      | Free AI search engine designed to revolutionize the way you discover information           |
 
 
 ## Software development tools
@@ -141,3 +147,5 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [iTerm2](https://iterm2.com)                  | macOS terminal                                             |
 | [CotEditor](https://coteditor.com)            | The Plain-Text Editor for macOS (my notepad++ replacement) |
 | [Figma](https://www.figma.com)                | Design user interfaces                                     |
+| [Github](https://www.github.com)              | Store code, review code, build code, etc...                |
+| [Gitlab](https://www.gitlab.com)              | Same as above                                              |
