@@ -126,18 +126,17 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Learn how to use Canva](https://www.canva.com/learn/how-to-canva-beginners-guide/)                                  | Learn how to use Canva                                                           |
 | [Greg Isenberg](https://www.youtube.com/@GregIsenberg)                                                               | This is the startup ideas YouTube channel                                        |
 
-
 ## AI
 
-| The link                                         | My thoughts or just a description                                                          |
-|--------------------------------------------------|--------------------------------------------------------------------------------------------|
-| [Chat GPT](https://chatgpt.com)                  | Proofreading, content generation, etc                                                      |
-| [Claude](https://claude.ai/)                     | Proofreading, content generation, etc                                                      |
-| [Relevance AI](https://relevanceai.com/agents)   | Build AI agents                                                                            |
-| [LangChain](https://www.langchain.com)           | Seems like this is for building AI agents before the "AI agents" buzzword (could be wrong) |
-| [Hugging Face](https://huggingface.co/)          | Free AI resources, with the caveat that you will need to know how to use them              |
-| [Perplexity AI](https://www.perplexity.ai/)      | Free AI search engine designed to revolutionize the way you discover information           |
-
+| The link                                        | My thoughts or just a description                                                            |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------|
+| [Chat GPT](https://chatgpt.com)                 | Proofreading, content generation, etc                                                        |
+| [Claude](https://claude.ai/)                    | Proofreading, content generation, etc                                                        |
+| [Relevance AI](https://relevanceai.com/agents)  | Build AI agents                                                                              |
+| [LangChain](https://www.langchain.com)          | Seems like this is for building AI agents before the "AI agents" buzzword (could be wrong)   |
+| [Hugging Face](https://huggingface.co/)         | Free AI resources, with the caveat that you will need to know how to use them                |
+| [Perplexity AI](https://www.perplexity.ai/)     | Free AI search engine designed to revolutionize the way you discover information             |
+| [Vertex AI](https://cloud.google.com/vertex-ai) | Google's fully-managed, unified AI development platform for building and using generative AI |
 
 ## Software development tools
 
