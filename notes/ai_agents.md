@@ -16,9 +16,9 @@ At the core of any AI Agent is a Large Language Model. This enables the agent to
 
 Here are some examples of what an AI agent or Agentic-based system will do:
 
-* A personal assistant bot that checks the weather or books a meeting.
-* A web-crawling bot gathering information for market research.
-* A financial bot deciding on stock investments based on historical data.
+* A personal assistant bot that checks the weather or books a meeting
+* A web-crawling bot gathering information for market research
+* A financial bot deciding on stock investments based on historical data
 
 ## Other terms in the context of AI agents
 
@@ -58,21 +58,6 @@ and the ability to optimize performance, making them suitable for advanced or hi
 While they require programming skills and more development time, coded solutions are more adaptable and capable 
 of handling complex tasks effectively.
 
-## Other examples use cases with links to source code
-
-The following is a list of AI agent use cases with links to source
-code for implementing that use case.
-
-
-| Description                                                                | GitHub Repository                                                                   |
-|----------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
-| A chatbot that provides weather updates.                                   | [Project: AI Use Case - Weather Chatbot](https://github.com/chris-official/chatbot) |
-| A bot that gathers information from websites for market research purposes. | [Market-Research-Agent](https://github.com/psrane8/Market-Research-Agent)           |
-| A bot that categorizes and prioritizes emails automatically.               | [Email Organizer AI](https://github.com/Ionio-io/AI-agent-for-cold-emails)          |
-| A bot that helps users book flights, hotels, or other travel services.     | [Travel Booking AI](https://github.com/lordlinus/travel-chatbot)                    |
-| A bot that translates text between multiple languages.                     | [Translation Bot](https://github.com/andrewyng/translation-agent)                   |
-
-
 ## Python-configurable agent systems
 
 List of agent systems that can be configured with Python (other language interfaces may be available). I have also linked to the documentation and open source
@@ -90,7 +75,11 @@ example code showing how it can be used.
 
 ## No Code agent systems
 
-List of No-Code agent systems (these don't require and coding skills).
+List of No-Code agent systems. These don't require coding skills but may be more expensive to run, less flexible and in
+some cases slower to execute. However, you may end up a good-enough solution with a lot less effort, especially for 
+individual or small scale deployment. Some of these systems are built specifically for an eco-system such as Agentforce
+which is designed to work with Salesforce.
+
 * [make.com AI Automation](https://www.make.com/en/ai-automation)
 * [Zapier agents](https://zapier.com/agents)
 * [Voiceflow](https://www.voiceflow.com/)
@@ -98,7 +87,7 @@ List of No-Code agent systems (these don't require and coding skills).
 * [Relevance AI](https://relevanceai.com/agents) 
 * [n8n](https://n8n.io/)
 * [Copilot agents](https://support.microsoft.com/en-gb/topic/introducing-copilot-agents-943e563d-602d-40fa-bdd1-dbc83f582466)
-* [Agent Force](https://www.salesforce.com/uk/agentforce/)
+* [Agentforce](https://www.salesforce.com/uk/agentforce/)
 
 ## Do you need a framework to build AI agents?
 
@@ -108,7 +97,7 @@ If you're building a simple AI agent with limited functionality, you can write e
 like Python’s asyncio for concurrency, requests for APIs, or ML libraries like TensorFlow or PyTorch. [This article](https://www.analyticsvidhya.com/blog/2024/07/build-ai-agents-from-scratch/)
 describes how you can do this.
 
-My feeling is other than for an academic excercise, there are so many well-thought-out frameworks that you will most 
+My feeling is that, other than for an academic exercise, there are so many well-thought-out frameworks that you will most 
 likely end up re-inventing the wheel. If you're going to do AI agents, use a system designed for that purpose
 
 ## AI Agent approach vs traditional coding approach
