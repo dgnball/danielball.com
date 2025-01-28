@@ -69,16 +69,16 @@ example code showing how it can be used.
 | [OpenAI Swarm](https://github.com/openai/swarm)               | [OpenAI Swarm docs](https://github.com/openai/swarm?tab=readme-ov-file#documentation) | [OpenAI Swarm samples ](https://github.com/openai/swarm/tree/main/examples)                 |
 | [LangGraph](https://langchain-ai.github.io/langgraph/)        | [LangGraph docs](https://langchain-ai.github.io/langgraph/tutorials/introduction/)    | [LangGraph samples ](https://github.com/langchain-ai/langgraph/tree/main/examples)          |
 | [Microsoft Autogen](https://microsoft.github.io/autogen/0.2/) | [Autogen docs](https://microsoft.github.io/autogen/stable/)                           | [Autogen samples](https://github.com/microsoft/autogen/tree/main/python/samples)            |
-| [CrewAI](https://www.crewai.com/)                             | [Autogen docs](https://docs.crewai.com/introduction)                                  | [Autogen Code samples ](https://github.com/crewAIInc/crewAI-examples)                       |
+| [CrewAI](https://www.crewai.com/)                             | [CrewAI docs](https://docs.crewai.com/introduction)                                   | [CrewAI Code samples ](https://github.com/crewAIInc/crewAI-examples)                        |
 | [Vertex AI](https://cloud.google.com/vertex-ai?hl=en)         | [Vertex AI Code docs ](https://cloud.google.com/vertex-ai/docs)                       | [Vertex AI Code samples ](https://github.com/GoogleCloudPlatform/vertex-ai-samples)         |
 | [Langflow](https://www.langflow.org/)                         | [Langflow docs](https://docs.langflow.org)                                            | [Langflow samples ](https://github.com/langflow-ai/langflow_examples)                       |
 
 ## No Code agent systems
 
 List of No-Code agent systems. These don't require coding skills but may be more expensive to run, less flexible and in
-some cases slower to execute. However, you may end up a good-enough solution with a lot less effort, especially for 
-individual or small scale deployment. Some of these systems are built specifically for an eco-system such as Agentforce
-which is designed to work with Salesforce.
+some cases slower to execute. However, you may end up with a good-enough solution with a lot less effort, especially for 
+individual or small scale deployment. Some of these systems are built specifically for a specific eco-system such as
+Agentforce, which is designed to work with Salesforce.
 
 * [make.com AI Automation](https://www.make.com/en/ai-automation)
 * [Zapier agents](https://zapier.com/agents)
@@ -98,7 +98,7 @@ like Python’s asyncio for concurrency, requests for APIs, or ML libraries like
 describes how you can do this.
 
 My feeling is that, other than for an academic exercise, there are so many well-thought-out frameworks that you will most 
-likely end up re-inventing the wheel. If you're going to do AI agents, use a system designed for that purpose
+likely end up re-inventing the wheel. If you're going to make use of AI agents, use a system designed for that purpose
 
 ## AI Agent approach vs traditional coding approach
 
