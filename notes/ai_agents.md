@@ -28,7 +28,7 @@ Here are some examples of what an AI agent or Agentic-based system will do:
 * **Agentic** - Means a system can operate independently, making decisions based on data analysis and predefined goals
 * **Model** - The underlying LLM used by the agent
 * **No Code** - No Code agent systems use drag and drop plus text boxes for configuration instead of code (usually Python). [Relevance AI](https://relevanceai.com/agents) would be an example of such a system
-* **RAG** - Retrieval-Augmented Generation. A technique for building LLM-powered applications.
+* **RAG** - Retrieval-Augmented Generation. A technique for enhancing the accuracy and reliability of generative AI models with information from specific and relevant data sources
 * **ReAct** - Reasoning and Action
 * **Multi-agent** - A system using multiple specizilised agents to collaborate on a desired outcome such as summarising today's news into an email
 * **Task-Oriented Agent** - Executes specific tasks based on given inputs, like fetching data, summarizing content, or scheduling events
@@ -91,14 +91,16 @@ Agentforce, which is designed to work with Salesforce.
 
 ## Do you need a framework to build AI agents?
 
-I would not recommend building an AI agent framework or system from scratch... 
+No, in fact you may find that you are better off not using a framework. This is because you are relying on someone 
+else's code to perform actions under the cover like passing data between agents. However, the concepts used in agent
+frameworks are useful to know, and it is worth familiarising yourself with the terminology and ways of working prescribed
+by frameworks.
 
-If you're building a simple AI agent with limited functionality, you can write everything from scratch using libraries
-like Python’s asyncio for concurrency, requests for APIs, or ML libraries like TensorFlow or PyTorch. [This article](https://www.analyticsvidhya.com/blog/2024/07/build-ai-agents-from-scratch/)
-describes how you can do this.
+A framework is a quick way to get you up and running though, so for a small project such as a personal assistant,
+it may make sense rather than coding your own framework.
 
-My feeling is that, other than for an academic exercise, there are so many well-thought-out frameworks that you will most 
-likely end up re-inventing the wheel. If you're going to make use of AI agents, use a system designed for that purpose
+ [This article](https://www.analyticsvidhya.com/blog/2024/07/build-ai-agents-from-scratch/)
+describes how you set up a framework from scratch.
 
 ## AI Agent approach vs traditional coding approach
 
@@ -144,6 +146,7 @@ handle complex workloads often justify the investment for businesses or mission-
 
 This is a list of articles, YouTube channels and other useful resources related to AI agents
 
+* [Dave Ebbelaar's YouTube channel](https://www.youtube.com/@daveebbelaar)
 * [Multiagent AI frameworks](https://getstream.io/blog/multiagent-ai-frameworks/)
 * [Demystifying AI Agents](https://www.mongodb.com/resources/basics/artificial-intelligence/ai-agents)
 * [Ben AI YouTube channel](https://www.youtube.com/@BenAI92)
