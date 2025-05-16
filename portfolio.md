@@ -9,6 +9,11 @@ and my [company's github profile](https://github.com/westsmith-open).
 
 For a deeper dive into some of the commercial projects I've worked on in the last 5 years, click the headings below:
 
+### [ONS Integrated Data Service](/projects/ons-integrated-data-service)
+A service that provides secure access to high-quality data.
+
+<img src="/assets/images/projects/ids.png" width="120" height="60">
+
 ### [University Lab Allocator](/projects/university-lab-allocator)
 A service that places students in labs using a Genetic Algorithm.
 
