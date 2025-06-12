@@ -3,9 +3,7 @@ layout: page
 title: Portfolio 📚
 ---
 
-Most of my career has been spent working on proprietary software systems, so I can't share the code on Github. 
-However, there are some open source projects I've worked, so please checkout [my github profile](https://github.com/dgnball)
-and my [company's github profile](https://github.com/westsmith-open).
+While my primary work involves private enterprise software, I maintain several open source projects available on both [my personal](https://github.com/dgnball) and [company](https://github.com/westsmith-open) GitHub profiles.
 
 For a deeper dive into some of the commercial projects I've worked on in the last 5 years, click the headings below:
 
