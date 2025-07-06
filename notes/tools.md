@@ -12,7 +12,6 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 
 | The link                                                                       | My thoughts or just a description                                                                                   |
 |--------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| [Pexels](https://www.pexels.com)                                               | Royalty free images                                                                                                 |
 | [Unsplash](https://unsplash.com)                                               | Royalty free images                                                                                                 |
 | [Openclipart](https://openclipart.org)                                         | Royalty free images                                                                                                 |
 | [DALL.E](https://openai.com/index/dall-e-3/)                                   | AI Image generation                                                                                                 |
@@ -26,18 +25,13 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 
 ## Building websites / landing pages
 
-| The link                                                      | My thoughts or just a description                                                                                                                              |
-|---------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Google Sites](https://sites.google.com/)                     | Cheap and easy. No SEO and has other limitations such as limited customizations. Great if you want a quick site though.                                        |
-| [Github pages](https://pages.github.com/)                     | Free fast hosting at no cost. This site runs on Github pages!                                                                                                  |
-| [Jekyll](https://jekyllrb.com/)                               | Turn markdown into nicely formatted websites. This site uses Jekyll. Jekyll and Github pages are a great combo but require some coding knowledge.              |
-| [Google Analytics](https://analytics.google.com/)             | Measure your site's performance.                                                                                                                               |
-| [GrapeJS](https://grapesjs.com/)                              | Drag and drop website editor for self hosting. I'm looking for something which is as easy as Google Sites but can be hosted on Github pages. This might be it! |
-| [Mobirise](https://mobirise.com/)                             | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
-| [Publii](https://getpublii.com/)                              | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
-| [Simply Static](https://wordpress.org/plugins/simply-static/) | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
-| [Shuffle](https://shuffle.dev)                                | Drag and drop website editor for self hosting. To be evaluated...                                                                                              | 
-| [Squarespace](https://www.squarespace.com)                    | If the above don't work out, I'll just use squarespace as I'm sure it'll be great for SEO and ease of use (but not free)                                       |
+| The link                                                      | My thoughts or just a description                                                                                                                 |
+|---------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Google Sites](https://sites.google.com/)                     | Cheap and easy. No SEO and has other limitations such as limited customizations. Great if you want a quick site though.                           |
+| [Github pages](https://pages.github.com/)                     | Free fast hosting at no cost. This site runs on Github pages!                                                                                     |
+| [Jekyll](https://jekyllrb.com/)                               | Turn markdown into nicely formatted websites. This site uses Jekyll. Jekyll and Github pages are a great combo but require some coding knowledge. |
+| [Google Analytics](https://analytics.google.com/)             | Measure your site's performance.                                                                                                                  |
+| [Squarespace](https://www.squarespace.com)                    | Should be great for SEO and ease of use (but not free)                                                                                            |
 
 ## Find ideas / problems / inspiration
 
