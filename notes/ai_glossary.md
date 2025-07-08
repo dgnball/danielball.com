@@ -98,3 +98,52 @@ be a bottleneck for an app. That is where Chroma DB comes in. It stores somethin
 
 These are somewhat like a cache of LLM responses. So if I asked, "What are the prices of rucksacks?" I could store the response in Chroma DB. Then if someone asked a similar question in the future, like "What are the costs of rucksacks?" then it would respond more quickly and thus make it viable
 for a performant app.
+
+
+
+
+
+## Transformer
+
+The tech that lets it get the vibe of a sentence, not just words. It’s why it actually understands context.
+
+## Prompt Engineering
+
+ust means 'getting good at asking it questions'. You have to spell out what you want (role, task, tone) like you're talking to a five-year-old, otherwise you get rubbish.
+
+## Context Window
+
+Its short-term memory. It'll forget what you said 10 minutes ago, so you have to keep reminding it. A right pain.
+
+## Tokens
+
+The currency of AI. Every word is a 'token' and it's how they charge you on the paid stuff. Nothing's free, is it?
+
+## Fine-tuning
+
+When you train the general model on your company's data to make it a specialist in what you actually do.
+
+## RAG
+
+It lets the AI look stuff up from a trusted source (like our SharePoint) before it answers. A reality check that stops it from just making stuff up.
+
+## Hallucination
+
+The big problem. It lies with unwavering confidence, inventing facts and quotes. Treat it like a known fibber and check everything.
+
+## Temperature 
+
+(a creativity dial), 
+
+## Zero-shot Learning 
+
+(its ability to 'have a go' at new tasks), and 
+
+## Chain-of-Thought 
+
+(telling it to 'show its working' on complex problems).
+
+## Embeddings
+
+The really geeky bit
+
