@@ -97,7 +97,7 @@ potentially build an **AI agent**. This is an application that performs intellig
 
 AI agents are systems that don’t just answer questions, they can take actions. They’re set up to reason through tasks, use tools (like APIs or databases) and make decisions step by step. Instead of being passive responders, agents can actively do things to reach a goal.
 
-For example, if you ask, “What’s the next train to Winchester?”, an agent could break that down into steps: call a rail API, parse the response and reply conversationally. Frameworks like LangChain make this possible by letting you chain together the model with external tools, memory and logic. Think of it as giving your AI arms and legs—not just a brain.
+For example, if you ask, “What’s the next train to Winchester?”, an agent could break that down into steps: call a rail API, parse the response and reply conversationally. Frameworks like LangChain make this possible by letting you chain together the model with external tools, memory and logic.
 
 ---
 
