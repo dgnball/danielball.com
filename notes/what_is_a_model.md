@@ -7,6 +7,28 @@ title: What Is a Model and How Should You Access It?
 
 In this article, we’ll demystify the term “model” and explore the evolving landscape of machine learning tools. We’ll cover the difference between classical models and modern LLMs, show you the tradeoffs between running models locally, in the cloud, or via an API, and explain when you actually *need* an LLM, and when you're better off reaching for something simpler. If you’re a software developer, system architect, or tech-curious builder wondering how to integrate ML wisely, this is for you.
 
+### Resources or TLDR
+
+Don't want to read this or don't have the time. Here's a list of resources I reference in this document (or you might find generally useful):
+
+**Communities**
+* [Kaggle](https://www.kaggle.com/) - The Largest AI and ML community
+* [Hugging Face](https://huggingface.co/) - The platform where the machine learning community collaborates on models, datasets and applications.
+
+**Tools**
+* [Open Router Models](https://openrouter.ai/models) - Access any hosted LLM model (from GPT to DeepSeek) from this one interface!
+* [Github Models](https://docs.github.com/en/github-models) - Find and experiment with AI models for free
+* [Jupyter](https://jupyter.org/) - ML engineers and data scientists will use this tool to write Python code that interfaces with ML models.
+* [PyTorch](https://pytorch.org/) and [TensorFlow](https://www.tensorflow.org/) - Most complex models are built on PyTorch or TensorFlow. The backbone of modern AI
+
+**Learning**
+* [W3C Schools Machine Learning course](https://www.w3schools.com/python/python_ml_getting_started.asp) - Lots of getting-started style Python examples of Machine Learning
+* [Google Machine Learning Education](https://developers.google.com/machine-learning) - Highly recommended ML courses from Google 
+* [StatQuest YouTube channel](https://www.youtube.com/@statquest) - The best beginner-friendly ML YouTube channel
+* [Wikipedia's Machine learning Models](https://en.wikipedia.org/wiki/Machine_learning#Models) - The "official" list of model types, as penned by academics and the data-science community.
+* [Machine Learning for Kids](https://machinelearningforkids.co.uk/) - We've all got to start somewhere!
+* There's also free ML courses from [Harvard](https://pll.harvard.edu/course/machine-learning-and-ai-python), [IBM](https://www.coursera.org/learn/machine-learning-with-python) and [FreeCodeCamp](https://www.freecodecamp.org/learn/machine-learning-with-python/)
+
 
 ## What is a Model?
 
@@ -27,13 +49,21 @@ Here are the major types, explained simply:
 
 ### 1. **Linear Models** – *The Straight-Line Thinker*
 
-Draws a line or curve through data points to spot trends and make predictions.
+<img src="/assets/images/notes/linear.png" alt="Linear Model" style="width: 300px;">
+
+Draws a line or curve through data points to spot trends and make predictions. 
+
+See [W3C schools Python explainer on Linear Regression](https://www.w3schools.com/python/python_ml_linear_regression.asp).
 
 * **Used for**: Forecasting sales, predicting prices
 * **Strength**: Simple, fast, easy to interpret
 * **Weakness**: Can’t handle complex relationships
 
 ### 2. **Decision Trees** – *The Flowchart Brain*
+
+<img src="/assets/images/notes/decision_tree.jpg" alt="Decision Tree" style="width: 300px;"> 
+
+See [W3C schools Python explainer on Decisions Tree](https://www.w3schools.com/python/python_ml_decision_tree.asp).
 
 Asks a series of yes/no questions to make a decision.
 
