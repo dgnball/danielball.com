@@ -1,7 +1,9 @@
 ---
 layout: page
-title: What Is a Model and How Should You Access It?
+title: Machine Learning Models
 ---
+
+<img src="/assets/images/notes/models.png" alt="models">
 
 ## Introduction
 
@@ -19,7 +21,8 @@ Don't want to read this or don't have the time. Here's a list of resources I ref
 * [Open Router Models](https://openrouter.ai/models) - Access any hosted LLM model (from GPT to DeepSeek) from this one interface!
 * [Github Models](https://docs.github.com/en/github-models) - Find and experiment with AI models for free
 * [Jupyter](https://jupyter.org/) - ML engineers and data scientists will use this tool to write Python code that interfaces with ML models.
-* [PyTorch](https://pytorch.org/) and [TensorFlow](https://www.tensorflow.org/) - Most complex models are built on PyTorch or TensorFlow. The backbone of modern AI
+* [PyTorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/) and [JAX](https://docs.jax.dev/en/latest/) - Most complex models are built on PyTorch, TensorFlow or JAX. The backbone of modern AI!
+* [scikit-learn](https://scikit-learn.org/) - Python library for building most types of ML model. Less focus on neural nets (like PyTorch), more on models such as Random Forest.
 
 **Learning**
 * [W3C Schools Machine Learning course](https://www.w3schools.com/python/python_ml_getting_started.asp) - Lots of getting-started style Python examples of Machine Learning
@@ -61,7 +64,7 @@ See [W3C schools Python explainer on Linear Regression](https://www.w3schools.co
 
 ### 2. **Decision Trees** – *The Flowchart Brain*
 
-<img src="/assets/images/notes/decision_tree.jpg" alt="Decision Tree" style="width: 300px;"> 
+<img src="/assets/images/notes/decision_tree.png" alt="Decision Tree" style="width: 300px;"> 
 
 See [W3C schools Python explainer on Decisions Tree](https://www.w3schools.com/python/python_ml_decision_tree.asp).
 
@@ -73,6 +76,8 @@ Asks a series of yes/no questions to make a decision.
 
 ### 3. **Random Forests** – *The Crowd of Flowcharts*
 
+<img src="/assets/images/notes/random_forest.png" alt="Random Forest" style="width: 300px;">
+
 Builds many decision trees and combines their answers to improve accuracy.
 
 * **Used for**: Risk scoring, product recommendations
@@ -80,6 +85,8 @@ Builds many decision trees and combines their answers to improve accuracy.
 * **Weakness**: Harder to explain decisions
 
 ### 4. **Clustering Models** – *The Natural Group Finder*
+
+<img src="/assets/images/notes/clustering.png" alt="Clustering Models" style="width: 300px;">
 
 Groups similar things together without knowing the labels ahead of time.
 
@@ -89,6 +96,8 @@ Groups similar things together without knowing the labels ahead of time.
 
 ### 5. **Naive Bayes** – *The Probability Calculator*
 
+<img src="/assets/images/notes/bayes.png" alt="Bayes" style="width: 300px;">
+
 Makes predictions based on how likely something is, given past data.
 
 * **Used for**: Spam filters, topic classification
@@ -96,6 +105,8 @@ Makes predictions based on how likely something is, given past data.
 * **Weakness**: Can oversimplify complex problems
 
 ### 6. **Support Vector Machines (SVMs)** – *The Border Drawer*
+
+<img src="/assets/images/notes/svm.png" alt="SVM" style="width: 300px;">
 
 Draws the best dividing line between different categories in your data.
 
@@ -105,11 +116,30 @@ Draws the best dividing line between different categories in your data.
 
 ### 7. **Neural Networks** – *The Brain-Inspired Pattern Learner*
 
-A network of tiny computing units ("neurons") that work together to find complex patterns in data.
+<img src="/assets/images/notes/neural.png" alt="SVM" style="width: 300px;">
 
-* **Used for**: Speech recognition, facial recognition, chatbots, translation
-* **Strength**: Can learn deep and subtle relationships
-* **Weakness**: Hard to explain how they work, and they need a lot of data and power
+See [Real Python article on how to build a Neural network in Python](https://realpython.com/python-ai-neural-network/)
+
+Mathematical models inspired by biological neural networks, consisting of interconnected nodes ("neurons") organized in layers that process and transform input data.
+
+
+* **Used for**: Pattern recognition, classification, prediction
+* **Strength**: Can learn complex relationships
+* **Weakness**: Need careful tuning, can be unstable
+
+
+### 8. **Deep Learning** – *The Advanced Pattern Master*
+
+<img src="/assets/images/notes/deep.png" alt="Deep Learning" style="width: 200px;">
+
+Deep learning refers to neural networks with many layers ("deep" architecture). These additional layers allow the network to learn increasingly complex features from data automatically. LLM models such as GPT and Gemini fall into this category.
+
+* **Used for**: Computer vision, language models, speech recognition, game AI
+* **Strength**: Learns complex patterns automatically, state-of-the-art performance
+* **Weakness**: Needs massive data/compute, complex to train, black box behavior
+
+Common types include CNNs (for images), Transformers (for language), RNNs (for sequences), and GNNs (for network data).
+
 
 
 ### Summary:
@@ -342,7 +372,7 @@ You can buy a used GPU workstation (e.g. with an NVIDIA RTX 3090 or A6000) and r
 
 * Mixtral, LLaMA 3 8B, stable diffusion models
 
-### 4. **Hourly Cloud Compute (e.g. RunPod, Lambda, Vast.ai)**
+### 4. **Hourly Cloud Compute**
 
 Platforms like RunPod, Paperspace, and LambdaLabs let you spin up a GPU machine by the hour.
 
@@ -357,27 +387,38 @@ Platforms like RunPod, Paperspace, and LambdaLabs let you spin up a GPU machine 
 * Serving open-source models via APIs
 * Experiments with reproducibility
 
-### 5. **Commercial APIs (OpenAI, Claude, Gemini)**
+### 5. **Commercial APIs**
 
 The easiest route is to use models via APIs from the big players:
 
 * OpenAI’s GPT-4o
-
 * Anthropic’s Claude 3
-
 * Google’s Gemini 1.5
 
 * ✅ Fastest time to value
-
 * ✅ Extremely powerful models
-
 * ⚠️ Black-box: no insight into training or operation
-
 * ⚠️ Data may be logged (unless on enterprise tiers)
-
 * ⚠️ Pay-per-use, costs can scale fast
 
+### 6. **Enterprise ML Platforms**
+Platforms like Snowflake ML and Amazon SageMaker that provide integrated environments for model development, deployment and management at enterprise scale.
+- ✅ End-to-end ML workflow management
+- ✅ Built-in security and governance
+- ✅ Seamless data integration
+- ⚠️ Requires enterprise licensing/subscription
+- ⚠️ Platform lock-in considerations
 
+**Good for:**
+- Large-scale ML deployments
+- Teams needing governance and security
+- Organizations with existing data warehouse investments
+- Integrated data pipelines
+- Compliance and governance controls
+- Collaboration features
+- Production-grade reliability
+
+The key difference from the other categories is that these platforms provide a complete ecosystem rather than just model hosting or computation resources. They're especially valuable for organizations that already use these platforms for data warehousing and analytics.
 
 ## The LLM-ification of Everything (and Why It’s a Problem)
 
