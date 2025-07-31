@@ -247,9 +247,9 @@ and the sort of model you might want to employ for that task.
 
 **Use audio models**:
 
-* Whisper (speech-to-text)
-* wav2vec2 (speech recognition)
-* TTS models (text-to-speech)
+* [Whisper (speech-to-text)](https://openai.com/index/whisper/)
+* [wav2vec2 (speech recognition)](https://docs.pytorch.org/audio/stable/tutorials/speech_recognition_pipeline_tutorial.html)
+* [TTS models (text-to-speech)](https://www.bentoml.com/blog/exploring-the-world-of-open-source-text-to-speech-models)
 
 **Examples:**
 
@@ -268,7 +268,7 @@ and the sort of model you might want to employ for that task.
 
 * GPT-4 / Claude 3 / Gemini → commercial APIs
 * LLaMA / Mistral / Phi-3 → open-source options
-* Use tools like **OpenRouter**, **Ollama** or [**vLLM**](https://github.com/vllm-project/vllm) for access
+* Use tools like [OpenRouter](https://openrouter.ai/), [Ollama](https://ollama.com/) or [vLLM](https://github.com/vllm-project/vllm) for access
 
 **Examples:**
 
@@ -327,7 +327,7 @@ All the models are free or open source, but you will need to provide the compute
 | Model Type                                              | Hosted on Hugging Face? | Notes                                                      |
 |---------------------------------------------------------|-------------------------|------------------------------------------------------------|
 | **Transformers (LLMs)**                                 | ✅ Yes                   | Hugging Face’s core focus (e.g. GPT-style, BERT, LLaMA)    |
-| **CNNs for vision**                                     | ✅ Yes                   | Models like ResNet, YOLO and CLIP                         |
+| **CNNs for vision**                                     | ✅ Yes                   | Models like ResNet, YOLO and CLIP                          |
 | **Audio models**                                        | ✅ Yes                   | Whisper, wav2vec2, TTS (text-to-speech)                    |
 | **Multimodal models**                                   | ✅ Yes                   | e.g. Flamingo, BLIP (image + text)                         |
 | **Small/efficient LMs (SLMs)**                          | ✅ Yes                   | e.g. DistilBERT, TinyLLaMA, Phi-3                          |
@@ -340,20 +340,23 @@ All the models are free or open source, but you will need to provide the compute
 
 ## Building a Homemade Model?
 
-Creating your own model from scratch is not just possible, it’s educational. Here's what you need:
+Creating your own model from scratch is not just possible, it’s educational. Now I'm not just talking about a linear equation, here but a full blow neural net! [Code Academy](https://www.codecademy.com/article/building-a-neural-network-using-pytorch) has a
+nice tutorial on how to get start with building a neural net.
+
+Here's a general overview of the steps required:
 
 * **Data**: Collect or curate a training dataset
-* **Framework**: Use `PyTorch`, `TensorFlow` or `JAX`
+* **Framework**: Use **PyTorch**, **TensorFlow** or **JAX**
 * **Compute**: A GPU (local or cloud)
-* **Training**: Run an optimization loop (SGD, Adam, etc.)
+* **Training**: Run an optimisation loop with [SGD](https://keras.io/api/optimizers/sgd/) or [Adam](https://keras.io/api/optimizers/adam/)
 * **Evaluation**: Monitor accuracy, loss, perplexity
-* **Packaging**: Export via `ONNX`, `torchscript` or serve with `FastAPI`, `vLLM` or `TGI`
+* **Packaging**: Export via [ONNX](https://onnx.ai/) or [torchscript](https://docs.pytorch.org/docs/stable/jit.html)
 
 You could build:
 
 * A sentiment classifier
 * A chatbot on your internal docs
-* An image recognizer for niche applications (e.g. insects!)
+* An image recogniser for niche applications (e.g. insects!)
 
 ## How to access and run complex Models
 
@@ -376,13 +379,12 @@ Running smaller models like **Phi-3-mini** or **Gemma 2B** on a laptop is increa
 * ✅ Full privacy: data never leaves your machine
 * ✅ Free after setup
 * ⚠️ Limited power: can’t run massive models
-* ⚠️ Requires technical setup (e.g. Ollama, LM Studio, llama.cpp)
+* ⚠️ Requires technical setup e.g. [Ollama](https://ollama.com/) or [LM Studio](https://lmstudio.ai/)
 
-**Good stack for this:**
-
-* `Ollama`, `LM Studio`, `llama.cpp`, `Python`, `Rust` or `Go` interfaces
 
 ### 3. **GPU-Enhanced Machine (eBay Special)**
+
+<img src="/assets/images/notes/ebay_special.png" alt="Ebay special">
 
 You can buy a new or used GPU workstation (e.g. with an NVIDIA RTX 3090 or A6000) and run even mid-sized models locally.
 
@@ -443,9 +445,9 @@ Platforms like [Snowflake ML](https://docs.snowflake.com/en/developer-guide/snow
 
 The key difference from the other categories is that these platforms provide a complete ecosystem rather than just model hosting or computation resources. They're especially valuable for organisations that already use these platforms for data warehousing and analytics.
 
-## The LLM-ification of Everything (and Why It’s a Problem)
+## The LLM-ification of everything (and why it’s a Problem)
 
-Large Language Models are incredibly capable, they can summarize, classify, generate, reason and even write code. Given that power, it's no surprise that **many developers are now reaching for LLMs as the default tool for every ML problem**.
+Large Language Models are incredibly capable, they can summarise, classify, generate, reason and even write code. Given that power, it's no surprise that **many developers are now reaching for LLMs as the default tool for every ML problem**.
 
 But just because you *can* use an LLM doesn’t mean you *should*.
 
@@ -471,7 +473,7 @@ Relying on LLMs for everything creates several long-term issues:
 
 You're using a billion-parameter model to do what a 5MB model (or a few if-statements) could have done:
 
-* Classifying tweets as positive or negative? A fine-tuned BERT or even `fastText` could do it faster and cheaper.
+* Classifying tweets as positive or negative? A fine-tuned BERT or even fastText could do it faster and cheaper.
 * Matching users to product categories? A logistic regression or decision tree might outperform your LLM at scale.
 
 #### 2. **Scaling Costs**
