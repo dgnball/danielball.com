@@ -11,7 +11,7 @@ In this article, we will demystify the term **model** and explore the evolving l
 
 Picking the right ML tool for the job is where we want to get to at the end, instead of plugging everything into a ChatGPT terminal 😝 If you’re a software developer, system architect or tech-curious builder wondering how to integrate ML wisely, this is for you.
 
-There is also a heavy focus on examples in **Python**, both for generating models and using them. If you don't know Python, then  do still read on. Hopefully, you'll get inspired to learn Python as well as discovering the underpinnings of modern AI!
+There is also a heavy focus on examples in **Python**, both for generating models and using them. If you don't know Python, then do still read on. Hopefully, you'll get inspired to learn Python as well as discovering the underpinnings of modern AI!
 
 ### Resources or TLDR
 
@@ -29,7 +29,7 @@ Don't want to read this or don't have the time. Here's a list of resources I ref
 * [scikit-learn](https://scikit-learn.org/) - Python library for building most types of ML model. Less focus on neural nets (like PyTorch), more on models such as Random Forest.
 
 **Learning**
-* [W3C Schools Machine Learning course](https://www.w3schools.com/python/python_ml_getting_started.asp) - Lots of getting-started style examples
+* [W3Schools Machine Learning course](https://www.w3schools.com/python/python_ml_getting_started.asp) - Lots of getting-started style examples
 * [Google Machine Learning Education](https://developers.google.com/machine-learning) - Highly recommended ML courses from Google 
 * [StatQuest YouTube channel](https://www.youtube.com/@statquest) - The best beginner-friendly ML YouTube channel
 * [Wikipedia's Machine learning Models](https://en.wikipedia.org/wiki/Machine_learning#Models) - The "official" list of model types, as penned by academics and the data-science community.
@@ -45,7 +45,7 @@ GPT, Gemini and Claude are examples of **Large Language Models** and are perhaps
 
 Before AI became known for chatbots and image generators, professionals who dealt with data (such as data scientist) used and still do use a variety of machine learning (ML) models to make predictions, detect patterns or sort information. These models were usually small, focused and trained on structured data like spreadsheets or databases.
 
-## Types of ML Models?
+## Types of ML Models
 
 Here are the major types of ML model:
 
@@ -55,7 +55,7 @@ Here are the major types of ML model:
 
 Draws a line or curve through data points to spot trends and make predictions. 
 
-See [W3C schools Python explainer on Linear Regression](https://www.w3schools.com/python/python_ml_linear_regression.asp).
+See [W3Schools Python explainer on Linear Regression](https://www.w3schools.com/python/python_ml_linear_regression.asp).
 
 * **Used for**: Forecasting sales, predicting prices
 * **Strength**: Simple, fast, easy to interpret
@@ -69,7 +69,7 @@ See [W3C schools Python explainer on Linear Regression](https://www.w3schools.co
 
 Asks a series of yes/no questions to make a decision.
 
-See [W3C schools Python explainer on Decisions Tree](https://www.w3schools.com/python/python_ml_decision_tree.asp).
+See [W3Schools Python explainer on Decision Tree](https://www.w3schools.com/python/python_ml_decision_tree.asp).
 
 * **Used for**: Loan approval, medical diagnoses
 * **Strength**: Easy to understand and explain
@@ -288,16 +288,16 @@ and the sort of model you might want to employ for that task.
 
 ### Decision Table: What Model Should I Use?
 
-| Task Type                   | Recommended Model Type | Example Tool         |
-|-----------------------------|------------------------|----------------------|
-| Predict from tabular data   | Decision Tree          | XGBoost, LightGBM    |
-| Classify short texts        | NLP                    | DistilBERT, fastText |
-| Summarize/generate text     | LLM                    | GPT, Claude, Mistral |
-| Understand images           | CNN                    | YOLO, ResNet, BLIP   |
-| Transcribe speech           | ASR                    | Whisper              |
-| Group similar users         | K-means Clustering     | Scikit-learn         |
-| Detect sentiment in reviews | NLP                    | RoBERTa              |
-| Write SEO blog posts        | LLM                    | GPT-4, Claude 3      |
+| Task Type                   | Recommended Model Type             | Example Tool         |
+|-----------------------------|------------------------------------|----------------------|
+| Predict from tabular data   | Decision Tree                      | XGBoost, LightGBM    |
+| Classify short texts        | NLP                                | DistilBERT, fastText |
+| Summarize/generate text     | LLM                                | GPT, Claude, Mistral |
+| Understand images           | CNN                                | YOLO, ResNet, BLIP   |
+| Transcribe speech           | ASR (Automatic Speech Recognition) | Whisper              |
+| Group similar users         | K-means Clustering                 | Scikit-learn         |
+| Detect sentiment in reviews | NLP                                | RoBERTa              |
+| Write SEO blog posts        | LLM                                | GPT-4, Claude 3      |
 
 
 ### Final Advice: Use the Smallest Model That Works
@@ -318,7 +318,7 @@ But sometimes LLMs are great. If:
 
 ## Acquiring models from Hugging Face
 
-Hugging Face started hosts a wide range of **machine learning models**, especially those built with deep learning frameworks like **PyTorch**, **TensorFlow** and **JAX**.
+Hugging Face hosts a wide range of **machine learning models**, especially those built with deep learning frameworks like **PyTorch**, **TensorFlow** and **JAX**.
 
 All the models are free or open source, but you will need to provide the compute resource to run them on. Depending on the size of the model, this may be expensive.
 
@@ -340,7 +340,7 @@ All the models are free or open source, but you will need to provide the compute
 
 ## Building a Homemade Model?
 
-Creating your own model from scratch is not just possible, it’s educational. Now I'm not just talking about a linear equation, here but a full blow neural net! [Code Academy](https://www.codecademy.com/article/building-a-neural-network-using-pytorch) has a
+Creating your own model from scratch is not just possible, it’s educational. Now I'm not just talking about a linear equation, here but a full-blow neural net! [Code Academy](https://www.codecademy.com/article/building-a-neural-network-using-pytorch) has a
 nice tutorial on how to get start with building a neural net.
 
 Here's a general overview of the steps required:
