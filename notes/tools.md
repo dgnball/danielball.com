@@ -132,13 +132,15 @@ This is a (not exhaustive) list of tools and web resources I choose to use, plus
 | [Perplexity AI](https://www.perplexity.ai/)     | Free AI search engine designed to revolutionize the way you discover information             |
 | [Vertex AI](https://cloud.google.com/vertex-ai) | Google's fully-managed, unified AI development platform for building and using generative AI |
 
-## Software development tools
+## Software development / Mac desktop tools 
 
-| The link                                      | My thoughts or just a description                          |
-|-----------------------------------------------|------------------------------------------------------------|
-| [PyCharm](https://www.jetbrains.com/pycharm/) | My main workhorse and worth every penny                    |
-| [iTerm2](https://iterm2.com)                  | macOS terminal                                             |
-| [CotEditor](https://coteditor.com)            | The Plain-Text Editor for macOS (my notepad++ replacement) |
-| [Figma](https://www.figma.com)                | Design user interfaces                                     |
-| [Github](https://www.github.com)              | Store code, review code, build code, etc...                |
-| [Gitlab](https://www.gitlab.com)              | Same as above                                              |
+| The link                                                             | My thoughts or just a description                          |
+|----------------------------------------------------------------------|------------------------------------------------------------|
+| [PyCharm](https://www.jetbrains.com/pycharm/)                        | My main workhorse and worth every penny                    |
+| [iTerm2](https://iterm2.com)                                         | macOS terminal                                             |
+| [CotEditor](https://coteditor.com)                                   | The Plain-Text Editor for macOS (my notepad++ replacement) |
+| [Figma](https://www.figma.com)                                       | Design user interfaces                                     |
+| [Github](https://www.github.com)                                     | Store code, review code, build code, etc...                |
+| [Gitlab](https://www.gitlab.com)                                     | Same as above                                              |
+| [Nimble Commander](https://magnumbytes.com)                          | Better Finder for Mac                                      |
+| [CopyClip](https://apps.apple.com/us/app/copyclip-clipboard-history) | Clipboard history                                          |
