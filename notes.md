@@ -9,3 +9,4 @@ This is a bit like a blog but without the pressure of having to churn out an art
 * [Tools and Resources](notes/tools) - My bookmarks
 * [AI Agents](notes/ai_agents) - My attempt to explain what is meant by the term "AI agent" with examples and resources
 * [Machine Learning Models](notes/machine-learning-models) - Understanding the modern ML landscape, from LLMs to classical models and when to use what.
+* [AI Assisted Coding](notes/ai_assisted_coding) - The tools, the models, the risks and the trade-offs of the AI-assisted coding landscape
