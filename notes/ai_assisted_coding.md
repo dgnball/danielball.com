@@ -162,43 +162,228 @@ trust and verifiability: how do you confidently delegate to a system you can't f
 likely be the ones that make their reasoning transparent enough that engineers stay in control of the craft, even as the
 mechanical labour of coding largely disappears.
 
-## How These Tools Actually Work
+## How to Use an AI Coding Assistant
 
-There are two broad categories worth distinguishing.
+There's a temptation, when you first get access to an AI coding assistant, to treat it like a very fast search engine.
+You type a vague question, get something back, and move on. That approach works for simple, isolated tasks, but it
+misses the point entirely. Getting real value from these tools requires a shift in how you think about the interaction —
+less like querying a database, and more like briefing a capable but context-blind colleague who has just walked into
+your project for the first time.
 
-**Chat-based assistants** (Claude.ai, ChatGPT) let you describe a problem and receive code in return. You copy it into
-your project yourself. The AI has no visibility into your codebase and no ability to run or test anything. It's powerful
-but requires you to do the integration work.
+### Starting with the Right Mental Model
 
-**Agentic coding tools** (Claude Code, Cursor, Lovable, Bolt) go further. These tools operate in a loop: they receive a
-task, use tools to gather information, take actions, observe the results and repeat until the task is done. They can
-read files, search codebases, run shell commands, install dependencies and make edits across multiple files
-autonomously.
+AI coding assistants operate within a **context window** — a finite amount of text they can "see" at any one time.
+Everything relevant to your task needs to fit within that window: your question, the code you're working on, any files
+you've shared, prior conversation, and the assistant's own responses. When the context fills up, older information falls
+away. The assistant doesn't remember last session's decisions. It doesn't know your project's conventions, your team's
+opinions, or the architectural choices made six months ago — unless you tell it.
 
-The key concept underpinning all of this is the **context window** — the amount of text an LLM can hold in memory at
-once. Larger context windows mean the model can reason about more of your codebase at once, which generally produces
-better results. But context costs tokens and tokens cost money.
+This is the most important thing to understand about working effectively with these tools. **Context is everything, and
+context costs tokens.**
 
-### How Claude Code decides what to read
+### Customising Your Assistant
 
-A common misconception is that agentic tools like Claude Code send your entire codebase to the LLM on every turn. They
-don't — that would be prohibitively expensive and often unnecessary.
+Most AI coding tools offer several layers of customisation, and taking the time to set these up properly pays dividends
+on every subsequent interaction.
 
-Instead, Claude Code builds context incrementally through a series of tool calls. It might start by listing the
-directory structure to understand the project layout, then read a `package.json` or `pyproject.toml` to understand
-dependencies, then follow imports to find the files most relevant to the task at hand. It uses grep-style search to
-locate specific functions or patterns. Each of these is a discrete tool call that returns results which the model uses
-to decide what to look at next.
+**System-level or project-level instructions** are the most powerful lever you have. In Claude Code, for instance, you
+can create a `CLAUDE.md` file in the root of your project. This file is read at the start of every session and can
+contain anything you'd want a new developer to know before touching your codebase: the tech stack, coding conventions,
+which directories to leave alone, how tests are structured, which commands to run to start the dev server. Think of it
+as your project's onboarding document for the AI. The difference between a session that starts with this context and one
+without is striking — you stop spending tokens re-explaining the basics every time.
 
-What actually gets sent to the LLM is the accumulated results of those tool calls — the files and snippets the model has
-decided are relevant — plus the conversation history. Files that weren't explored don't get sent.
+Beyond project-level files, most tools allow you to configure **permission levels** (whether the assistant can run shell
+commands, edit files autonomously, or only make suggestions), **model selection** (trading off speed against quality
+depending on the task), and **tool access** (whether the assistant can browse the web, read connected services like Jira
+or Google Drive via integrations such as MCP servers).
 
-One practical implication of this: if you create a `CLAUDE.md` file in your project root, Claude Code will always read
-it at the start of a session. This is your opportunity to give the model persistent context about the project —
-architecture decisions, conventions, things to avoid — without it having to rediscover them every time.
+**Custom commands and slash commands** are another underused feature. Claude Code lets you define custom `/commands`
+that encapsulate common workflows — running your test suite, generating a summary of recent changes, or triggering a
+code review prompt against your own standards. These are tiny upfront investments that save disproportionate amounts of
+time over a project's life.
 
-This matters for three reasons: cost (you're only paying for context that's actually needed), privacy (not everything in
-your repo goes to the API) and quality (a focused context tends to produce better output than a noisy one).
+### The Token Economy: Where People Go Wrong
+
+Tokens are the currency of AI interactions. You're charged for them financially (if you're on a usage-based plan) and
+constrained by them architecturally. Wasting tokens on unnecessary content makes the tool slower, more expensive, and
+sometimes less accurate as useful information gets crowded out. Here are the most common mistakes:
+
+**Pasting entire files when only a function is relevant.** If you're asking about a bug in a 40-line function, you don't
+need to include the entire 800-line module. Be surgical. Use `@`-mentions in Claude Code or similar context-attachment
+features to include only what's needed.
+
+**Repeating context that's already been established.** Once you've explained your stack and architecture, you shouldn't
+keep re-stating it in every message. This is exactly what project-level markdown files solve — the context is loaded
+once, automatically.
+
+**Ignoring conversation history bloat.** Long, meandering sessions accumulate tokens fast. Every message in the
+conversation history is re-sent to the model on each turn. If you've spent thirty messages debugging a side issue,
+consider starting a fresh session once that's resolved rather than carrying all that history forward into an unrelated
+task.
+
+**Asking for broad rewrites when targeted edits would do.** "Refactor this entire service" consumes far more tokens than
+"Extract the database logic from this controller into a separate repository class." The more specific your request, the
+more efficient and accurate the response.
+
+**Not using Plan Mode or equivalent.** Many tools offer a mode where the assistant describes what it intends to do
+before doing it. This is invaluable. It lets you catch misunderstandings before the assistant has burned tokens (and
+potentially made changes) on the wrong approach.
+
+### Planning as a First-Class Activity
+
+One of the biggest mindset shifts in working well with AI coding assistants is learning to plan *before* you prompt.
+This feels counterintuitive — wasn't the whole point to move faster? — but unplanned sessions are where the real time
+gets lost.
+
+Before starting a significant task, it's worth spending a few minutes writing down in plain language what you're trying
+to achieve, what constraints apply, and what a successful outcome looks like. You can put this directly into your
+prompt, or better yet, maintain a `TASKS.md` or `PLANNING.md` file in your project that evolves as the work progresses.
+
+This approach has several compounding benefits. It forces you to think clearly about scope, which surfaces ambiguities
+before the assistant has a chance to make confident wrong assumptions. It gives the assistant a clear success criterion
+to work toward. And it creates a written record you can refer back to if a session goes sideways.
+
+Some developers go further, maintaining a suite of markdown files that together form a kind of living project memory: an
+`ARCHITECTURE.md` covering high-level design decisions, a `CONVENTIONS.md` for style and naming rules, a `DECISIONS.md`
+logging why certain approaches were chosen, and a `PROGRESS.md` tracking what's done and what's next. These files make
+every new session dramatically more productive because the assistant has genuine context to work with rather than having
+to infer everything from the code alone.
+
+The payoff is that you stop treating every session as a blank slate. The markdown files persist what the context window
+cannot.
+
+### Asking Well
+
+Clear, specific prompts produce better results than vague ones. This isn't a character flaw in the AI — it's a
+reflection of how language models work. They generate responses based on the probability distribution of what plausibly
+follows your input. Vague inputs lead to generic outputs.
+
+Useful habits include: being explicit about what you already know (so the assistant doesn't explain it), specifying the
+format you want for the response, breaking complex tasks into discrete steps, and using the `@filename` pattern to
+attach precise context rather than pasting content into the message body. If a response isn't quite right, it's almost
+always more efficient to refine the prompt than to argue with the output.
+
+## How AI Coding Assistants Work
+
+Not all AI coding assistants are the same. The category label "AI coding assistant" currently covers everything from a
+light autocomplete plugin that suggests the next line of your function, to a fully autonomous agent that can clone a
+repository, understand its architecture, write new features, run the tests, and open a pull request — all without you
+touching the keyboard. Understanding the differences matters, because the right tool depends entirely on what you're
+trying to do.
+
+### The Spectrum of Assistance
+
+It helps to think of AI coding assistants as sitting on a spectrum from **ambient/reactive** at one end to **agentic**
+at the other.
+
+At the reactive end, tools like **GitHub Copilot** (in its traditional form) sit close to your cursor. They observe what
+you're typing, infer your intent from the surrounding code and comments, and suggest completions inline. The interaction
+model is passive: you write, it suggests, you accept or ignore. Copilot is deeply integrated into the IDE and operates
+almost entirely on the immediate local context — the file you're editing, perhaps a few open tabs, your recent
+keystrokes. It does not browse the web, run your code, or orchestrate multi-step tasks. Its intelligence is applied in a
+single forward pass: here is the context, what comes next?
+
+At the agentic end, tools like **Claude Code** and **Lovable** take a fundamentally different approach. Rather than
+predicting the next token of your code, they reason about goals, decompose tasks into steps, invoke tools, observe the
+results, and decide what to do next. This loop — reason, act, observe, repeat — is what makes them agents rather than
+autocomplete engines.
+
+### How Agentic Tools Work
+
+The engine underneath an agentic coding assistant is a large language model (an LLM) equipped with a set of tools it can
+call. When you give Claude Code a task, it doesn't just generate text — it generates *decisions about what actions to
+take*. These might include reading a file, running a shell command, searching the codebase for a pattern, fetching
+documentation from the web, or editing a file. Each action produces a result that is fed back into the model's context,
+informing the next decision.
+
+Claude Code reads your codebase, edits files, runs commands, and integrates with your development tools. This
+description sounds simple, but the underlying mechanism is a continuous loop: the model maintains a running view of the
+task, decides on the next tool call, executes it, processes the result, and iterates until the task is complete or it
+needs your input.
+
+The key insight is that the model's intelligence is not applied once, upfront — it's applied repeatedly, with fresh
+information each time. This is what allows agentic tools to handle genuinely complex, multi-file tasks that a reactive
+autocomplete tool simply couldn't approach.
+
+CLAUDE.md is a markdown file you add to your project root that Claude Code reads at the start of every session — one
+example of how project-specific context is injected into this loop at initialisation, shaping every subsequent decision
+the agent makes.
+
+### Lovable: Generation, Not Assistance
+
+Lovable occupies an interesting and distinct position on this spectrum. Where Claude Code is designed to work *within*
+your existing codebase — editing, debugging, extending — Lovable is primarily a **generative** tool aimed at building
+applications from scratch through conversation. You describe what you want, and it produces a full-stack application:
+component structure, styling, data model, and deployment configuration.
+
+The difference in philosophy is significant. Lovable is optimised for the early, greenfield phase of a project, where
+you're moving quickly from idea to working prototype and the codebase doesn't yet have accumulated conventions or
+complexity. Claude Code is optimised for the sustained development phase — the much longer period where an existing
+codebase needs to be understood, extended, and maintained. Both are powered by LLMs with tool access, but they are
+designed for different moments in a project's life and make different trade-offs.
+
+### OpenCode: Open Source Flexibility
+
+**OpenCode** ([opencode.ai](https://opencode.ai)) takes a different philosophical stance again. It is an open source AI
+coding agent that runs in your terminal, IDE, or desktop, and is explicitly designed to be model-agnostic. Rather than
+locking you into a single LLM provider, OpenCode connects to any model from any provider — Claude, GPT, Gemini, and more
+— with support for over 75 LLM providers and even locally running models. GitHub Copilot users can log in and use their
+existing subscription directly.
+
+This matters for developers who want the agent architecture — the reasoning loop, the tool access, the file editing —
+without being tethered to a single vendor's pricing or model quality decisions. OpenCode's approach reflects a broader
+trend in the tooling ecosystem: separating the *agent infrastructure* (how the loop works, how tools are invoked, how
+results are processed) from the *model* (which LLM does the reasoning). The two concerns are increasingly being treated
+as independent, and with over 100,000 GitHub stars and 2.5 million monthly developers, OpenCode is clearly meeting a
+real demand for that flexibility.
+
+### The Role of the Context Window
+
+Every LLM-based tool, regardless of where it sits on the spectrum, is fundamentally constrained by its context window —
+the maximum amount of text the model can process in a single pass. For agentic tools, managing this window intelligently
+is one of the core engineering challenges.
+
+A large repository can contain millions of tokens worth of code. The model can't read all of it at once. Agentic tools
+therefore need strategies for deciding *what to include* in the context at any moment. Common approaches include
+semantic search (finding the most relevant files by embedding similarity), language server protocol (LSP) integration to
+understand code structure and relationships, and explicit user-directed context attachment (the `@filename` pattern).
+OpenCode automatically loads the right LSPs for the LLM, which is one example of how tools are increasingly automating
+this context management on your behalf.
+
+The context window also explains why session management matters. Longer sessions accumulate more history, which consumes
+window space that could otherwise be used for relevant code. Well-designed tools handle this through summarisation,
+selective history pruning, and the ability to resume sessions with their key decisions intact without replaying every
+token.
+
+### Model Context Protocol
+
+One architectural development worth understanding is the **Model Context Protocol (MCP)**, an open standard for
+connecting AI agents to external data sources. With MCP, a coding assistant isn't limited to your local files — it can
+be connected to your Jira board, your Slack workspace, your Google Drive, your Figma designs, or any custom internal
+tooling that exposes an MCP server.
+
+This is significant because it shifts the agent's effective context from "what's in this repository" to "what's in your
+entire development environment." The agent becomes a genuine participant in your workflow rather than an isolated tool
+that only knows about code files.
+
+### Putting It Together
+
+The fundamental difference between a tool like GitHub Copilot and a tool like Claude Code or OpenCode is the degree to
+which reasoning is externalised from a single forward pass into a multi-step loop with real-world tool use. Copilot
+applies intelligence once, inline, in a fraction of a second. An agentic tool applies intelligence repeatedly, across
+minutes or longer, with each step informed by the results of the last.
+
+Both are useful. The right choice depends on the task. For fast, flow-state coding where you want suggestions without
+interruption, a reactive autocomplete tool is often the better fit. For complex, multi-file work where you need
+something that can genuinely understand a problem and work toward a solution, an agentic tool is more appropriate. And
+for the earliest phase of a project — when you're still figuring out what you're building — a generative tool like
+Lovable may be the right starting point before you hand the codebase over to something with deeper editing and reasoning
+capabilities.
+
+What's clear is that the category is moving rapidly in one direction: more agency, more tool access, more integration
+with the broader development environment, and increasingly sophisticated strategies for managing the context that makes
+all of it possible.
 
 ## The Landscape
 
