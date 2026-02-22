@@ -8,3 +8,4 @@
 - Mention Peter Steinberger (who wrote Open Claw)
 - List out the top 5 rival articles
 - Find some decebt Youtube videos that explain how coding agents work
+- add repliy and remove poolside
