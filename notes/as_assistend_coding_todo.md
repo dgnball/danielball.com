@@ -3,4 +3,3 @@
 - Mention open claw
 - Mention codex model
 - Remove m dashes
-- add replit and remove poolside
