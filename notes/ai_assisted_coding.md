@@ -10,7 +10,30 @@ for anyone trying to navigate this space without the hype.
 - TOC
 {:toc}
 
+## Resources or TLDR
+
+Don’t want to read this or don’t have the time. Here’s a list of resources you might find generally useful or
+interesting:
+
+- [Awsome list-style list of AI coding tools](https://github.com/sourcegraph/awesome-code-ai)
+- [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
+- [Codex docs](https://developers.openai.com/codex)
+- [Gemini Code Assist Docs](https://developers.google.com/gemini-code-assist/docs/overview)
+- [Cursor Docs](https://cursor.com/docs)
+- [8 best AI coding tools for developers (n8n blog)](https://blog.n8n.io/best-ai-for-coding/)
+- [ChatGPTCoding on Reddit](https://www.reddit.com/r/ChatGPTCoding/)
+- [Vibecoding on Reddit](https://www.reddit.com/r/vibecoding/)
+- [My LLM coding workflow going into 2026 (Addy Osmani's blog)](https://addyosmani.com/blog/ai-coding-workflow/)
+- [Andrej Karpathy's homepage (the person who came up with "Vibecoding)](https://karpathy.ai/)
+- [Beyond Vibe Coding book](https://beyond.addy.ie/)
+- [Mind the gap: Closing the AI trust gap for developers (StackOverflow blog)](https://stackoverflow.blog/2026/02/18/closing-the-developer-ai-trust-gap/)
+- [Vibe coding - Wikipedia](https://en.wikipedia.org/wiki/Vibe_coding)
+- [Homepage for Peter Steinberger (the man behind OpenClaw)](https://steipete.me/)
+- [MCP docs](https://modelcontextprotocol.io/docs/getting-started/intro)
+
 ## AI Coding Glossary
+
+See also [AI Glossary](./ai_glossary)
 
 - **Agentic AI** — An AI system that doesn't just respond to a single prompt but takes sequences of actions
   autonomously: running commands, reading files, making decisions and iterating toward a goal with minimal human
@@ -28,58 +51,26 @@ for anyone trying to navigate this space without the hype.
   from simple symbol lookup (early IDEs) to ML-ranked suggestions (PyCharm) to full-line and multi-line generation
   (GitHub Copilot).
 
-- **Copilot** — [GitHub Copilot](https://github.com/features/copilot), a widely adopted AI code completion tool built on
-  OpenAI's Codex model. Sits inside your editor and suggests whole lines or functions in real time as you type, trained
-  primarily on public GitHub repositories.
-
-- **Embedding** — A numerical representation of code or text as a vector in high-dimensional space, used by AI systems
-  to measure semantic similarity. Allows a model to understand that `fetch_user` and `get_user` are likely related
-  concepts even though the strings are different.
-
-- **Fine-tuning** — Taking a general-purpose language model and training it further on a specific dataset — a particular
-  codebase, language or domain — so it becomes more accurate and idiomatic for that context.
-
-- **Hallucination** — When an AI model confidently generates something that is plausible-looking but factually wrong: a
-  method that doesn't exist, an API with the wrong signature, a library that was never published. A significant risk in
-  AI-assisted coding that makes verification essential.
-
-- **Inference** — The process of running a trained AI model to generate output. Distinct from training. When you ask
-  Claude Code to refactor a function, you're triggering inference against a model that was trained earlier.
-
-- **LLM (Large Language Model)** — The class of AI model underpinning modern coding assistants. Trained on vast text and
-  code corpora to predict likely next tokens, LLMs develop emergent abilities to reason, explain, translate between
-  languages and generate syntactically and semantically coherent code.
-
-- **MCP (Model Context Protocol)** — An open standard for connecting AI agents to external data sources and tools. With
-  MCP, a coding assistant isn't limited to your local files — it can be connected to Jira, Slack, Google Drive, Figma,
-  or any custom internal tooling that exposes an MCP server. Increasingly supported across Claude Code, Cursor, Windsurf
-  and other agentic tools.
+- **[MCP (Model Context Protocol)](https://modelcontextprotocol.io/docs/getting-started/intro)** — An open standard for
+  connecting AI agents to external data sources and tools. With MCP, a coding assistant isn't limited to your local
+  files — it can be connected to Jira, Slack, Google Drive, Figma, or any custom internal tooling that exposes an MCP
+  server. Increasingly supported across Claude Code, Cursor, Windsurf and other agentic tools.
 
 - **Prompt Engineering** — The practice of carefully crafting inputs to an AI model to get better outputs. In coding
   contexts this might mean specifying the language, describing constraints, providing examples of desired style or
   including relevant error messages to steer the model toward a useful response.
-
-- **RAG (Retrieval-Augmented Generation)** — A technique where an AI system retrieves relevant documents or code
-  snippets from an external source (like your codebase or documentation) and injects them into the prompt before
-  generating a response, allowing the model to reason over information it wasn't trained on.
 
 - **Static Analysis** — Examining code without executing it, to infer types, detect errors or suggest completions. The
   basis of pre-AI tools like [Rope](https://github.com/python-rope/rope) and
   [Jedi](https://jedi.readthedocs.io/en/latest/). Fast and deterministic, but limited by what can be known without
   running the program.
 
-- **Token** — The basic unit an LLM processes: roughly a word, part of a word or a symbol. Models have token limits for
-  both input and output. Code tends to be token-dense because of punctuation, indentation and repeated keywords.
-
-- **Type Inference** — Automatically deducing the type of a variable or expression without explicit annotations.
-  Critical to good Python autocompletion since Python doesn't require type declarations, though PEP 484 type hints have
-  made this significantly more tractable.
-
-- **Vibe Coding** — A term coined by Andrej Karpathy in early 2025 describing a style of development where the
-  programmer describes intent in natural language and largely accepts whatever the AI generates, iterating through
-  prompts rather than writing code directly. Prioritises speed and outcome over deep understanding of the
-  implementation. Powerful for prototyping; risky for production systems where the developer may not fully understand
-  what they've shipped.
+- **Vibe Coding** — A term coined by
+  [Andrej Karpathy in early 2025](https://x.com/karpathy/status/1886192184808149383?lang=en) describing a style of
+  development where the programmer describes intent in natural language and largely accepts whatever the AI generates,
+  iterating through prompts rather than writing code directly. Prioritises speed and outcome over deep understanding of
+  the implementation. Powerful for prototyping; risky for production systems where the developer may not fully
+  understand what they've shipped.
 
 - **Zero-shot / Few-shot Prompting** — Zero-shot means asking an AI to perform a task with no examples, relying purely
   on its training. Few-shot means providing one or more examples in the prompt to demonstrate the desired pattern or
@@ -89,9 +80,8 @@ for anyone trying to navigate this space without the hype.
 ## The Evolution of Code Assistance
 
 **Paper Manuals & Reference Books** The original developer companion. You'd thumb through language references, API docs,
-or O'Reilly books to find the right method signature or understand a concept. Entirely passive — the knowledge sat on
-the shelf until you went looking. Slow, but surprisingly thorough if you had the right book. Many developers kept
-dog-eared copies of K&R C or the Python Cookbook within arm's reach.
+or O'Reilly books to find the right method signature or understand a concept. Slow, but surprisingly thorough if you had
+the right book. Many developers kept dog-eared copies of K&R C or the Python Cookbook within arm's reach.
 
 **Online IDE Documentation & Language References** As the web matured, documentation moved online —
 [docs.python.org](https://docs.python.org), [MSDN](https://learn.microsoft.com/en-us/),
@@ -100,60 +90,48 @@ pulled from docstrings or type stubs. Still reactive, but dramatically faster. T
 follow a rabbit warren of related APIs in minutes rather than flicking through an index.
 
 **Copying from Stack Overflow, GitHub & Open Source** Arguably the most impactful "tool" of the mid-2000s to 2010s
-developer toolkit — and it wasn't just [Stack Overflow](https://stackoverflow.com). Developers were simultaneously
-mining [GitHub](https://github.com), reading through open source repositories on [SourceForge](https://sourceforge.net)
-and later [GitLab](https://gitlab.com) and lifting patterns from permissively licensed projects. The cognitive model was
-matching natural language intent to human-curated solutions or real-world production code. Stack Overflow gave you
-explained snippets; GitHub gave you full working implementations you could study in context. It worked remarkably well
-for common problems but broke down for anything domain-specific, requiring you to adapt boilerplate to your situation —
-often the fiddly part. It also introduced a generation of developers to cargo-cult programming: paste first, understand
-later. Crucially, this vast public corpus — millions of answered questions, billions of lines of openly licensed code —
-became the training substrate that made AI coding tools possible. Without Stack Overflow's decade of annotated
-problem-solution pairs, and without the open source community's collective output on GitHub, there would be nothing
-substantial enough for models to learn the shape of good code from.
+developer toolkit. Developers were simultaneously mining [GitHub](https://github.com) and reading through open source
+repositories on [Stack Overflow](https://stackoverflow.com) The cognitive model was matching natural language intent to
+human-curated solutions or real-world production code. Stack Overflow gave you explained snippets and GitHub gave you
+full working implementations you could study in context. Without Stack Overflow's decade of annotated problem-solution
+pairs and without the open source community's collective output on GitHub, there would be nothing substantial enough for
+models to learn the shape of good code from.
 
 **Early Code Completion (2000s IDEs)** Tools like early [Eclipse](https://eclipseide.org),
 [Visual Studio](https://visualstudio.microsoft.com) and [IntelliJ](https://www.jetbrains.com/idea/) began offering basic
-autocomplete — typically triggered by typing a dot after an object. The engine was largely syntax-aware symbol lookup:
-parse the file, infer the type, offer members from that class. It was often brittle — break the type chain and
-suggestions vanished. Useful for reducing typos in method names but rarely capable of suggesting whole patterns or
-intent.
+autocomplete, typically triggered by typing a dot after an object. The engine was largely syntax-aware symbol lookup:
+parse the file, infer the type, offer members from that class. Useful for reducing typos in method names but rarely
+capable of suggesting whole patterns or intent.
 
-**Python Autocompletion Before AI — Jedi & Rope** Python's dynamic typing made static autocompletion genuinely hard.
-Early tools like [Rope](https://github.com/python-rope/rope) and later [Jedi](https://jedi.readthedocs.io/en/latest/)
-tackled this with deep static analysis: they'd trace variable assignments, follow imports, infer types through call
-chains and build an in-memory symbol index. Jedi in particular became the backbone of completion in editors like
+**Autocompletion Before AI — Jedi & Rope** Python's dynamic typing made static autocompletion genuinely hard. Early
+tools like [Rope](https://github.com/python-rope/rope) and later [Jedi](https://jedi.readthedocs.io/en/latest/) tackled
+this with deep static analysis: they'd trace variable assignments, follow imports, infer types through call chains and
+build an in-memory symbol index. Jedi in particular became the backbone of completion in editors like
 [Vim](https://www.vim.org), [Emacs](https://www.gnu.org/software/emacs/), [Atom](https://github.com/atom/atom) and
 [VS Code](https://code.visualstudio.com). It handled decorators, `*args/**kwargs` and even some basic type inference
-without annotations. Its big limitation was dynamic runtime behaviour — if a type was only knowable at execution time,
-Jedi had to guess or give up.
+without annotations.
 
-**PyCharm's Autocompletion — Basic AI & Deep Analysis** [PyCharm](https://www.jetbrains.com/pycharm/) pushed Python
-completion significantly further by combining Jedi-style static analysis with its own proprietary type inference engine
-and, more recently, a locally-run ML model (introduced around 2019–2020 as
-"[ML-assisted completion](https://plugins.jetbrains.com/plugin/14823-full-line-code-completion)"). This model was
-trained on large Python corpora to rank completion candidates by likelihood given surrounding context — so it wouldn't
-just offer every valid method, it would surface the one you probably meant. It also integrates full type checking via
-its own type system, understanding PEP 484 annotations deeply. The result felt almost anticipatory compared to pure
-static tools, though it still operated at the token/symbol level rather than understanding intent.
+**Autocompletion — Using AI** The landscape shifted significantly when GitHub launched
+[GitHub Copilot](https://github.com/features/copilot) in 2021, generating entire functions and suggesting multi-line
+logic from natural language comments rather than simply ranking symbol candidates. This felt less like autocomplete and
+more like pair programming. The impact was immediate. Others followed, marking a broad industry shift from smarter
+symbol ranking toward tools that could genuinely reason about developer intent.
 
 **Copying and Pasting into ChatGPT (Pre-Agentic)** When [ChatGPT](https://chatgpt.com) launched publicly in late 2022 it
 changed developer workflows overnight, even in its most primitive form. The pattern was manual but transformative: copy
 a function or error message, paste it into the chat window, describe what you wanted and get back working code with an
-explanation. For the first time you could have a conversation about your code — ask follow-up questions, request a
+explanation. For the first time you could have a conversation about your code, ask follow-up questions, request a
 refactor or say "that didn't work, here's the error." The model had no access to your wider codebase, no ability to run
 code and no memory between sessions, so you were constantly ferrying context back and forth by hand. Despite the
-friction it was a dramatic leap over Stack Overflow for anything non-trivial, because the response was tailored to your
-exact situation rather than someone else's similar-but-different problem. Developers quickly learned the art of prompt
-crafting — how much context to include, how to describe the desired output, when to paste the full traceback versus a
-summary.
+friction, it was a dramatic leap over Stack Overflow for anything non-trivial, because the response was tailored to your
+exact situation rather than someone else's similar-but-different problem.
 
-**Claude Code** [Claude Code](https://claude.ai/code) operates at a fundamentally different level. Rather than
+**Agentic tools** like [Claude Code](https://claude.ai/code) operate at a fundamentally different level. Rather than
 completing tokens or ranking symbols, it understands intent across an entire codebase. You describe what you want in
 plain language, and it can generate, refactor, debug and explain across multiple files simultaneously. It holds context
-about your architecture, naming conventions and patterns — not just the open file. It reasons about _why_ code works,
-not just _what_ comes next. Used via the CLI, it can run commands, read outputs and iterate — behaving less like a tool
-and more like a junior engineer pair-programming alongside you.
+about your architecture, naming conventions and patterns. It reasons about _why_ code works, not just _what_ comes next.
+Used via the CLI, it can run commands, read outputs and iterate — behaving less like a tool and more like a junior
+engineer pair-programming alongside you.
 
 **The Near Future — Agents with Persistent Context** The next step is likely persistent, project-aware agents that
 maintain a living model of your codebase between sessions — knowing not just the current state but _why_ decisions were
@@ -430,6 +408,10 @@ all of it possible.
 These are the underlying models purpose-built or heavily optimised for code generation. Most are accessible via API and
 can power your own tooling.
 
+- [Ollama — run models locally](https://ollama.com/)
+- [SWE-bench — coding benchmark](https://www.swebench.com/)
+- [LiveCodeBench](https://livecodebench.github.io/)
+
 | Model                                                       | Country of origin | Description                                                                                                                                                                                                                                                                                   |
 | ----------------------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Claude Sonnet 4](https://docs.anthropic.com)               | USA               | Top SWE-bench scores (>72% Verified). 200K context window. Best-in-class for agentic coding, refactoring and multi-file reasoning. Powers Claude Code, Cursor, Windsurf and Lovable. Input: **$3** / Output: **$15** per 1M tokens.                                                           |
@@ -494,12 +476,12 @@ It's worth distinguishing between linters and security analysers — they're not
 **Ruff** is a fast Python linter and formatter. It catches style issues, unused imports, obvious bugs. It's not a
 security tool.
 
-**Bandit** analyses Python code for common security issues — hardcoded credentials, use of unsafe functions, SQL
-injection patterns. This is what you want running on generated code.
+[**Bandit**](https://bandit.readthedocs.io/) analyses Python code for common security issues — hardcoded credentials,
+use of unsafe functions, SQL injection patterns. This is what you want running on generated code.
 
-**Semgrep** is more powerful and language-agnostic. It uses rules to detect patterns across a codebase and has a large
-library of security-focused rules. For JavaScript, ESLint with the `eslint-plugin-security` plugin covers similar
-ground.
+[**Semgrep**](https://semgrep.dev/docs/) is more powerful and language-agnostic. It uses rules to detect patterns across
+a codebase and has a large library of security-focused rules. For JavaScript, ESLint with the `eslint-plugin-security`
+plugin covers similar ground.
 
 All of these can be run as pre-commit hooks or integrated into a CI pipeline via GitHub Actions, so they run
 automatically on every code change without requiring manual intervention.
@@ -574,15 +556,3 @@ production system accumulates decisions nobody understands. When something break
 
 A simple heuristic: use these tools freely for anything throwaway or exploratory. Apply more discipline — better
 prompts, more review, more understanding — as the code gets closer to production.
-
-## Resources
-
-- [Awsome list-style list of AI coding tools](https://github.com/sourcegraph/awesome-code-ai)
-- [Andrej Karpathy — vibe coding post](https://x.com/karpathy/status/1886192184808149383?lang=en)
-- [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
-- [DeepSeek technical report](https://arxiv.org/abs/2501.12948)
-- [Bandit — Python security linter](https://bandit.readthedocs.io/)
-- [Semgrep documentation](https://semgrep.dev/docs/)
-- [Ollama — run models locally](https://ollama.com/)
-- [SWE-bench — coding benchmark](https://www.swebench.com/)
-- [LiveCodeBench](https://livecodebench.github.io/)
