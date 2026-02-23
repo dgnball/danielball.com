@@ -10,7 +10,7 @@ AI.
 
 <img src="/assets/images/notes/ai_hierarchy.png">
 
-______________________________________________________________________
+---
 
 ## AI
 
@@ -39,7 +39,7 @@ assume one of three things:
 This assumption can be wrong, but if the label **AI** is applied to something without further explanation, it gives you
 a starting point to ask what is meant by "AI" when presented with a claim of its usage.
 
-______________________________________________________________________
+---
 
 ## Large Language Model (LLM)
 
@@ -91,14 +91,14 @@ See [Hugging Face Models](https://huggingface.co/models) for a canonical listing
 | Mistral | Models from Mistral.                                                                                 | 141 billion (Mixtral 8x22B) |
 | Gemma   | Smaller models from Google built similarly to Gemini. Notable for being small enough to run at home. | 7 Billion                   |
 
-______________________________________________________________________
+---
 
 ## Hugging Face
 
 Hugging Face is a website, a bit like GitHub, that hosts LLM models, tools to build LLM models, and tools to make use of
 LLM models. Everything is free and community maintained.
 
-______________________________________________________________________
+---
 
 ## LLM Apps
 
@@ -109,7 +109,7 @@ You can also interact with LLMs via an API. This allows you to build whatever yo
 build an **AI agent**. This is an application that performs intelligent tasks on your behalf, such as looking up train
 times or today's weather.
 
-______________________________________________________________________
+---
 
 ## AI Agents
 
@@ -121,7 +121,7 @@ For example, if you ask, “What’s the next train to Winchester?”, an agent 
 API, parse the response and reply conversationally. Frameworks like LangChain make this possible by letting you chain
 together the model with external tools, memory and logic.
 
-______________________________________________________________________
+---
 
 ## Transformer
 
@@ -132,7 +132,7 @@ what you’re saying, understand context and generate more coherent, relevant re
 Transformers work by assigning different weights to different words, so the model knows what to pay attention to. That’s
 why it can understand “He said she left” and know who "she" is.
 
-______________________________________________________________________
+---
 
 ## Prompt Engineering
 
@@ -144,17 +144,17 @@ Think of it like briefing a new intern. The clearer and more specific you are ab
 result. "Act like a friendly tutor and explain this in simple terms" is a prompt. "Write a formal summary using bullet
 points" is another. Being vague gets you vague.
 
-______________________________________________________________________
+---
 
 ## Context Window
 
-This is the model’s short-term memory, or the amount of information it can "see" at one time. It’s measured in *tokens*
+This is the model’s short-term memory, or the amount of information it can "see" at one time. It’s measured in _tokens_
 (more on that below), and once you hit the limit, it starts forgetting earlier parts of the conversation.
 
 For example, if the context window is 8,000 tokens (roughly 6,000 words), anything before that gets trimmed or dropped.
 That’s why long chats might make it lose the plot unless you keep reminding it what matters.
 
-______________________________________________________________________
+---
 
 ## Tokens
 
@@ -165,7 +165,7 @@ count words, they count tokens.
 This matters because most AI tools charge based on token usage, not time or number of questions. So a long, detailed
 prompt or a massive output will cost more in tokens. It's like a pay-per-word messaging service.
 
-______________________________________________________________________
+---
 
 ## Fine-tuning
 
@@ -175,7 +175,7 @@ of domains are **legal language**, **medical reports** or **your company's inter
 Instead of starting from scratch, you build on the model’s general knowledge by feeding it new, specific examples. It’s
 a more permanent change than just giving it a long prompt or extra documents.
 
-______________________________________________________________________
+---
 
 ## RAG (Retrieval-Augmented Generation)
 
@@ -185,7 +185,7 @@ retrieves relevant content from a trusted source (like your SharePoint, Notion, 
 This helps keep answers grounded in real facts. It's like giving the model a chance to "Google" your knowledge base
 first, then write the answer. It massively reduces the risk of hallucination.
 
-______________________________________________________________________
+---
 
 ## Hallucination
 
@@ -195,7 +195,7 @@ It’s not malicious, the model is just trying to complete the pattern of langua
 That’s why you always need to fact-check anything important (like an AI-generated glossary on AI terms 😂). LLMs don't
 know what's real. They just know what sounds right. Treat it like a very persuasive friend who occasionally bluffs.
 
-______________________________________________________________________
+---
 
 ## Temperature
 
@@ -208,7 +208,7 @@ to be selected. A higher temperature increases a model's likelihood of selecting
 If you want safe, consistent answers (like summarising policy documents), go low. If you want it to brainstorm or write
 poetry, go higher. It’s like turning up the imagination dial.
 
-______________________________________________________________________
+---
 
 ## Zero-shot Learning
 
@@ -219,7 +219,7 @@ it’s seen thousands of similar examples.
 It’s like asking someone to write a press release for the first time. They might not have training, but they’ve read
 enough to figure it out.
 
-______________________________________________________________________
+---
 
 ## Chain-of-Thought
 
@@ -230,7 +230,7 @@ By breaking a problem into smaller steps, the model is more accurate and transpa
 by step” or “First explain the logic, then give the answer.” Just like in school, showing your reasoning helps prevent
 silly mistakes.
 
-______________________________________________________________________
+---
 
 ## Embeddings
 
@@ -242,7 +242,7 @@ For example, “cat” and “kitten” will be closer in embedding space than �
 works, so when you search “how do I fix login issues,” it can also find documents titled “authentication problems.” It’s
 the backbone of search, clustering and classification in AI systems.
 
-______________________________________________________________________
+---
 
 ## Vector Database
 

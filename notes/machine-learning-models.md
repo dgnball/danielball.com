@@ -75,7 +75,7 @@ information. These models were usually small, focused and trained on structured 
 
 Here are the major types of ML model:
 
-### 1. **Linear Models** – *The Straight-Line Thinker*
+### 1. **Linear Models** – _The Straight-Line Thinker_
 
 <img src="/assets/images/notes/linear.png" alt="Linear Model" style="width: 300px;">
 
@@ -87,9 +87,9 @@ See [W3Schools Python explainer on Linear Regression](https://www.w3schools.com/
 - **Strength**: Simple, fast, easy to interpret
 - **Weakness**: Can’t handle complex relationships
 
-______________________________________________________________________
+---
 
-### 2. **Decision Trees** – *The Flowchart Brain*
+### 2. **Decision Trees** – _The Flowchart Brain_
 
 <img src="/assets/images/notes/decision_tree.png" alt="Decision Tree" style="width: 300px;">
 
@@ -101,9 +101,9 @@ See [W3Schools Python explainer on Decision Tree](https://www.w3schools.com/pyth
 - **Strength**: Easy to understand and explain
 - **Weakness**: Can overfit and make decisions that don’t generalise
 
-______________________________________________________________________
+---
 
-### 3. **Random Forests** – *The Crowd of Flowcharts*
+### 3. **Random Forests** – _The Crowd of Flowcharts_
 
 <img src="/assets/images/notes/random_forest.png" alt="Random Forest" style="width: 300px;">
 
@@ -115,9 +115,9 @@ Builds many decision trees and combines their answers to improve accuracy.
 - **Strength**: More accurate and robust
 - **Weakness**: Harder to explain decisions
 
-______________________________________________________________________
+---
 
-### 4. **Clustering Models** – *The Natural Group Finder*
+### 4. **Clustering Models** – _The Natural Group Finder_
 
 <img src="/assets/images/notes/clustering.png" alt="Clustering Models" style="width: 300px;">
 
@@ -131,9 +131,9 @@ Groups similar things together without knowing the labels ahead of time.
 - **Strength**: Great for discovery
 - **Weakness**: Can be sensitive to noise or unclear groups
 
-______________________________________________________________________
+---
 
-### 5. **Naive Bayes** – *The Probability Calculator*
+### 5. **Naive Bayes** – _The Probability Calculator_
 
 <img src="/assets/images/notes/bayes.png" alt="Bayes" style="width: 300px;">
 
@@ -145,9 +145,9 @@ See [python example at Kaggle](https://www.kaggle.com/code/prashant111/naive-bay
 - **Strength**: Very fast
 - **Weakness**: Can oversimplify complex problems
 
-______________________________________________________________________
+---
 
-### 6. **Support Vector Machines (SVMs)** – *The Border Drawer*
+### 6. **Support Vector Machines (SVMs)** – _The Border Drawer_
 
 <img src="/assets/images/notes/svm.png" alt="SVM" style="width: 300px;">
 
@@ -161,9 +161,9 @@ for a Python example.
 - **Strength**: Precise with clean data
 - **Weakness**: Not great with lots of messy or overlapping data
 
-______________________________________________________________________
+---
 
-### 7. **Neural Networks** – *The Brain-Inspired Pattern Learner*
+### 7. **Neural Networks** – _The Brain-Inspired Pattern Learner_
 
 <img src="/assets/images/notes/neural.png" alt="SVM" style="width: 300px;">
 
@@ -176,9 +176,9 @@ See [Real Python article on how to build a Neural network in Python](https://rea
 - **Strength**: Can learn complex relationships
 - **Weakness**: Need careful tuning, can be unstable
 
-______________________________________________________________________
+---
 
-### 8. **Deep Learning** – *The Advanced Pattern Master*
+### 8. **Deep Learning** – _The Advanced Pattern Master_
 
 <img src="/assets/images/notes/deep.png" alt="Deep Learning" style="width: 200px;">
 
@@ -230,7 +230,7 @@ need one). It lists out some ML-type tasks and the sort of model you might want 
 ✅ Can run locally or in the browser\
 ❌ Not great for messy or unstructured input
 
-> 💡 *If the data fits in a spreadsheet, you probably don’t need a neural net.*
+> 💡 _If the data fits in a spreadsheet, you probably don’t need a neural net._
 
 ### 📄 If your input is text and the output is a simple label:
 
@@ -250,7 +250,7 @@ need one). It lists out some ML-type tasks and the sort of model you might want 
 ✅ More accurate than old-school methods\
 ❌ Doesn’t generate language, just classifies
 
-> 💡 *You don’t need ChatGPT to decide if a tweet is angry or not.*
+> 💡 _You don’t need ChatGPT to decide if a tweet is angry or not._
 
 ### 🖼 If you're working with images or video:
 
@@ -314,7 +314,7 @@ need one). It lists out some ML-type tasks and the sort of model you might want 
 ❌ May hallucinate or go off-topic\
 ❌ Overkill for small classification tasks
 
-> 💡 *Use LLMs for jobs that involve language reasoning.*
+> 💡 _Use LLMs for jobs that involve language reasoning._
 
 ### Decision Table: What Model Should I Use?
 
@@ -395,7 +395,7 @@ You could build:
 ## How to access and run complex Models
 
 If you want to run or access an LLM or other complex model acquired from Hugging Face or developed locally, there are
-several options. Each has tradeoffs around *power, cost,* and *privacy*.
+several options. Each has tradeoffs around _power, cost,_ and _privacy_.
 
 ### 1. **OpenRouter**
 
@@ -498,7 +498,7 @@ Large Language Models are incredibly capable, they can summarise, classify, gene
 that power, it's no surprise that **many developers are now reaching for LLMs as the default tool for every ML
 problem**.
 
-But just because you *can* use an LLM doesn’t mean you *should*.
+But just because you _can_ use an LLM doesn’t mean you _should_.
 
 ### 🚀 Why Everyone’s Using LLMs for Everything:
 
@@ -508,7 +508,7 @@ But just because you *can* use an LLM doesn’t mean you *should*.
 - **One tool for many tasks** You can classify sentiment, summarize articles, translate languages and chat, all from the
   same API.
 
-- **Faster prototyping** Especially for startups and small teams, LLMs let you get a working product *today*.
+- **Faster prototyping** Especially for startups and small teams, LLMs let you get a working product _today_.
 
 - **Wide availability** With tools like OpenAI, Claude, Gemini and OpenRouter, LLMs are just an API key away.
 
@@ -563,12 +563,12 @@ often without questioning if it’s the best tool for the job.
 
 ### ✅ When It’s Fine to Use LLMs for Traditional Tasks
 
-To be clear, this isn’t a blanket indictment. Sometimes, using an LLM **is totally appropriate**, even if it *could* be
+To be clear, this isn’t a blanket indictment. Sometimes, using an LLM **is totally appropriate**, even if it _could_ be
 done with classical ML.
 
 Examples:
 
-- You’re in a rush and need something working *now*
+- You’re in a rush and need something working _now_
 - You don’t have labeled data
 - The job is small, infrequent or low-volume
 - You want human-like flexibility (e.g. parsing vague or inconsistent text)
@@ -577,7 +577,7 @@ Examples:
 
 ### 🔄 Consider a Hybrid Approach
 
-Use LLMs for what they’re great at, *language understanding, generation and reasoning*. Use traditional models when you
+Use LLMs for what they’re great at, _language understanding, generation and reasoning_. Use traditional models when you
 want:
 
 - Speed

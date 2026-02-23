@@ -6,7 +6,9 @@ title: AI Assisted Coding
 This is my attempt to make sense of the AI-assisted coding landscape. I wrote this to educate myself and as a reference
 for anyone trying to navigate this space without the hype.
 
-- TOC {:toc}
+<!-- prettier-ignore -->
+- TOC
+{:toc}
 
 ## AI Coding Glossary
 
@@ -149,12 +151,12 @@ summary.
 **Claude Code** [Claude Code](https://claude.ai/code) operates at a fundamentally different level. Rather than
 completing tokens or ranking symbols, it understands intent across an entire codebase. You describe what you want in
 plain language, and it can generate, refactor, debug and explain across multiple files simultaneously. It holds context
-about your architecture, naming conventions and patterns — not just the open file. It reasons about *why* code works,
-not just *what* comes next. Used via the CLI, it can run commands, read outputs and iterate — behaving less like a tool
+about your architecture, naming conventions and patterns — not just the open file. It reasons about _why_ code works,
+not just _what_ comes next. Used via the CLI, it can run commands, read outputs and iterate — behaving less like a tool
 and more like a junior engineer pair-programming alongside you.
 
 **The Near Future — Agents with Persistent Context** The next step is likely persistent, project-aware agents that
-maintain a living model of your codebase between sessions — knowing not just the current state but *why* decisions were
+maintain a living model of your codebase between sessions — knowing not just the current state but _why_ decisions were
 made, tracking tech debt and proactively surfacing problems before you hit them. Think less "answer my question" and
 more "autonomous collaborator" that files its own PRs, writes tests as code changes and flags when a new feature
 conflicts with an architectural decision made six months ago.
@@ -236,7 +238,7 @@ potentially made changes) on the wrong approach.
 
 ### Planning as a First-Class Activity
 
-One of the biggest mindset shifts in working well with AI coding assistants is learning to plan *before* you prompt.
+One of the biggest mindset shifts in working well with AI coding assistants is learning to plan _before_ you prompt.
 This feels counterintuitive — wasn't the whole point to move faster? — but unplanned sessions are where the real time
 gets lost.
 
@@ -296,8 +298,8 @@ autocomplete engines.
 ### How Agentic Tools Work
 
 The engine underneath an agentic coding assistant is a large language model (an LLM) equipped with a set of tools it can
-call. When you give Claude Code a task, it doesn't just generate text — it generates *decisions about what actions to
-take*. These might include reading a file, running a shell command, searching the codebase for a pattern, fetching
+call. When you give Claude Code a task, it doesn't just generate text — it generates _decisions about what actions to
+take_. These might include reading a file, running a shell command, searching the codebase for a pattern, fetching
 documentation from the web or editing a file. Each action produces a result that is fed back into the model's context,
 informing the next decision.
 
@@ -314,7 +316,7 @@ root at the start of every session, shaping every subsequent decision the agent 
 
 ### Lovable: Generation, Not Assistance
 
-Lovable occupies an interesting and distinct position on this spectrum. Where Claude Code is designed to work *within*
+Lovable occupies an interesting and distinct position on this spectrum. Where Claude Code is designed to work _within_
 your existing codebase — editing, debugging, extending — Lovable is primarily a **generative** tool aimed at building
 applications from scratch through conversation. You describe what you want, and it produces a full-stack application:
 component structure, styling, data model and deployment configuration.
@@ -335,8 +337,8 @@ existing subscription directly.
 
 This matters for developers who want the agent architecture — the reasoning loop, the tool access, the file editing —
 without being tethered to a single vendor's pricing or model quality decisions. OpenCode's approach reflects a broader
-trend in the tooling ecosystem: separating the *agent infrastructure* (how the loop works, how tools are invoked, how
-results are processed) from the *model* (which LLM does the reasoning). The two concerns are increasingly being treated
+trend in the tooling ecosystem: separating the _agent infrastructure_ (how the loop works, how tools are invoked, how
+results are processed) from the _model_ (which LLM does the reasoning). The two concerns are increasingly being treated
 as independent, and with over 100,000 GitHub stars and 2.5 million monthly developers, OpenCode is clearly meeting a
 real demand for that flexibility.
 
@@ -362,7 +364,7 @@ the maximum amount of text the model can process in a single pass. For agentic t
 is one of the core engineering challenges.
 
 A large repository can contain millions of tokens worth of code. The model can't read all of it at once. Agentic tools
-therefore need strategies for deciding *what to include* in the context at any moment. Common approaches include
+therefore need strategies for deciding _what to include_ in the context at any moment. Common approaches include
 semantic search (finding the most relevant files by embedding similarity), language server protocol (LSP) integration to
 understand code structure and relationships and explicit user-directed context attachment (the `@filename` pattern).
 OpenCode automatically loads the right LSPs for the LLM, which is one example of how tools are increasingly automating
@@ -440,7 +442,7 @@ can power your own tooling.
 | [Qwen3-Coder 480B](https://huggingface.co/Qwen)             | China             | Massive MoE model. 69.6% on SWE-bench Verified — the highest open-source score to date. Supports 256K+ context and agentic workflows. A genuine open-source challenger to Claude and GPT. Via API: pricing varies by provider; free to self-host.                                             |
 | [Devstral / Codestral (Mistral family)](https://mistral.ai) | France            | Devstral Medium is an "agentic coding" model designed for multi-step code planning and automated review. Part of Mistral's growing code-focused family. Open-source version available (Apache 2.0). Devstral via API: **$0.50** / **$1.50** per 1M tokens; open weights free.                 |
 
-*Prices correct as of February 2026. The AI tooling market moves fast — always check vendor pages for the latest.*
+_Prices correct as of February 2026. The AI tooling market moves fast — always check vendor pages for the latest._
 
 ### Chinese models: a separate conversation
 
