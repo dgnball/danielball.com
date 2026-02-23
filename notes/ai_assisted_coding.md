@@ -11,7 +11,7 @@ for anyone trying to navigate this space without the hype.
 ## AI Coding Glossary
 
 - **Agentic AI** — An AI system that doesn't just respond to a single prompt but takes sequences of actions
-  autonomously: running commands, reading files, making decisions, and iterating toward a goal with minimal human
+  autonomously: running commands, reading files, making decisions and iterating toward a goal with minimal human
   intervention between steps.
 
 - **Cargo-Cult Programming** — Writing code by copying patterns or snippets without understanding why they work, hoping
@@ -22,7 +22,7 @@ for anyone trying to navigate this space without the hype.
   once when generating a response. Larger context windows allow tools like Claude Code to reason across more files
   simultaneously. Measured in tokens.
 
-- **Code Completion** — A feature in IDEs that suggests the next token, method, or block of code as you type, ranging
+- **Code Completion** — A feature in IDEs that suggests the next token, method or block of code as you type, ranging
   from simple symbol lookup (early IDEs) to ML-ranked suggestions (PyCharm) to full-line and multi-line generation
   (GitHub Copilot).
 
@@ -35,7 +35,7 @@ for anyone trying to navigate this space without the hype.
   concepts even though the strings are different.
 
 - **Fine-tuning** — Taking a general-purpose language model and training it further on a specific dataset — a particular
-  codebase, language, or domain — so it becomes more accurate and idiomatic for that context.
+  codebase, language or domain — so it becomes more accurate and idiomatic for that context.
 
 - **Hallucination** — When an AI model confidently generates something that is plausible-looking but factually wrong: a
   method that doesn't exist, an API with the wrong signature, a library that was never published. A significant risk in
@@ -46,28 +46,28 @@ for anyone trying to navigate this space without the hype.
 
 - **LLM (Large Language Model)** — The class of AI model underpinning modern coding assistants. Trained on vast text and
   code corpora to predict likely next tokens, LLMs develop emergent abilities to reason, explain, translate between
-  languages, and generate syntactically and semantically coherent code.
+  languages and generate syntactically and semantically coherent code.
 
 - **MCP (Model Context Protocol)** — An open standard for connecting AI agents to external data sources and tools. With
   MCP, a coding assistant isn't limited to your local files — it can be connected to Jira, Slack, Google Drive, Figma,
-  or any custom internal tooling that exposes an MCP server. Increasingly supported across Claude Code, Cursor,
-  Windsurf, and other agentic tools.
+  or any custom internal tooling that exposes an MCP server. Increasingly supported across Claude Code, Cursor, Windsurf
+  and other agentic tools.
 
 - **Prompt Engineering** — The practice of carefully crafting inputs to an AI model to get better outputs. In coding
-  contexts this might mean specifying the language, describing constraints, providing examples of desired style, or
+  contexts this might mean specifying the language, describing constraints, providing examples of desired style or
   including relevant error messages to steer the model toward a useful response.
 
 - **RAG (Retrieval-Augmented Generation)** — A technique where an AI system retrieves relevant documents or code
   snippets from an external source (like your codebase or documentation) and injects them into the prompt before
   generating a response, allowing the model to reason over information it wasn't trained on.
 
-- **Static Analysis** — Examining code without executing it, to infer types, detect errors, or suggest completions. The
+- **Static Analysis** — Examining code without executing it, to infer types, detect errors or suggest completions. The
   basis of pre-AI tools like [Rope](https://github.com/python-rope/rope) and
   [Jedi](https://jedi.readthedocs.io/en/latest/). Fast and deterministic, but limited by what can be known without
   running the program.
 
-- **Token** — The basic unit an LLM processes: roughly a word, part of a word, or a symbol. Models have token limits for
-  both input and output. Code tends to be token-dense because of punctuation, indentation, and repeated keywords.
+- **Token** — The basic unit an LLM processes: roughly a word, part of a word or a symbol. Models have token limits for
+  both input and output. Code tends to be token-dense because of punctuation, indentation and repeated keywords.
 
 - **Type Inference** — Automatically deducing the type of a variable or expression without explicit annotations.
   Critical to good Python autocompletion since Python doesn't require type declarations, though PEP 484 type hints have
@@ -100,8 +100,8 @@ follow a rabbit warren of related APIs in minutes rather than flicking through a
 **Copying from Stack Overflow, GitHub & Open Source** Arguably the most impactful "tool" of the mid-2000s to 2010s
 developer toolkit — and it wasn't just [Stack Overflow](https://stackoverflow.com). Developers were simultaneously
 mining [GitHub](https://github.com), reading through open source repositories on [SourceForge](https://sourceforge.net)
-and later [GitLab](https://gitlab.com), and lifting patterns from permissively licensed projects. The cognitive model
-was matching natural language intent to human-curated solutions or real-world production code. Stack Overflow gave you
+and later [GitLab](https://gitlab.com) and lifting patterns from permissively licensed projects. The cognitive model was
+matching natural language intent to human-curated solutions or real-world production code. Stack Overflow gave you
 explained snippets; GitHub gave you full working implementations you could study in context. It worked remarkably well
 for common problems but broke down for anything domain-specific, requiring you to adapt boilerplate to your situation —
 often the fiddly part. It also introduced a generation of developers to cargo-cult programming: paste first, understand
@@ -111,18 +111,18 @@ problem-solution pairs, and without the open source community's collective outpu
 substantial enough for models to learn the shape of good code from.
 
 **Early Code Completion (2000s IDEs)** Tools like early [Eclipse](https://eclipseide.org),
-[Visual Studio](https://visualstudio.microsoft.com), and [IntelliJ](https://www.jetbrains.com/idea/) began offering
-basic autocomplete — typically triggered by typing a dot after an object. The engine was largely syntax-aware symbol
-lookup: parse the file, infer the type, offer members from that class. It was often brittle — break the type chain and
+[Visual Studio](https://visualstudio.microsoft.com) and [IntelliJ](https://www.jetbrains.com/idea/) began offering basic
+autocomplete — typically triggered by typing a dot after an object. The engine was largely syntax-aware symbol lookup:
+parse the file, infer the type, offer members from that class. It was often brittle — break the type chain and
 suggestions vanished. Useful for reducing typos in method names but rarely capable of suggesting whole patterns or
 intent.
 
 **Python Autocompletion Before AI — Jedi & Rope** Python's dynamic typing made static autocompletion genuinely hard.
 Early tools like [Rope](https://github.com/python-rope/rope) and later [Jedi](https://jedi.readthedocs.io/en/latest/)
 tackled this with deep static analysis: they'd trace variable assignments, follow imports, infer types through call
-chains, and build an in-memory symbol index. Jedi in particular became the backbone of completion in editors like
-[Vim](https://www.vim.org), [Emacs](https://www.gnu.org/software/emacs/), [Atom](https://github.com/atom/atom), and
-[VS Code](https://code.visualstudio.com). It handled decorators, `*args/**kwargs`, and even some basic type inference
+chains and build an in-memory symbol index. Jedi in particular became the backbone of completion in editors like
+[Vim](https://www.vim.org), [Emacs](https://www.gnu.org/software/emacs/), [Atom](https://github.com/atom/atom) and
+[VS Code](https://code.visualstudio.com). It handled decorators, `*args/**kwargs` and even some basic type inference
 without annotations. Its big limitation was dynamic runtime behaviour — if a type was only knowable at execution time,
 Jedi had to guess or give up.
 
@@ -137,10 +137,10 @@ static tools, though it still operated at the token/symbol level rather than und
 
 **Copying and Pasting into ChatGPT (Pre-Agentic)** When [ChatGPT](https://chatgpt.com) launched publicly in late 2022 it
 changed developer workflows overnight, even in its most primitive form. The pattern was manual but transformative: copy
-a function or error message, paste it into the chat window, describe what you wanted, and get back working code with an
+a function or error message, paste it into the chat window, describe what you wanted and get back working code with an
 explanation. For the first time you could have a conversation about your code — ask follow-up questions, request a
-refactor, or say "that didn't work, here's the error." The model had no access to your wider codebase, no ability to run
-code, and no memory between sessions, so you were constantly ferrying context back and forth by hand. Despite the
+refactor or say "that didn't work, here's the error." The model had no access to your wider codebase, no ability to run
+code and no memory between sessions, so you were constantly ferrying context back and forth by hand. Despite the
 friction it was a dramatic leap over Stack Overflow for anything non-trivial, because the response was tailored to your
 exact situation rather than someone else's similar-but-different problem. Developers quickly learned the art of prompt
 crafting — how much context to include, how to describe the desired output, when to paste the full traceback versus a
@@ -148,15 +148,15 @@ summary.
 
 **Claude Code** [Claude Code](https://claude.ai/code) operates at a fundamentally different level. Rather than
 completing tokens or ranking symbols, it understands intent across an entire codebase. You describe what you want in
-plain language, and it can generate, refactor, debug, and explain across multiple files simultaneously. It holds context
-about your architecture, naming conventions, and patterns — not just the open file. It reasons about *why* code works,
-not just *what* comes next. Used via the CLI, it can run commands, read outputs, and iterate — behaving less like a tool
+plain language, and it can generate, refactor, debug and explain across multiple files simultaneously. It holds context
+about your architecture, naming conventions and patterns — not just the open file. It reasons about *why* code works,
+not just *what* comes next. Used via the CLI, it can run commands, read outputs and iterate — behaving less like a tool
 and more like a junior engineer pair-programming alongside you.
 
 **The Near Future — Agents with Persistent Context** The next step is likely persistent, project-aware agents that
 maintain a living model of your codebase between sessions — knowing not just the current state but *why* decisions were
-made, tracking tech debt, and proactively surfacing problems before you hit them. Think less "answer my question" and
-more "autonomous collaborator" that files its own PRs, writes tests as code changes, and flags when a new feature
+made, tracking tech debt and proactively surfacing problems before you hit them. Think less "answer my question" and
+more "autonomous collaborator" that files its own PRs, writes tests as code changes and flags when a new feature
 conflicts with an architectural decision made six months ago.
 
 **The Speculative Horizon — Self-Improving Systems** Further out, the boundary between tool and team blurs. Models
@@ -169,18 +169,18 @@ mechanical labour of coding largely disappears.
 ## How to Use an AI Coding Assistant
 
 There's a temptation, when you first get access to an AI coding assistant, to treat it like a very fast search engine.
-You type a vague question, get something back, and move on. That approach works for simple, isolated tasks, but it
-misses the point entirely. Getting real value from these tools requires a shift in how you think about the interaction —
-less like querying a database, and more like briefing a capable but context-blind colleague who has just walked into
-your project for the first time.
+You type a vague question, get something back and move on. That approach works for simple, isolated tasks, but it misses
+the point entirely. Getting real value from these tools requires a shift in how you think about the interaction — less
+like querying a database, and more like briefing a capable but context-blind colleague who has just walked into your
+project for the first time.
 
 ### Starting with the Right Mental Model
 
 AI coding assistants operate within a **context window** — a finite amount of text they can "see" at any one time.
 Everything relevant to your task needs to fit within that window: your question, the code you're working on, any files
-you've shared, prior conversation, and the assistant's own responses. When the context fills up, older information falls
+you've shared, prior conversation and the assistant's own responses. When the context fills up, older information falls
 away. The assistant doesn't remember last session's decisions. It doesn't know your project's conventions, your team's
-opinions, or the architectural choices made six months ago — unless you tell it.
+opinions or the architectural choices made six months ago — unless you tell it.
 
 This is the most important thing to understand about working effectively with these tools. **Context is everything, and
 context costs tokens.**
@@ -198,19 +198,19 @@ as your project's onboarding document for the AI. The difference between a sessi
 without is striking — you stop spending tokens re-explaining the basics every time.
 
 Beyond project-level files, most tools allow you to configure **permission levels** (whether the assistant can run shell
-commands, edit files autonomously, or only make suggestions), **model selection** (trading off speed against quality
-depending on the task), and **tool access** (whether the assistant can browse the web, read connected services like Jira
+commands, edit files autonomously or only make suggestions), **model selection** (trading off speed against quality
+depending on the task) and **tool access** (whether the assistant can browse the web, read connected services like Jira
 or Google Drive via integrations such as MCP servers).
 
 **Custom commands and slash commands** are another underused feature. Claude Code lets you define custom `/commands`
-that encapsulate common workflows — running your test suite, generating a summary of recent changes, or triggering a
-code review prompt against your own standards. These are tiny upfront investments that save disproportionate amounts of
-time over a project's life.
+that encapsulate common workflows — running your test suite, generating a summary of recent changes or triggering a code
+review prompt against your own standards. These are tiny upfront investments that save disproportionate amounts of time
+over a project's life.
 
 ### The Token Economy: Where People Go Wrong
 
 Tokens are the currency of AI interactions. You're charged for them financially (if you're on a usage-based plan) and
-constrained by them architecturally. Wasting tokens on unnecessary content makes the tool slower, more expensive, and
+constrained by them architecturally. Wasting tokens on unnecessary content makes the tool slower, more expensive and
 sometimes less accurate as useful information gets crowded out. Here are the most common mistakes:
 
 **Pasting entire files when only a function is relevant.** If you're asking about a bug in a 40-line function, you don't
@@ -241,8 +241,8 @@ This feels counterintuitive — wasn't the whole point to move faster? — but u
 gets lost.
 
 Before starting a significant task, it's worth spending a few minutes writing down in plain language what you're trying
-to achieve, what constraints apply, and what a successful outcome looks like. You can put this directly into your
-prompt, or better yet, maintain a `TASKS.md` or `PLANNING.md` file in your project that evolves as the work progresses.
+to achieve, what constraints apply and what a successful outcome looks like. You can put this directly into your prompt,
+or better yet, maintain a `TASKS.md` or `PLANNING.md` file in your project that evolves as the work progresses.
 
 This approach has several compounding benefits. It forces you to think clearly about scope, which surfaces ambiguities
 before the assistant has a chance to make confident wrong assumptions. It gives the assistant a clear success criterion
@@ -250,7 +250,7 @@ to work toward. And it creates a written record you can refer back to if a sessi
 
 Some developers go further, maintaining a suite of markdown files that together form a kind of living project memory: an
 `ARCHITECTURE.md` covering high-level design decisions, a `CONVENTIONS.md` for style and naming rules, a `DECISIONS.md`
-logging why certain approaches were chosen, and a `PROGRESS.md` tracking what's done and what's next. These files make
+logging why certain approaches were chosen and a `PROGRESS.md` tracking what's done and what's next. These files make
 every new session dramatically more productive because the assistant has genuine context to work with rather than having
 to infer everything from the code alone.
 
@@ -264,15 +264,15 @@ reflection of how language models work. They generate responses based on the pro
 follows your input. Vague inputs lead to generic outputs.
 
 Useful habits include: being explicit about what you already know (so the assistant doesn't explain it), specifying the
-format you want for the response, breaking complex tasks into discrete steps, and using the `@filename` pattern to
-attach precise context rather than pasting content into the message body. If a response isn't quite right, it's almost
-always more efficient to refine the prompt than to argue with the output.
+format you want for the response, breaking complex tasks into discrete steps and using the `@filename` pattern to attach
+precise context rather than pasting content into the message body. If a response isn't quite right, it's almost always
+more efficient to refine the prompt than to argue with the output.
 
 ## How AI Coding Assistants Work
 
 Not all AI coding assistants are the same. The category label "AI coding assistant" currently covers everything from a
 light autocomplete plugin that suggests the next line of your function, to a fully autonomous agent that can clone a
-repository, understand its architecture, write new features, run the tests, and open a pull request — all without you
+repository, understand its architecture, write new features, run the tests and open a pull request — all without you
 touching the keyboard. Understanding the differences matters, because the right tool depends entirely on what you're
 trying to do.
 
@@ -285,12 +285,12 @@ At the reactive end, tools like **GitHub Copilot** (in its traditional form) sit
 you're typing, infer your intent from the surrounding code and comments, and suggest completions inline. The interaction
 model is passive: you write, it suggests, you accept or ignore. Copilot is deeply integrated into the IDE and operates
 almost entirely on the immediate local context — the file you're editing, perhaps a few open tabs, your recent
-keystrokes. It does not browse the web, run your code, or orchestrate multi-step tasks. Its intelligence is applied in a
+keystrokes. It does not browse the web, run your code or orchestrate multi-step tasks. Its intelligence is applied in a
 single forward pass: here is the context, what comes next?
 
 At the agentic end, tools like **Claude Code** and **Lovable** take a fundamentally different approach. Rather than
 predicting the next token of your code, they reason about goals, decompose tasks into steps, invoke tools, observe the
-results, and decide what to do next. This loop — reason, act, observe, repeat — is what makes them agents rather than
+results and decide what to do next. This loop — reason, act, observe, repeat — is what makes them agents rather than
 autocomplete engines.
 
 ### How Agentic Tools Work
@@ -298,13 +298,13 @@ autocomplete engines.
 The engine underneath an agentic coding assistant is a large language model (an LLM) equipped with a set of tools it can
 call. When you give Claude Code a task, it doesn't just generate text — it generates *decisions about what actions to
 take*. These might include reading a file, running a shell command, searching the codebase for a pattern, fetching
-documentation from the web, or editing a file. Each action produces a result that is fed back into the model's context,
+documentation from the web or editing a file. Each action produces a result that is fed back into the model's context,
 informing the next decision.
 
-Claude Code reads your codebase, edits files, runs commands, and integrates with your development tools. This
-description sounds simple, but the underlying mechanism is a continuous loop: the model maintains a running view of the
-task, decides on the next tool call, executes it, processes the result, and iterates until the task is complete or it
-needs your input.
+Claude Code reads your codebase, edits files, runs commands and integrates with your development tools. This description
+sounds simple, but the underlying mechanism is a continuous loop: the model maintains a running view of the task,
+decides on the next tool call, executes it, processes the result and iterates until the task is complete or it needs
+your input.
 
 The key insight is that the model's intelligence is not applied once, upfront — it's applied repeatedly, with fresh
 information each time, informed by real results from the environment. This is what allows agentic tools to handle
@@ -317,19 +317,19 @@ root at the start of every session, shaping every subsequent decision the agent 
 Lovable occupies an interesting and distinct position on this spectrum. Where Claude Code is designed to work *within*
 your existing codebase — editing, debugging, extending — Lovable is primarily a **generative** tool aimed at building
 applications from scratch through conversation. You describe what you want, and it produces a full-stack application:
-component structure, styling, data model, and deployment configuration.
+component structure, styling, data model and deployment configuration.
 
 The difference in philosophy is significant. Lovable is optimised for the early, greenfield phase of a project, where
 you're moving quickly from idea to working prototype and the codebase doesn't yet have accumulated conventions or
 complexity. Claude Code is optimised for the sustained development phase — the much longer period where an existing
-codebase needs to be understood, extended, and maintained. Both are powered by LLMs with tool access, but they are
+codebase needs to be understood, extended and maintained. Both are powered by LLMs with tool access, but they are
 designed for different moments in a project's life and make different trade-offs.
 
 ### OpenCode: Open Source Flexibility
 
 **OpenCode** ([opencode.ai](https://opencode.ai)) takes a different philosophical stance again. It is an open source AI
-coding agent that runs in your terminal, IDE, or desktop, and is explicitly designed to be model-agnostic. Rather than
-locking you into a single LLM provider, OpenCode connects to any model from any provider — Claude, GPT, Gemini, and more
+coding agent that runs in your terminal, IDE or desktop, and is explicitly designed to be model-agnostic. Rather than
+locking you into a single LLM provider, OpenCode connects to any model from any provider — Claude, GPT, Gemini and more
 — with support for over 75 LLM providers and even locally running models. GitHub Copilot users can log in and use their
 existing subscription directly.
 
@@ -344,7 +344,7 @@ real demand for that flexibility.
 
 **Cursor** ([cursor.com](https://www.cursor.com)) takes yet another approach: rather than operating in the terminal or
 as an extension, it replaces the editor itself. Built as a fork of VS Code, Cursor embeds AI deeply into the editing
-experience — not as an add-on, but as a first-class participant in how you navigate, write, and refactor code.
+experience — not as an add-on, but as a first-class participant in how you navigate, write and refactor code.
 
 Its most distinctive feature is **Composer**, which handles multi-file edits autonomously: you describe a goal, and it
 plans and applies changes across your codebase, showing you diffs before committing them. Tab completion goes beyond
@@ -364,20 +364,20 @@ is one of the core engineering challenges.
 A large repository can contain millions of tokens worth of code. The model can't read all of it at once. Agentic tools
 therefore need strategies for deciding *what to include* in the context at any moment. Common approaches include
 semantic search (finding the most relevant files by embedding similarity), language server protocol (LSP) integration to
-understand code structure and relationships, and explicit user-directed context attachment (the `@filename` pattern).
+understand code structure and relationships and explicit user-directed context attachment (the `@filename` pattern).
 OpenCode automatically loads the right LSPs for the LLM, which is one example of how tools are increasingly automating
 this context management on your behalf.
 
 The context window also explains why session management matters. Longer sessions accumulate more history, which consumes
 window space that could otherwise be used for relevant code. Well-designed tools handle this through summarisation,
-selective history pruning, and the ability to resume sessions with their key decisions intact without replaying every
+selective history pruning and the ability to resume sessions with their key decisions intact without replaying every
 token.
 
 ### Model Context Protocol
 
 One architectural development worth understanding is the **Model Context Protocol (MCP)**, an open standard for
 connecting AI agents to external data sources. With MCP, a coding assistant isn't limited to your local files — it can
-be connected to your Jira board, your Slack workspace, your Google Drive, your Figma designs, or any custom internal
+be connected to your Jira board, your Slack workspace, your Google Drive, your Figma designs or any custom internal
 tooling that exposes an MCP server.
 
 This is significant because it shifts the agent's effective context from "what's in this repository" to "what's in your
@@ -399,7 +399,7 @@ Lovable may be the right starting point before you hand the codebase over to som
 capabilities.
 
 What's clear is that the category is moving rapidly in one direction: more agency, more tool access, more integration
-with the broader development environment, and increasingly sophisticated strategies for managing the context that makes
+with the broader development environment and increasingly sophisticated strategies for managing the context that makes
 all of it possible.
 
 ## The Landscape
@@ -409,36 +409,36 @@ all of it possible.
 | Tool                                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Lovable](https://lovable.dev)                            | Uses Anthropic models. Browser-based vibe coding platform that turns natural language prompts into full-stack React/Supabase apps. No local setup required — ideal for rapid prototyping and non-developers. Free tier available; paid plans from around **$25/mo**.                                                                                                                                                                                                                     |
-| [Claude Code](https://www.anthropic.com/claude-code)      | Uses Anthropic models. Agentic coding tool that lives in your terminal. Reads, edits, and reasons across entire codebases. Excels at large-scale refactoring and complex multi-file tasks with a 200K token context window. Pay-per-use via the Anthropic API — costs vary by usage, with a flat **$100/mo** option available.                                                                                                                                                           |
-| [GitHub Copilot](https://github.com/features/copilot)     | Supports multiple models — GPT-4o, Claude, and Gemini are all switchable. The original AI coding assistant, deeply integrated into VS Code, JetBrains, and the wider GitHub ecosystem. Covers inline completions, chat, agent mode, and PR summaries. Free tier available; paid plans from around **$10/mo**.                                                                                                                                                                            |
-| [Cursor](https://www.cursor.com)                          | Uses a mix of GPT-4o, Claude, and custom Cursor models. AI-native code editor (VS Code fork) purpose-built for AI-first development. Composer mode handles multi-file edits autonomously; Tab completion predicts entire functions. One of the most popular tools in the space, valued at ~$29B. Free trial; Pro around **$20/mo**.                                                                                                                                                      |
+| [Claude Code](https://www.anthropic.com/claude-code)      | Uses Anthropic models. Agentic coding tool that lives in your terminal. Reads, edits and reasons across entire codebases. Excels at large-scale refactoring and complex multi-file tasks with a 200K token context window. Pay-per-use via the Anthropic API — costs vary by usage, with a flat **$100/mo** option available.                                                                                                                                                            |
+| [GitHub Copilot](https://github.com/features/copilot)     | Supports multiple models — GPT-4o, Claude and Gemini are all switchable. The original AI coding assistant, deeply integrated into VS Code, JetBrains and the wider GitHub ecosystem. Covers inline completions, chat, agent mode and PR summaries. Free tier available; paid plans from around **$10/mo**.                                                                                                                                                                               |
+| [Cursor](https://www.cursor.com)                          | Uses a mix of GPT-4o, Claude and custom Cursor models. AI-native code editor (VS Code fork) purpose-built for AI-first development. Composer mode handles multi-file edits autonomously; Tab completion predicts entire functions. One of the most popular tools in the space, valued at ~$29B. Free trial; Pro around **$20/mo**.                                                                                                                                                       |
 | [Windsurf](https://windsurf.com)                          | Uses multiple models including Claude and GPT-4o — switchable. IDE built on VS Code with a unique "Cascade" agentic system that tracks your real-time actions and responds contextually. Acquired by OpenAI in May 2025. Strong value at its price point. Free tier; paid plans from around **$15/mo**. Codeium ([codeium.com](https://codeium.com)) is the underlying platform — it also offers a free standalone completion plugin for all major IDEs as a GitHub Copilot alternative. |
-| [Devin](https://devin.ai)                                 | Built on OpenAI models with proprietary RL fine-tuning. The original "autonomous AI software engineer" — operates independently via Slack or a VSCode-style interface, spawning its own environment to plan, code, test, and open PRs. Famously launched at $500/mo before dropping prices with Devin 2.0. Entry plans are affordable but serious usage gets expensive quickly.                                                                                                          |
+| [Devin](https://devin.ai)                                 | Built on OpenAI models with proprietary RL fine-tuning. The original "autonomous AI software engineer" — operates independently via Slack or a VSCode-style interface, spawning its own environment to plan, code, test and open PRs. Famously launched at $500/mo before dropping prices with Devin 2.0. Entry plans are affordable but serious usage gets expensive quickly.                                                                                                           |
 | [Poolside](https://poolside.ai)                           | Uses proprietary in-house models. Enterprise-only platform deploying custom-trained models within your own infrastructure (on-prem or VPC). Targets Global 2000 and defence customers. Backed by Nvidia at a **$12B valuation**. Enterprise pricing only — contact for a quote.                                                                                                                                                                                                          |
-| [Amazon Q Developer](https://aws.amazon.com/q/developer/) | Uses Amazon's proprietary models. AWS-native AI coding assistant for building, debugging, and transforming code. Deep integration with AWS services and IDEs. Includes a `/transform` feature for upgrading Java/.NET/COBOL codebases. Free tier available; paid plans from around **$19/mo**.                                                                                                                                                                                           |
-| [Aider](https://aider.chat)                               | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini, or local models via Ollama). The most popular open-source terminal coding agent. Git-native by design — it stages changes and writes commit messages automatically. Excellent for multi-file refactors across an existing repo. Terminal-first, but terminal-native developers consistently rate it their most productive tool. **Free**; you pay for API calls.                                                        |
-| [Continue.dev](https://continue.dev)                      | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini, or run locally via Ollama). Open-source VS Code and JetBrains extension for building fully custom AI coding assistants. Highly configurable; 20K+ GitHub stars. The go-to choice for teams in regulated industries who need 100% on-premise AI. **Free**; you pay for API calls.                                                                                                                                        |
+| [Amazon Q Developer](https://aws.amazon.com/q/developer/) | Uses Amazon's proprietary models. AWS-native AI coding assistant for building, debugging and transforming code. Deep integration with AWS services and IDEs. Includes a `/transform` feature for upgrading Java/.NET/COBOL codebases. Free tier available; paid plans from around **$19/mo**.                                                                                                                                                                                            |
+| [Aider](https://aider.chat)                               | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). The most popular open-source terminal coding agent. Git-native by design — it stages changes and writes commit messages automatically. Excellent for multi-file refactors across an existing repo. Terminal-first, but terminal-native developers consistently rate it their most productive tool. **Free**; you pay for API calls.                                                         |
+| [Continue.dev](https://continue.dev)                      | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or run locally via Ollama). Open-source VS Code and JetBrains extension for building fully custom AI coding assistants. Highly configurable; 20K+ GitHub stars. The go-to choice for teams in regulated industries who need 100% on-premise AI. **Free**; you pay for API calls.                                                                                                                                         |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Uses Google's Gemini models. Open-source terminal coding agent that uses a ReAct loop to plan and execute multi-step tasks directly from your shell. Integrates with MCP servers and Google Search for real-time context. Made waves with its extremely generous free tier — **free** via a Google account, with pay-as-you-go or team plans available.                                                                                                                                  |
-| [OpenAI Codex CLI](https://github.com/openai/codex)       | Uses OpenAI's Codex models. Open-source terminal coding agent built in Rust. Reads, edits, and runs code in your local directory with configurable approval modes. Supports multimodal input, web search, and MCP. **Free to install**; usage is bundled with a ChatGPT subscription or pay-as-you-go via API.                                                                                                                                                                           |
-| [Cline](https://cline.bot)                                | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini, or local models via Ollama). Open-source VS Code extension that acts as a fully agentic coding assistant. Shows diffs inline before applying them and requires explicit approval before running terminal commands — agentic power with human-in-the-loop control. **Free**; you pay for API calls.                                                                                                                      |
-| [OpenCode](https://opencode.ai)                           | Model-agnostic — connects to any of 75+ providers including Claude, GPT, Gemini, and local models; or log in with an existing Copilot or ChatGPT subscription. Open-source terminal, IDE, and desktop coding agent with 100K+ GitHub stars. LSP-aware, multi-session, and privacy-first. **Free** to use; a paid tier offers access to curated hosted models.                                                                                                                            |
+| [OpenAI Codex CLI](https://github.com/openai/codex)       | Uses OpenAI's Codex models. Open-source terminal coding agent built in Rust. Reads, edits and runs code in your local directory with configurable approval modes. Supports multimodal input, web search and MCP. **Free to install**; usage is bundled with a ChatGPT subscription or pay-as-you-go via API.                                                                                                                                                                             |
+| [Cline](https://cline.bot)                                | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). Open-source VS Code extension that acts as a fully agentic coding assistant. Shows diffs inline before applying them and requires explicit approval before running terminal commands — agentic power with human-in-the-loop control. **Free**; you pay for API calls.                                                                                                                       |
+| [OpenCode](https://opencode.ai)                           | Model-agnostic — connects to any of 75+ providers including Claude, GPT, Gemini and local models; or log in with an existing Copilot or ChatGPT subscription. Open-source terminal, IDE and desktop coding agent with 100K+ GitHub stars. LSP-aware, multi-session and privacy-first. **Free** to use; a paid tier offers access to curated hosted models.                                                                                                                               |
 
 ### 🧠 Code-Specific Models
 
 These are the underlying models purpose-built or heavily optimised for code generation. Most are accessible via API and
 can power your own tooling.
 
-| Model                                                       | Country of origin | Description                                                                                                                                                                                                                                                                                    |
-| ----------------------------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Claude Sonnet 4](https://docs.anthropic.com)               | USA               | Top SWE-bench scores (>72% Verified). 200K context window. Best-in-class for agentic coding, refactoring, and multi-file reasoning. Powers Claude Code, Cursor, Windsurf, and Lovable. Input: **$3** / Output: **$15** per 1M tokens.                                                          |
-| [Claude Opus 4](https://docs.anthropic.com)                 | USA               | Anthropic's most capable model. Superior at complex reasoning, large-scale refactoring, and extended agentic workflows where quality takes priority over cost. Same 200K context window as Sonnet. Best reserved for the most demanding tasks. Input: **$15** / Output: **$75** per 1M tokens. |
-| [GPT-4.1 / o3](https://platform.openai.com)                 | USA               | o3 scores 69.1% on SWE-bench Verified. GPT-4.1 is strong on multi-language, multi-module enterprise tasks. Powers GitHub Copilot and Devin. GPT-4.1 Input: **$2** / Output: **$8**; o3 Input: **$10** / Output: **$40** per 1M tokens.                                                         |
-| [Gemini 2.5 Pro](https://ai.google.dev)                     | USA               | 63.8% on SWE-bench Verified; massive **1M token context window** ideal for large codebases. Strong at multimodal coding (e.g. code from diagrams). Input: **$1.25** (≤200K) / Output: **$10** per 1M tokens.                                                                                   |
-| [Codestral 2501](https://mistral.ai/news/codestral)         | France            | Specialist code model supporting **80+ languages** and a 256K context window. 2× faster than its predecessor. Scores 86.6% on HumanEval Python and 95.3% on Fill-in-the-Middle tasks. Optimised for low-latency IDE completions. Input: **$0.30** / Output: **$0.90** per 1M tokens.           |
-| [DeepSeek Coder V2 / V3](https://platform.deepseek.com)     | China             | 236B parameter MoE (21B active). Competitive with frontier closed models on coding benchmarks. Extremely aggressive pricing makes it a go-to for cost-conscious teams. Open weights available. Input: **$0.14** / Output: **$0.28** (V3) per 1M tokens.                                        |
-| [Qwen2.5-Coder 32B](https://huggingface.co/Qwen)            | China             | Open-weight coding specialist, 32B params. Rivals GPT-4o on HumanEval (91.0%). Strong multilingual coding support across 40+ languages. Can be self-hosted or accessed via API. Via Together/Fireworks: ~**$0.90** / **$0.90** per 1M tokens; free to self-host.                               |
-| [Qwen3-Coder 480B](https://huggingface.co/Qwen)             | China             | Massive MoE model. 69.6% on SWE-bench Verified — the highest open-source score to date. Supports 256K+ context and agentic workflows. A genuine open-source challenger to Claude and GPT. Via API: pricing varies by provider; free to self-host.                                              |
-| [Devstral / Codestral (Mistral family)](https://mistral.ai) | France            | Devstral Medium is an "agentic coding" model designed for multi-step code planning and automated review. Part of Mistral's growing code-focused family. Open-source version available (Apache 2.0). Devstral via API: **$0.50** / **$1.50** per 1M tokens; open weights free.                  |
+| Model                                                       | Country of origin | Description                                                                                                                                                                                                                                                                                   |
+| ----------------------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Claude Sonnet 4](https://docs.anthropic.com)               | USA               | Top SWE-bench scores (>72% Verified). 200K context window. Best-in-class for agentic coding, refactoring and multi-file reasoning. Powers Claude Code, Cursor, Windsurf and Lovable. Input: **$3** / Output: **$15** per 1M tokens.                                                           |
+| [Claude Opus 4](https://docs.anthropic.com)                 | USA               | Anthropic's most capable model. Superior at complex reasoning, large-scale refactoring and extended agentic workflows where quality takes priority over cost. Same 200K context window as Sonnet. Best reserved for the most demanding tasks. Input: **$15** / Output: **$75** per 1M tokens. |
+| [GPT-4.1 / o3](https://platform.openai.com)                 | USA               | o3 scores 69.1% on SWE-bench Verified. GPT-4.1 is strong on multi-language, multi-module enterprise tasks. Powers GitHub Copilot and Devin. GPT-4.1 Input: **$2** / Output: **$8**; o3 Input: **$10** / Output: **$40** per 1M tokens.                                                        |
+| [Gemini 2.5 Pro](https://ai.google.dev)                     | USA               | 63.8% on SWE-bench Verified; massive **1M token context window** ideal for large codebases. Strong at multimodal coding (e.g. code from diagrams). Input: **$1.25** (≤200K) / Output: **$10** per 1M tokens.                                                                                  |
+| [Codestral 2501](https://mistral.ai/news/codestral)         | France            | Specialist code model supporting **80+ languages** and a 256K context window. 2× faster than its predecessor. Scores 86.6% on HumanEval Python and 95.3% on Fill-in-the-Middle tasks. Optimised for low-latency IDE completions. Input: **$0.30** / Output: **$0.90** per 1M tokens.          |
+| [DeepSeek Coder V2 / V3](https://platform.deepseek.com)     | China             | 236B parameter MoE (21B active). Competitive with frontier closed models on coding benchmarks. Extremely aggressive pricing makes it a go-to for cost-conscious teams. Open weights available. Input: **$0.14** / Output: **$0.28** (V3) per 1M tokens.                                       |
+| [Qwen2.5-Coder 32B](https://huggingface.co/Qwen)            | China             | Open-weight coding specialist, 32B params. Rivals GPT-4o on HumanEval (91.0%). Strong multilingual coding support across 40+ languages. Can be self-hosted or accessed via API. Via Together/Fireworks: ~**$0.90** / **$0.90** per 1M tokens; free to self-host.                              |
+| [Qwen3-Coder 480B](https://huggingface.co/Qwen)             | China             | Massive MoE model. 69.6% on SWE-bench Verified — the highest open-source score to date. Supports 256K+ context and agentic workflows. A genuine open-source challenger to Claude and GPT. Via API: pricing varies by provider; free to self-host.                                             |
+| [Devstral / Codestral (Mistral family)](https://mistral.ai) | France            | Devstral Medium is an "agentic coding" model designed for multi-step code planning and automated review. Part of Mistral's growing code-focused family. Open-source version available (Apache 2.0). Devstral via API: **$0.50** / **$1.50** per 1M tokens; open weights free.                 |
 
 *Prices correct as of February 2026. The AI tooling market moves fast — always check vendor pages for the latest.*
 

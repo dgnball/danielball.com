@@ -290,8 +290,7 @@ need one). It lists out some ML-type tasks and the sort of model you might want 
 
 ✅ Highly accurate models are available open-source\
 ✅ Works well offline with the right setup\
-❌ Audio data can be large
-and tricky to process
+❌ Audio data can be large and tricky to process
 
 ### 💬 If you need language generation, summarization or reasoning:
 
@@ -313,8 +312,7 @@ and tricky to process
 ✅ Very general-purpose\
 ❌ Can be expensive\
 ❌ May hallucinate or go off-topic\
-❌ Overkill for
-small classification tasks
+❌ Overkill for small classification tasks
 
 > 💡 *Use LLMs for jobs that involve language reasoning.*
 
