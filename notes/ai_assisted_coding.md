@@ -4,10 +4,9 @@ title: AI Assisted Coding
 ---
 
 This is my attempt to make sense of the AI-assisted coding landscape. I wrote this to educate myself and as a reference
-for anyone trying to navigate this space without the hype. If you don't want to read this or don't value my opinion,
-feel free to skip to read these highly recommended resources instead:
+for anyone trying to navigate this space without the hype.
 
-- https://github.com/sourcegraph/awesome-code-ai
+- TOC {:toc}
 
 ## AI Coding Glossary
 
@@ -576,6 +575,7 @@ prompts, more review, more understanding — as the code gets closer to producti
 
 ## Resources
 
+- [Awsome list-style list of AI coding tools](https://github.com/sourcegraph/awesome-code-ai)
 - [Andrej Karpathy — vibe coding post](https://x.com/karpathy/status/1886192184808149383?lang=en)
 - [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
 - [DeepSeek technical report](https://arxiv.org/abs/2501.12948)

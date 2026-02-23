@@ -1,10 +1,9 @@
-- Add a contents table
 - Add some screenshots
 - Better detail about how coding agents work
 - Mention open claw
 - Mention codex model
 - Remove m dashes
-- Remove oxford comma
+- Remove oxford commas
 - Mention Peter Steinberger (who wrote Open Claw)
 - List out the top 5 rival articles
 - Find some decebt Youtube videos that explain how coding agents work
