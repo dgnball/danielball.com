@@ -405,26 +405,38 @@ all of it possible.
 
 ### 🧠 Code-Specific Models
 
-These are the underlying models purpose-built or heavily optimised for code generation. Most are accessible via API and
-can power your own tooling.
+Several benchmarks track coding and general model capability. The most useful ones:
 
-- [Ollama — run models locally](https://ollama.com/)
-- [SWE-bench — coding benchmark](https://www.swebench.com/)
-- [LiveCodeBench](https://livecodebench.github.io/)
+- [SWE-bench](https://www.swebench.com/) — measures how often a model can resolve real GitHub issues autonomously; the
+  standard for agentic coding
+- [GSO Bench](https://gso-bench.github.io/) — General Software Operations; evaluates models on broader software
+  engineering tasks beyond bug fixes
+- [LiveCodeBench](https://livecodebench.github.io/index.html) — live competitive programming problems, updated
+  continuously to prevent data contamination
+- [LiveBench](https://livebench.ai/#/) — general LLM benchmark using fresh, verifiable questions updated monthly
+- [Epoch AI Benchmarks](https://epoch.ai/benchmarks) — tracks long-run AI progress across a wide range of capability
+  benchmarks
+- [Vellum LLM Leaderboard](https://www.vellum.ai/llm-leaderboard) — practical comparison of frontier models across
+  quality, speed and cost
 
-| Model                                                       | Country of origin | Description                                                                                                                                                                                                                                                                                   |
-| ----------------------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Claude Sonnet 4](https://docs.anthropic.com)               | USA               | Top SWE-bench scores (>72% Verified). 200K context window. Best-in-class for agentic coding, refactoring and multi-file reasoning. Powers Claude Code, Cursor, Windsurf and Lovable. Input: **$3** / Output: **$15** per 1M tokens.                                                           |
-| [Claude Opus 4](https://docs.anthropic.com)                 | USA               | Anthropic's most capable model. Superior at complex reasoning, large-scale refactoring and extended agentic workflows where quality takes priority over cost. Same 200K context window as Sonnet. Best reserved for the most demanding tasks. Input: **$15** / Output: **$75** per 1M tokens. |
-| [GPT-4.1 / o3](https://platform.openai.com)                 | USA               | o3 scores 69.1% on SWE-bench Verified. GPT-4.1 is strong on multi-language, multi-module enterprise tasks. Powers GitHub Copilot and Devin. GPT-4.1 Input: **$2** / Output: **$8**; o3 Input: **$10** / Output: **$40** per 1M tokens.                                                        |
-| [Gemini 2.5 Pro](https://ai.google.dev)                     | USA               | 63.8% on SWE-bench Verified; massive **1M token context window** ideal for large codebases. Strong at multimodal coding (e.g. code from diagrams). Input: **$1.25** (≤200K) / Output: **$10** per 1M tokens.                                                                                  |
-| [Codestral 2501](https://mistral.ai/news/codestral)         | France            | Specialist code model supporting **80+ languages** and a 256K context window. 2× faster than its predecessor. Scores 86.6% on HumanEval Python and 95.3% on Fill-in-the-Middle tasks. Optimised for low-latency IDE completions. Input: **$0.30** / Output: **$0.90** per 1M tokens.          |
-| [DeepSeek Coder V2 / V3](https://platform.deepseek.com)     | China             | 236B parameter MoE (21B active). Competitive with frontier closed models on coding benchmarks. Extremely aggressive pricing makes it a go-to for cost-conscious teams. Open weights available. Input: **$0.14** / Output: **$0.28** (V3) per 1M tokens.                                       |
-| [Qwen2.5-Coder 32B](https://huggingface.co/Qwen)            | China             | Open-weight coding specialist, 32B params. Rivals GPT-4o on HumanEval (91.0%). Strong multilingual coding support across 40+ languages. Can be self-hosted or accessed via API. Via Together/Fireworks: ~**$0.90** / **$0.90** per 1M tokens; free to self-host.                              |
-| [Qwen3-Coder 480B](https://huggingface.co/Qwen)             | China             | Massive MoE model. 69.6% on SWE-bench Verified — the highest open-source score to date. Supports 256K+ context and agentic workflows. A genuine open-source challenger to Claude and GPT. Via API: pricing varies by provider; free to self-host.                                             |
-| [Devstral / Codestral (Mistral family)](https://mistral.ai) | France            | Devstral Medium is an "agentic coding" model designed for multi-step code planning and automated review. Part of Mistral's growing code-focused family. Open-source version available (Apache 2.0). Devstral via API: **$0.50** / **$1.50** per 1M tokens; open weights free.                 |
+The table below shows the current SWE-bench leaderboard (February 2026), ranked by resolution rate.
 
-_Prices correct as of February 2026. The AI tooling market moves fast — always check vendor pages for the latest._
+| Model                              | Org         | % Resolved | Avg. cost |
+| ---------------------------------- | ----------- | ---------- | --------- |
+| Claude 4.5 Opus (high reasoning)   | Anthropic   | 76.8%      | $0.75     |
+| Gemini 3 Flash (high reasoning)    | Google      | 75.8%      | $0.36     |
+| MiniMax M2.5 (high reasoning)      | MiniMax     | 75.8%      | $0.07     |
+| Claude Opus 4.6                    | Anthropic   | 75.6%      | $0.55     |
+| GLM-5 (high reasoning)             | Zhipu AI    | 72.8%      | $0.53     |
+| GPT-5-2 (high reasoning)           | OpenAI      | 72.8%      | $0.47     |
+| GPT 5.2 Codex                      | OpenAI      | 72.8%      | $0.45     |
+| Claude 4.5 Sonnet (high reasoning) | Anthropic   | 71.4%      | $0.66     |
+| Kimi K2.5 (high reasoning)         | Moonshot AI | 70.8%      | $0.15     |
+| DeepSeek V3.2 (high reasoning)     | DeepSeek    | 70.0%      | $0.45     |
+| Claude 4.5 Haiku (high reasoning)  | Anthropic   | 66.6%      | $0.33     |
+| GPT-5 Mini                         | OpenAI      | 56.2%      | $0.05     |
+
+_Source: [swebench.com](https://www.swebench.com/), February 2026. Scores use the mini-SWE-agent v2.0.0 scaffold._
 
 ### Chinese models: a separate conversation
 
