@@ -421,10 +421,8 @@ all of it possible.
 
 Several benchmarks track coding and general model capability. The most useful ones:
 
-- [SWE-bench](https://www.swebench.com/) — measures how often a model can resolve real GitHub issues autonomously; the
-  standard for agentic coding
-- [GSO Bench](https://gso-bench.github.io/) — General Software Operations; evaluates models on broader software
-  engineering tasks beyond bug fixes
+- [SWE-bench](https://www.swebench.com/) — measures how often a model can resolve real GitHub issues autonomously
+- [GSO Bench](https://gso-bench.github.io/) — General Software Operations
 - [LiveCodeBench](https://livecodebench.github.io/index.html) — live competitive programming problems, updated
   continuously to prevent data contamination
 - [LiveBench](https://livebench.ai/#/) — general LLM benchmark using fresh, verifiable questions updated monthly
@@ -473,102 +471,224 @@ Cons:
 - If you use the hosted API versions, your code is processed on Chinese infrastructure. For anything sensitive, this is
   a meaningful concern
 - The models may not have had the same level of independent security auditing as Western counterparts
-- It is widely believed that some or all of these models are at least partially built using "distillation" (see
+- It is believed that some or all of these models are at least partially built using "distillation" (see
   [here](https://www.theregister.com/2026/02/24/anthropic_misanthropic_chinese_ai_labs/)). As this could be considered a
-  form of theft, their use may be frowned upon if working with certain groups
+  form of intellectual property theft, their use may be frowned upon when working with certain clients
 
 ## Building in a Safety Net
 
-Vibe coding introduces a specific risk that's easy to underestimate: you can end up with working code that you don't
-fully understand and that contains security flaws you wouldn't recognise even if you read it.
+Vibe coding and other types of automated code generation introduce the risk that you end up with unmaintaiable code,
+non-working code or working code containing security or performance issues.
 
-Human code review breaks down in this situation. If the reviewer doesn't understand the code, they can't meaningfully
-assess it. This is where automated tooling becomes not just useful but arguably essential.
+This is where automated tooling becomes not just useful but arguably essential. In my opinion, there are four levels to
+this:
 
-### Static analysis tools
+- Quick to run and free static analysis tools
+- Quick to run unit testing
+- Slower to run and more expensive code analysis tools
+- Slower to run and harder to set up tests
 
-It's worth distinguishing between linters and security analysers — they're not the same thing.
+### Quick to run and free static analysis tools
 
-**Ruff** is a fast Python linter and formatter. It catches style issues, unused imports, obvious bugs. It's not a
-security tool.
+This is a no-brainer. Linting tools have been around for years, they are generally free and you can run them in seconds
+on any modern hardware and for free in Github actions. I like to include mine in a pre-commit file so that I don't
+forget to run it.
 
-[**Bandit**](https://bandit.readthedocs.io/) analyses Python code for common security issues — hardcoded credentials,
-use of unsafe functions, SQL injection patterns. This is what you want running on generated code.
+Here are some examples of the sort of tools you can use (a more extensive list is available
+[here](https://github.com/caramelomartins/awesome-linters)):
 
-[**Semgrep**](https://semgrep.dev/docs/) is more powerful and language-agnostic. It uses rules to detect patterns across
-a codebase and has a large library of security-focused rules. For JavaScript, ESLint with the `eslint-plugin-security`
-plugin covers similar ground.
+- **Ruff** is a fast Python linter and formatter. It catches style issues, unused imports and obvious bugs.
+- [**Bandit**](https://bandit.readthedocs.io/) analyses Python code for common security issues.
+- [**Semgrep**](https://semgrep.dev/docs/) is more powerful and language-agnostic. It uses rules to detect patterns
+  across a codebase and has a large library of security-focused rules. For JavaScript, ESLint with the
+  `eslint-plugin-security` plugin covers similar ground.
 
-All of these can be run as pre-commit hooks or integrated into a CI pipeline via GitHub Actions, so they run
-automatically on every code change without requiring manual intervention.
+Here's an example pre-commit for a Python project setup that will provide an initial safety net for AI-generated code:
 
-### The critic agent pattern
+```yaml
+repos:
+  # --- Ruff: fast Python linter + formatter (replaces flake8, isort, pyupgrade, etc.) ---
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.2
+    hooks:
+      - id: ruff-check
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
 
-A more sophisticated approach is to use a second AI agent whose sole job is to review the output of the first. This is
-sometimes called a critic agent or adversarial agent — a pattern from multi-agent architecture (see my
-[AI Agents article](/notes/ai_agents)).
+  # --- Bandit: security-focused static analysis ---
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.9.3
+    hooks:
+      - id: bandit
+        args: [-c, pyproject.toml]
+        additional_dependencies: ["bandit[toml]"]
 
-In practice this means setting up a second model session with a system prompt focused entirely on security review: look
-for injection vulnerabilities, check input validation, flag any use of deprecated or unsafe functions, identify missing
-error handling. It reviews the generated code before it goes anywhere near a pipeline.
+  # --- Semgrep: semantic code analysis / security patterns ---
+  - repo: https://github.com/semgrep/semgrep
+    rev: v1.152.0
+    hooks:
+      - id: semgrep
+        language_version: python3.12
+        args:
+          - --config=p/python
+          - --config=p/secrets
+          - --error
+          - --quiet
 
-The limitation worth acknowledging: an LLM reviewer can have the same blind spots as an LLM coder. It's not a substitute
-for understanding your code, but it catches a meaningful category of issues that static analysis misses — particularly
-logical security flaws rather than pattern-based ones.
+  # --- Basic file hygiene (near-zero cost, built-in hooks) ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-case-conflict # catches case-insensitive filesystem issues
+      - id: check-symlinks
+      - id: detect-private-key # catches accidentally committed keys
+      - id: debug-statements # catches leftover breakpoint() / pdb calls
+      - id: check-ast # validates Python files parse correctly
+      - id: check-docstring-first # catches code before module docstrings
+      - id: name-tests-test # enforces test_*.py naming convention
+        args: [--pytest-test-first]
 
-### A practical pipeline
+  # --- Pyupgrade: modernise Python syntax automatically ---
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.21.2
+    hooks:
+      - id: pyupgrade
+        args: [--py311-plus] # adjust to your minimum Python version
 
-A reasonable minimal setup for vibe-coded projects:
+  # --- Dead code detection ---
+  - repo: https://github.com/jendrikseipp/vulture
+    rev: v2.14
+    hooks:
+      - id: vulture
+        args: [--min-confidence=80, "--exclude=.venv", .]
 
-1. Generate code with your tool of choice
-2. Run Bandit or Semgrep automatically via pre-commit hook
-3. Run a critic agent review for anything going to production
-4. Human sign-off before merge
+  # --- pip-audit: check dependencies against known CVEs ---
+  - repo: local
+    hooks:
+      - id: pip-audit
+        name: pip-audit
+        language: system
+        entry: uv run pip-audit --local
+        pass_filenames: false
 
-GitHub Actions is the natural glue for steps 2 and 3 in a team setting.
+default_language_version:
+  python: python3.14
+```
 
-## Saving Money Without Sacrificing Quality
+### Quick to run unit testing
 
-Token costs add up quickly when you're using agentic tools, because every tool call and every file read consumes
-context. A few principles that help.
+Unit testing is non-negotiable in modern software development, and AI tools have made high coverage levels more
+achievable than ever with an iterative approach rather than a one-shot attempt. Feed the AI your function signatures,
+docstrings and intent, then ask it to surface edge cases, boundary conditions and failure modes you might not have
+considered. Also, consider hand-writing or partially hand-writing some tests to stay close to what the code is actually
+supposed to do
 
-**Match the model to the task.** Frontier models are expensive. For straightforward tasks — generating a migration,
-writing a test, reformatting code — a smaller, cheaper model (Claude Haiku, GPT-4o mini, Gemini Flash) will do the job.
-Save the heavy models for complex reasoning tasks.
+Aim for above 90% coverage but treat the test suite as documentation as much as a metric. Does it describe your problem
+domain and tell a story about what the system should do? If you find yourself patching function calls, it is usually a
+signal of a design problem worth addressing, since reducing side effectsx and injecting dependencies explicitly tends to
+fix both issues at once: code that is easier to test is generally better structured too.
 
-**Understand what drives cost.** You pay for input tokens (everything sent to the model, including context) and output
-tokens (everything the model generates). Long context windows are expensive on the input side. Verbose responses are
-expensive on the output side. Prompts that require lots of back-and-forth are expensive overall.
+**A few rules worth following**
 
-**Write better prompts upfront.** A precise prompt that gets the right result in one shot is significantly cheaper than
-a vague prompt that requires five rounds of correction. Time spent on the prompt pays for itself in token savings.
+- Every file should have a corresponding test file
+- Target 90% coverage as a minimum and treat any drop as worth investigating
+- Generate tests from descriptions first then iterate by asking the AI to find edge cases you missed
+- Write some tests by hand to stay close to what the code is actually supposed to do
+- Read your test suite as documentation and make sure it describes the problem not just the implementation
+- Treat the need for patching as a design smell to fix in the production code
+- Run coverage checks in your pre-commit hooks or CI pipeline so regressions don't slip through
 
-**Use local models for exploration.** When you're experimenting — trying an approach, exploring an API, sketching out a
-design — run a local model via Ollama. DeepSeek or Qwen locally costs nothing per token. Switch to a frontier model when
-you need the best result.
+### Slower to Run and More Expensive Code Analysis Tools
 
-**Subscription vs. pay-as-you-go.** For heavy daily use, a subscription (Claude Pro, ChatGPT Plus, Cursor) usually wins
-on cost. For occasional or project-based use, pay-as-you-go API access gives you more control and visibility over what
-you're spending.
+These fall into a few distinct categories and most solo contractors won't need all of them. It is worth thinking about
+which layer actually applies to your situation before reaching for your wallet.
 
-## When It Works and When It Doesn't
+#### AI PR Reviewers
 
-**Where vibe coding genuinely shines:**
+This is the most relevant category right now. **CodeRabbit** is the current market leader in purpose-built AI code
+review. It installs as a GitHub or GitLab app, runs automatically on every pull request and leaves line-by-line comments
+with severity rankings and one-click fixes. It is free for open source and around $19 per user per month for private
+repos. A study of 309 pull requests from November 2025 put it at the top for accuracy and the free tier for open source
+is genuinely useful on its own merits.
 
-- Prototypes and MVPs where speed matters more than perfection
-- Solo developers and non-technical founders building internal tools
-- Boilerplate — CRUD operations, API wrappers, data transformations
-- Learning — seeing working code helps you understand patterns faster than reading documentation
+**GitHub Copilot Code Review** was added in April 2025 and is now bundled into existing Copilot subscriptions. It added
+CodeQL and ESLint integration later that year. It is shallower than CodeRabbit because it works from the diff rather
+than the full codebase so it can miss cross-file concerns, but if you are already paying for Copilot then turning it on
+costs nothing extra.
 
-**Where it struggles:**
+**Cursor BugBot** launched mid-2025 and runs eight parallel review passes per pull request. Discord's team reported it
+catching real bugs on PRs that had already been approved by humans. It is tightly coupled to the Cursor editor though so
+it is only worth considering if your team is already working there.
 
-- Large, complex codebases where the model can't hold enough context to reason about the whole system
-- Security-sensitive code where you need to understand exactly what's happening
-- Anything requiring deep domain knowledge the model doesn't have
-- Production systems where maintainability and testability matter long-term
+#### SAST Platforms
 
-The "it works but I don't know why" problem compounds over time. A prototype built with vibe coding that becomes a
-production system accumulates decisions nobody understands. When something breaks, debugging becomes archaeology.
+These go beyond pattern matching into proper security analysis. **SonarQube and SonarCloud** are the established
+standard for combining code quality and security into a single dashboard. The Community Edition is free and self-hosted.
+The strength over tools like Ruff or Semgrep is the quality gate system which can block deployments when coverage or
+reliability drops below thresholds you define.
 
-A simple heuristic: use these tools freely for anything throwaway or exploratory. Apply more discipline — better
-prompts, more review, more understanding — as the code gets closer to production.
+**Snyk Code** takes an AI approach trained on millions of open source repositories. The key differentiator is data-flow
+analysis. It can catch things like second-order SQL injection where tainted data passes through multiple functions
+before hitting a sink, which pattern matching tools will miss entirely. It also bundles dependency scanning, container
+scanning and infrastructure-as-code analysis into a single platform.
+
+**GitHub Advanced Security with CodeQL** is worth knowing about if you are already on GitHub. CodeQL is a full semantic
+query language for finding vulnerabilities rather than just matching patterns. It is free for public repositories and
+the query language is powerful, though it has a steep learning curve.
+
+#### Dependency and Supply Chain Security
+
+**Dependabot** is free, built into GitHub and opens automatic pull requests for vulnerable dependencies with zero
+configuration. It is worth enabling if you have not already. For more serious supply chain concerns **Socket.dev**
+analyses the behaviour of npm and PyPI packages and can detect things like packages that exfiltrate data at install
+time. It has a free tier and a GitHub app.
+
+#### What to Actually Prioritise as a Solo Contractor
+
+If you are working alone the decision is fairly straightforward. Turn on Dependabot first because it is free and takes
+minutes. Try the CodeRabbit free tier on any public repositories because the five minute install is worth it. If you
+move into a team or client environment then SonarCloud offers the best value for quality gates on private projects and
+Snyk is the strongest option if you need dependency scanning and static analysis bundled together.
+
+### Slower to Run and Harder to Set Up Tests
+
+These are the tests that have a higher setup and/or running costs than those which could run on every pull request.
+
+Integration tests, end-to-end tests and contract tests all fall into this category. They are slower to run, harder to
+maintain and require more infrastructure to support, but they catch an entirely different class of bug to unit tests.
+
+Potentially, quick-running tests tell you nothing about whether the system works correctly when connected to a real
+database, a third-party API or another service in your system.
+
+#### Integration Tests
+
+Integration tests verify that your code works correctly with the real systems it depends on. The most practical approach
+is to use lightweight local versions of those dependencies wherever possible. **Docker Compose** is the standard tool
+for this and it lets you spin up a real Postgres instance, a Redis cache or a message queue locally or in CI without
+much ceremony. Libraries like **pytest-docker** make it straightforward to wire this into a pytest run.
+
+For Python projects **testcontainers-python** is worth knowing about. It programmatically spins up Docker containers
+from within your test suite so the infrastructure lives alongside the tests rather than in a separate configuration
+file. The setup overhead is front-loaded but once it is in place adding new integration tests is no harder than writing
+unit tests.
+
+#### End to End Tests
+
+End-to-end tests exercise your system the way a real user would. For web applications **Playwright** is the current tool
+of choice. It supports Python, JavaScript and TypeScript, runs headlessly in CI and has a codegen feature that records
+browser interactions and outputs test code automatically. That last feature makes it a natural fit for AI assisted
+workflows where you can describe a user journey and generate a skeleton test to refine from.
+
+The honest caveat is that end-to-end tests are brittle by nature. They break when UIs change, when test data drifts and
+when timing assumptions turn out to be wrong. Keeping the suite small and focused on critical user journeys rather than
+comprehensive coverage is usually the right call.
