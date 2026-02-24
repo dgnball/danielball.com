@@ -5,14 +5,13 @@ title: About Me 🧐
 
 <link rel="stylesheet" href="/assets/css/custom.css">
 
-![Daniel Ball](/assets/images/head-shot.jpeg){: .headshot}
-Hello and Welcome 👋 You've reached my [portfolio](portfolio) site. 
-This is where I put my best foot forward 👞 and persuade you (the reader), that you should hire me to work on
-your software project.
+![Daniel Ball](/assets/images/head-shot.jpeg){: .headshot} Hello and Welcome 👋 You've reached my [portfolio](portfolio)
+site. This is where I put my best foot forward 👞 and persuade you (the reader), that you should hire me to work on your
+software project.
 
 ### Why should you hire me?
 
-🌟 A strong track record in crafting solutions for a wide range of organisations. See my [portfolio](portfolio) 
+🌟 A strong track record in crafting solutions for a wide range of organisations. See my [portfolio](portfolio)
 
 🌟 20 years of experience in software development, agile management and system architecture. See my [journey](journey)
 
@@ -20,7 +19,8 @@ your software project.
 
 ### What I do?
 
-🌟 **I deliver working software systems!** This includes requirements gathering, system architecture design and full-scale implementation
+🌟 **I deliver working software systems!** This includes requirements gathering, system architecture design and
+full-scale implementation
 
 🌟 Skills are T-shaped (broad knowledge) but I specialise in **Python** and **Google Cloud** implementations
 
@@ -28,14 +28,16 @@ your software project.
 
 I work through my consultancy company, [Westsmith](https://westsmith.co.uk) on a contract or freelance basis.
 
-If you would like to discuss a project, please get in touch. The best place to reach me is on [LinkedIn](https://www.linkedin.com/in/daniel-ball-consultant/), but you
-can also contact me by emailing [info@westsmith.co.uk](mailto:info@westsmith.co.uk)
+If you would like to discuss a project, please get in touch. The best place to reach me is on
+[LinkedIn](https://www.linkedin.com/in/daniel-ball-consultant/), but you can also contact me by emailing
+[info@westsmith.co.uk](mailto:info@westsmith.co.uk)
 
 ### Noteworthy
 
 🌟 Recently, I have worked with the **University of Cambridge** 🎓 and the **Office for National Statistics** 📊
 
-🌟 I hold the [Google Cloud Certified Professional Cloud Developer certification](https://www.credly.com/badges/ffabea96-6a85-4ee6-97ee-52e36ae0aa59)
+🌟 I hold the
+[Google Cloud Certified Professional Cloud Developer certification](https://www.credly.com/badges/ffabea96-6a85-4ee6-97ee-52e36ae0aa59)
 
 ### Tech I've worked with ⬇️
 

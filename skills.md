@@ -129,6 +129,3 @@ title: Skills 🛠️
 - ActiveMQ
 - Spring Boot
 - OpenShift
-
-
-
