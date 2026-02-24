@@ -3,6 +3,16 @@ layout: page
 title: AI Assisted Coding
 ---
 
+<div style="font-family:monospace;background:#111;color:#ccc;border-radius:8px;padding:1.25rem 1.5rem;margin:1.5rem 0;max-width:480px;font-size:0.82rem;line-height:1.7;">
+  <div style="margin-bottom:0.6rem;"><span style="color:#ff5f57;">●</span> <span style="color:#febc2e;">●</span> <span style="color:#28c840;">●</span></div>
+  <span style="color:#7c8;">$</span> claude "refactor the auth module"<br>
+  <span style="color:#666;">Reading 9 files…</span><br>
+  <span style="color:#7c8;">✓</span> auth.py — simplified token logic<br>
+  <span style="color:#7c8;">✓</span> tests/test_auth.py — 6 new cases added<br>
+  <span style="color:#7c8;">✓</span> README.md — updated<br>
+  <span style="color:#555;">3 files changed, 94 insertions(+), 71 deletions(-)</span>
+</div>
+
 This is my attempt to make sense of the AI-assisted coding landscape. I wrote this to educate myself and as a reference
 for anyone trying to navigate this space without the hype.
 
@@ -13,23 +23,29 @@ for anyone trying to navigate this space without the hype.
 ## Resources or TLDR
 
 Don’t want to read this or don’t have the time. Here’s a list of resources you might find generally useful or
-interesting:
+interesting...
 
-- [Awsome list-style list of AI coding tools](https://github.com/sourcegraph/awesome-code-ai)
+**AI people**
+
+- [Peter Steinberger (the man behind OpenClaw)](https://steipete.me/)
+- [Andrej Karpathy(the person who came up with "Vibecoding)](https://karpathy.ai/)
+- [Addy Osmani (Director of Google Cloud AI)](https://addyosmani.com/blog/ai-coding-workflow/)
+
+**Docs**
+
 - [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
 - [Codex docs](https://developers.openai.com/codex)
 - [Gemini Code Assist Docs](https://developers.google.com/gemini-code-assist/docs/overview)
+- [MCP docs](https://modelcontextprotocol.io/docs/getting-started/intro)
 - [Cursor Docs](https://cursor.com/docs)
+
+**Misc**
+
 - [8 best AI coding tools for developers (n8n blog)](https://blog.n8n.io/best-ai-for-coding/)
 - [ChatGPTCoding on Reddit](https://www.reddit.com/r/ChatGPTCoding/)
 - [Vibecoding on Reddit](https://www.reddit.com/r/vibecoding/)
-- [My LLM coding workflow going into 2026 (Addy Osmani's blog)](https://addyosmani.com/blog/ai-coding-workflow/)
-- [Andrej Karpathy's homepage (the person who came up with "Vibecoding)](https://karpathy.ai/)
 - [Beyond Vibe Coding book](https://beyond.addy.ie/)
 - [Mind the gap: Closing the AI trust gap for developers (StackOverflow blog)](https://stackoverflow.blog/2026/02/18/closing-the-developer-ai-trust-gap/)
-- [Vibe coding - Wikipedia](https://en.wikipedia.org/wiki/Vibe_coding)
-- [Homepage for Peter Steinberger (the man behind OpenClaw)](https://steipete.me/)
-- [MCP docs](https://modelcontextprotocol.io/docs/getting-started/intro)
 
 ## AI Coding Glossary
 
@@ -41,7 +57,7 @@ See also [AI Glossary](./ai_glossary)
 
 - **Cargo-Cult Programming** — Writing code by copying patterns or snippets without understanding why they work, hoping
   the result will behave correctly by association. Named after the anthropological phenomenon of mimicking the form of
-  something without grasping its function. Stack Overflow made this easy; AI tools risk amplifying it further.
+  something without grasping its function. Stack Overflow made this easy. AI tools risk amplifying it further.
 
 - **Context Window** — The maximum amount of text (code, instructions, conversation history) an AI model can "see" at
   once when generating a response. Larger context windows allow tools like Claude Code to reason across more files
@@ -167,11 +183,10 @@ mechanical labour of coding largely disappears.
 
 ## How AI Coding Assistants Work
 
-It is easier to use an AI assistent if you first understand how they work (that's why this section comes first).
+It is easier to use an AI assistant if you first understand how they work. That's why this section comes first...
 
-The category label "AI coding assistant" currently covers everything from a light autocomplete plugin to a fully
-autonomous agent that can clone a repository, understand its architecture, write new features, run the tests and open a
-pull request. Choosing the right tool depends entirely on what you're trying to do.
+The category label **"AI coding assistant"** currently covers everything from a light autocomplete plugin to a fully
+autonomous agent. Choosing the right tool depends entirely on what you're trying to do.
 
 ### The Spectrum of Assistance
 
@@ -376,20 +391,20 @@ Useful habits include:
 
 ### AI Coding Tools
 
-| Tool                                                      | Description                                                                                                                                                                                                                                             |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Claude Code](https://www.anthropic.com/claude-code)      | Uses Anthropic models. Agentic coding tool that lives in your terminal. Reads, edits and reasons across entire codebases.                                                                                                                               |
-| [OpenAI Codex CLI](https://github.com/openai/codex)       | Open source. Uses OpenAI's models. Terminal coding agent built in Rust. Reads, edits and runs code in your local directory with configurable approval modes. Supports multimodal input, web search and MCP.                                             |
-| [Cursor](https://www.cursor.com)                          | AI-native code editor (VS Code fork). Composer mode handles multi-file edits autonomously; Tab completion predicts entire functions.                                                                                                                    |
-| [Lovable](https://lovable.dev)                            | Browser-based platform that turns natural language prompts into full-stack React/Supabase apps. No local setup required.                                                                                                                                |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Open source. Uses Google's Gemini models. Terminal coding agent that uses a ReAct loop to plan and execute multi-step tasks from your shell. Integrates with MCP servers and Google Search.                                                             |
-| [GitHub Copilot](https://github.com/features/copilot)     | Supports multiple models — GPT-4o, Claude and Gemini are all switchable. Integrated into VS Code, JetBrains and the GitHub ecosystem. Covers inline completions, chat, agent mode and PR summaries.                                                     |
-| [Devin](https://devin.ai)                                 | Built on OpenAI models with proprietary RL fine-tuning. Autonomous software engineer that operates independently via Slack or a VSCode-style interface, spawning its own environment to plan, code, test and open PRs.                                  |
-| [Replit](https://replit.com)                              | Uses multiple models including Claude and GPT-4o. Browser-based IDE with built-in hosting, databases and deployments. Replit Agent can build and deploy full-stack apps from a prompt.                                                                  |
-| [Amazon Q Developer](https://aws.amazon.com/q/developer/) | Uses Amazon's proprietary models. AWS-native AI coding assistant with deep integration into AWS services and IDEs. Includes a `/transform` feature for upgrading Java/.NET/COBOL codebases.                                                             |
-| [Aider](https://aider.chat)                               | Open source. Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). Terminal coding agent. Git-native by design — stages changes and writes commit messages automatically.                                        |
-| [Cline](https://cline.bot)                                | Open source. Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). VS Code extension acting as an agentic coding assistant. Shows diffs inline and requires explicit approval before running terminal commands.  |
-| [OpenCode](https://opencode.ai)                           | Open source. Model-agnostic — connects to 75+ providers including Claude, GPT, Gemini and local models; or log in with an existing Copilot or ChatGPT subscription. Terminal, IDE and desktop coding agent. LSP-aware, multi-session and privacy-first. |
+| Tool                                                      | Description                                                                                                                                                                                                                                                                                                                         |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Claude Code](https://www.anthropic.com/claude-code)      | Uses Anthropic models. Agentic coding tool that lives in your terminal. Reads, edits and reasons across entire codebases.                                                                                                                                                                                                           |
+| [Codex CLI](https://github.com/openai/codex)              | Open source. Uses OpenAI's models. Terminal coding agent built in Rust. Reads, edits and runs code in your local directory with configurable approval modes. Supports multimodal input, web search and MCP.                                                                                                                         |
+| [Cursor](https://www.cursor.com)                          | AI-native code editor (VS Code fork). Composer mode handles multi-file edits autonomously. Tab completion predicts entire functions.                                                                                                                                                                                                |
+| [Lovable](https://lovable.dev)                            | Browser-based platform that turns natural language prompts into full-stack React/Supabase apps. No local setup required.                                                                                                                                                                                                            |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Open source. Uses Google's Gemini models. Terminal coding agent that uses a ReAct loop to plan and execute multi-step tasks from your shell. Integrates with MCP servers and Google Search.                                                                                                                                         |
+| [GitHub Copilot](https://github.com/features/copilot)     | The OG AI coding tool but a bit out of fashion. Not to be confused with all the other [Copilots](https://www.reddit.com/r/microsoft/comments/1b83j9t/is_microsoft_copilot_subscription_different_than/). Integrated into VS Code, JetBrains and the GitHub ecosystem. Covers inline completions, chat, agent mode and PR summaries. |
+| [Devin](https://devin.ai)                                 | Built on OpenAI models with proprietary RL fine-tuning. Autonomous software engineer that operates independently via Slack or a VSCode-style interface, spawning its own environment to plan, code, test and open PRs.                                                                                                              |
+| [Replit](https://replit.com)                              | Uses multiple models including Claude and GPT-4o. Browser-based IDE with built-in hosting, databases and deployments. Replit Agent can build and deploy full-stack apps from a prompt.                                                                                                                                              |
+| [Amazon Q Developer](https://aws.amazon.com/q/developer/) | Uses Amazon's proprietary models. AWS-native AI coding assistant with deep integration into AWS services and IDEs. Includes a `/transform` feature for upgrading Java/.NET/COBOL codebases.                                                                                                                                         |
+| [Aider](https://aider.chat)                               | Open source. Model-agnostic. Terminal coding agent. Stages git changes and writes commit messages automatically.                                                                                                                                                                                                                    |
+| [Cline](https://cline.bot)                                | Open source. Model-agnostic. VS Code extension acting as an agentic coding assistant. Shows diffs inline and requires explicit approval before running terminal commands.                                                                                                                                                           |
+| [OpenCode](https://opencode.ai)                           | Open source. Model-agnostic — connects to other models or log in with an existing Copilot or ChatGPT subscription. Terminal, IDE and desktop coding agent. LSP-aware, multi-session and privacy-first.                                                                                                                              |
 
 ### Models that perform well at coding
 
