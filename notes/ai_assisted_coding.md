@@ -51,10 +51,24 @@ See also [AI Glossary](./ai_glossary)
   from simple symbol lookup (early IDEs) to ML-ranked suggestions (PyCharm) to full-line and multi-line generation
   (GitHub Copilot).
 
+- **Frontier models** are the most advanced, large-scale, general-purpose AI systems that push the boundaries of current
+  capabilities in reasoning, multimodality and scale. Typically trained using over computational operations (FLOPs),
+  these high-cost models from companies like OpenAI, Anthropic and Google set the benchmark for intelligence and are
+  considered the foundation of the AI industry.
+
 - **[MCP (Model Context Protocol)](https://modelcontextprotocol.io/docs/getting-started/intro)** — An open standard for
   connecting AI agents to external data sources and tools. With MCP, a coding assistant isn't limited to your local
   files — it can be connected to Jira, Slack, Google Drive, Figma, or any custom internal tooling that exposes an MCP
   server. Increasingly supported across Claude Code, Cursor, Windsurf and other agentic tools.
+
+- [**Open-weight AI models**](https://opensource.org/ai/open-weights) are AI systems that provide public access to their
+  trained parameters (weights), allowing users to download, run locally and fine-tune models without needing to train
+  them from scratch. Unlike fully open-source models, the underlying code or pre-training data is often not shared.
+
+- [**Open-source AI models**](https://opensource.org/ai/open-source-ai-definition) are machine learning models with
+  publicly accessible weights, architecture and training code, allowing for free, customizable deployment, data privacy
+  and no vendor lock-in. Popular, high-performance, and versatile models include Llama 3, DeepSeek V3, Mistral 7B and
+  Stable Diffusion.
 
 - **Prompt Engineering** — The practice of carefully crafting inputs to an AI model to get better outputs. In coding
   contexts this might mean specifying the language, describing constraints, providing examples of desired style or
@@ -421,57 +435,47 @@ Several benchmarks track coding and general model capability. The most useful on
 
 The table below shows the current SWE-bench leaderboard (February 2026), ranked by resolution rate.
 
-| Model                              | Org         | % Resolved | Avg. cost |
-| ---------------------------------- | ----------- | ---------- | --------- |
-| Claude 4.5 Opus (high reasoning)   | Anthropic   | 76.8%      | $0.75     |
-| Gemini 3 Flash (high reasoning)    | Google      | 75.8%      | $0.36     |
-| MiniMax M2.5 (high reasoning)      | MiniMax     | 75.8%      | $0.07     |
-| Claude Opus 4.6                    | Anthropic   | 75.6%      | $0.55     |
-| GLM-5 (high reasoning)             | Zhipu AI    | 72.8%      | $0.53     |
-| GPT-5-2 (high reasoning)           | OpenAI      | 72.8%      | $0.47     |
-| GPT 5.2 Codex                      | OpenAI      | 72.8%      | $0.45     |
-| Claude 4.5 Sonnet (high reasoning) | Anthropic   | 71.4%      | $0.66     |
-| Kimi K2.5 (high reasoning)         | Moonshot AI | 70.8%      | $0.15     |
-| DeepSeek V3.2 (high reasoning)     | DeepSeek    | 70.0%      | $0.45     |
-| Claude 4.5 Haiku (high reasoning)  | Anthropic   | 66.6%      | $0.33     |
-| GPT-5 Mini                         | OpenAI      | 56.2%      | $0.05     |
+| Model                              | Org            | % Resolved | Avg. cost |
+| ---------------------------------- | -------------- | ---------- | --------- |
+| Claude 4.5 Opus (high reasoning)   | 🇺🇸 Anthropic   | 76.8%      | $0.75     |
+| Gemini 3 Flash (high reasoning)    | 🇺🇸 Google      | 75.8%      | $0.36     |
+| MiniMax M2.5 (high reasoning)      | 🇨🇳 MiniMax     | 75.8%      | $0.07     |
+| Claude Opus 4.6                    | 🇺🇸 Anthropic   | 75.6%      | $0.55     |
+| GLM-5 (high reasoning)             | 🇨🇳 Zhipu AI    | 72.8%      | $0.53     |
+| GPT-5-2 (high reasoning)           | 🇺🇸 OpenAI      | 72.8%      | $0.47     |
+| GPT 5.2 Codex                      | 🇺🇸 OpenAI      | 72.8%      | $0.45     |
+| Claude 4.5 Sonnet (high reasoning) | 🇺🇸 Anthropic   | 71.4%      | $0.66     |
+| Kimi K2.5 (high reasoning)         | 🇨🇳 Moonshot AI | 70.8%      | $0.15     |
+| DeepSeek V3.2 (high reasoning)     | 🇨🇳 DeepSeek    | 70.0%      | $0.45     |
+| Claude 4.5 Haiku (high reasoning)  | 🇺🇸 Anthropic   | 66.6%      | $0.33     |
+| GPT-5 Mini                         | 🇺🇸 OpenAI      | 56.2%      | $0.05     |
 
 _Source: [swebench.com](https://www.swebench.com/), February 2026. Scores use the mini-SWE-agent v2.0.0 scaffold._
 
-### Chinese models: a separate conversation
+### Notes on Chinese models
 
-DeepSeek and Qwen (from Alibaba) deserve their own section because they've changed the economics of the space in a way
-that can't be ignored.
+These are open-weight, compete with but are generally smaller than frontier models and originate from China:
 
-DeepSeek V3 and R1 arrived in late 2024 and early 2025 and matched or beat frontier Western models on key coding
-benchmarks — at a fraction of the reported training cost. Qwen Coder is competitive at its size class. Both are open
-weight, meaning you can download and run them yourself.
+- MiniMax from MiniMax
+- GLM from Zhipu AI (z.ai)
+- Kimi from Moonshot AI
+- DeepSeek from DeepSeek
+- Qwen from Alibaba
 
-**The case for using them:**
+Pros:
 
-- API pricing is significantly cheaper than OpenAI or Anthropic
-- Open weight models can be run locally with no API costs at all
+- API pricing is significantly cheaper than OpenAI, Anthropic or Google
+- Open weight models can be run locally with no API costs at all or on hourly cloud compute with a trusted partner
 - Performance on coding tasks is genuinely competitive
 
-**The case for caution:**
+Cons:
 
-- If you use the hosted API versions, your code is processed on Chinese infrastructure. For anything sensitive —
-  commercial IP, government work, client code — this is a meaningful concern
-- "Open weight" is not the same as open source. The weights are available but the training data and full methodology
-  aren't always disclosed
-- The models haven't had the same level of independent security auditing as Western counterparts
-
-The practical split: DeepSeek and Qwen running locally via Ollama is a reasonable choice for personal projects and
-experimentation. The hosted API versions require a more deliberate decision about what code you're comfortable sending
-where.
-
-| Model          | Provider         | Open Weight | Data Concerns               | Cost Tier |
-| -------------- | ---------------- | ----------- | --------------------------- | --------- |
-| Claude Sonnet  | Anthropic        | No          | Low                         | High      |
-| GPT-4o         | OpenAI           | No          | Low-Medium                  | High      |
-| Gemini 2.5 Pro | Google           | No          | Low-Medium                  | Medium    |
-| DeepSeek V3    | DeepSeek (China) | Yes         | High (hosted) / Low (local) | Low       |
-| Qwen Coder     | Alibaba (China)  | Yes         | High (hosted) / Low (local) | Low       |
+- If you use the hosted API versions, your code is processed on Chinese infrastructure. For anything sensitive, this is
+  a meaningful concern
+- The models may not have had the same level of independent security auditing as Western counterparts
+- It is widely believed that some or all of these models are at least partially built using "distillation" (see
+  [here](https://www.theregister.com/2026/02/24/anthropic_misanthropic_chinese_ai_labs/)). As this could be considered a
+  form of theft, their use may be frowned upon if working with certain groups
 
 ## Building in a Safety Net
 
@@ -517,9 +521,9 @@ logical security flaws rather than pattern-based ones.
 A reasonable minimal setup for vibe-coded projects:
 
 1. Generate code with your tool of choice
-1. Run Bandit or Semgrep automatically via pre-commit hook
-1. Run a critic agent review for anything going to production
-1. Human sign-off before merge
+2. Run Bandit or Semgrep automatically via pre-commit hook
+3. Run a critic agent review for anything going to production
+4. Human sign-off before merge
 
 GitHub Actions is the natural glue for steps 2 and 3 in a team setting.
 
