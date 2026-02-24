@@ -1,5 +1,0 @@
-- Add some screenshots
-- Better detail about how coding agents work
-- Mention open claw
-- Mention codex model
-- Remove m dashes
