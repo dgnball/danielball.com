@@ -28,7 +28,7 @@ interesting...
 **AI experts**
 
 - [Peter Steinberger - the guy who wrote OpenClaw](https://steipete.me/)
-- [Andrej Karpathy - the person who coined the term "Vibecoding](https://karpathy.ai/)
+- [Andrej Karpathy - the person who coined the term "Vibecoding"](https://karpathy.ai/)
 - [Addy Osmani - Director of Google Cloud AI](https://addyosmani.com/blog/ai-coding-workflow/)
 
 **Docs**
@@ -114,10 +114,10 @@ dramatically faster. The shift to hyperlinking meant you could follow a rabbit w
 than flicking through an index.
 
 **Copying from Stack Overflow, GitHub & Open Source** Arguably the most impactful "tool" of the mid-2000s to 2010s
-developer toolkit. Developers were simultaneously mining [GitHub](https://github.com) and reading through open source
-repositories on [Stack Overflow](https://stackoverflow.com). Stack Overflow gave you explained snippets and GitHub gave
+developer toolkit. Developers were simultaneously mining [GitHub](https://github.com) for open source repositories and
+reading through [Stack Overflow](https://stackoverflow.com). Stack Overflow gave you explained snippets and GitHub gave
 you full working implementations you could study in context. For coding capability, today's AI models are heavily
-dependent on the content of Stack Overflow and Github.
+dependent on the content of Stack Overflow and GitHub.
 
 **Early Code Completion (2000s IDEs)** Tools like early [Eclipse](https://eclipseide.org),
 [Visual Studio](https://visualstudio.microsoft.com) and [IntelliJ](https://www.jetbrains.com/idea/) began offering basic
@@ -138,7 +138,7 @@ more like pair programming. The impact was immediate. Others followed, marking a
 symbol ranking toward tools that could genuinely reason about developer intent.
 
 **Copying and Pasting into ChatGPT (Pre-Agentic)** When [ChatGPT](https://chatgpt.com) launched publicly in late 2022 it
-changed developer workflows overnight, even in its most primitive form. The pattern was, copy a function or error
+changed developer workflows overnight, even in its most primitive form. The pattern was: copy a function or error
 message, paste it into the chat window, describe what you wanted and get back working code with an explanation. For the
 first time you could have a conversation about your code, ask follow-up questions, request a refactor or say "that
 didn't work, here's the error." It was a dramatic leap over Stack Overflow for anything non-trivial, because the
@@ -298,7 +298,7 @@ contain anything you'd want a new developer to know before touching your codebas
 - Which commands to run to start the dev server
 
 ... think of it as your project's onboarding document for the AI. The difference between a session that starts with this
-context and one without, is you stop spending tokens and wasting time re-explaining the same thing.
+context and one without, is that you stop spending tokens and wasting time re-explaining the same thing.
 
 Beyond project-level files, most tools allow you to configure **permission levels** (whether the assistant can run shell
 commands, edit files autonomously or only make suggestions), **model selection** (trading off speed against quality
@@ -447,7 +447,7 @@ Cons:
 
 ## Building in a Safety Net
 
-Vibe coding and other types of automated code generation, introduce the risk that you end up with unmaintainable code,
+Vibe coding and other types of automated code generation introduce the risk that you end up with unmaintainable code,
 non-working code or working code containing security or performance issues.
 
 This is where automated tooling becomes not just useful but arguably essential. In my opinion, there are four levels to
@@ -561,7 +561,7 @@ Unit testing is non-negotiable in modern software development, and AI tools have
 achievable than ever with an iterative approach rather than a one-shot attempt. Feed the AI your function signatures,
 docstrings and intent, then ask it to surface edge cases, boundary conditions and failure modes you might not have
 considered. Also, consider hand-writing or partially hand-writing some tests to stay close to what the code is actually
-supposed to do
+supposed to do.
 
 Aim for above 90% coverage but treat the test suite as documentation as much as a metric. Does it describe your problem
 domain and tell a story about what the system should do? If you find yourself patching function calls, it is usually a
@@ -638,8 +638,8 @@ push, such as a unit test suite.
 Integration tests, end-to-end tests and contract tests all fall into this category. They are slower to run, harder to
 maintain and require more infrastructure to support, but they catch an entirely different class of bug to unit tests.
 
-Potentially, quick-running tests tell you nothing about whether the system works correctly when connected to a real
-database, a third-party API or another service in your system.
+Purely quick-running tests tell you nothing about whether the system works correctly when connected to a real database,
+a third-party API or another service in your system.
 
 #### Integration Tests
 
