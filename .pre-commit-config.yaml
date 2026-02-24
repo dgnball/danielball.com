@@ -10,7 +10,7 @@ repos:
       - id: mixed-line-ending
         args: [--fix=lf]
       - id: check-added-large-files
-        args: [--maxkb=500]
+        args: [--maxkb=700]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.8

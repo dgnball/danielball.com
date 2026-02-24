@@ -56,6 +56,11 @@ See also [AI Glossary](./ai_glossary)
   these high-cost models from companies like OpenAI, Anthropic and Google set the benchmark for intelligence and are
   considered the foundation of the AI industry.
 
+- **[Language Server Protocol (LSP)](https://en.wikipedia.org/wiki/Language_Server_Protocol)** is an open,
+  JSON-RPC-based protocol for use between source-code editors or integrated development environments (IDEs) and servers
+  that provide "language intelligence tools". The goal of the protocol is to allow programming language support to be
+  implemented and distributed independently of any given editor or IDE.
+
 - **[MCP (Model Context Protocol)](https://modelcontextprotocol.io/docs/getting-started/intro)** — An open standard for
   connecting AI agents to external data sources and tools. With MCP, a coding assistant isn't limited to your local
   files — it can be connected to Jira, Slack, Google Drive, Figma, or any custom internal tooling that exposes an MCP
@@ -160,36 +165,144 @@ trust and verifiability: how do you confidently delegate to a system you can't f
 likely be the ones that make their reasoning transparent enough that engineers stay in control of the craft, even as the
 mechanical labour of coding largely disappears.
 
+## How AI Coding Assistants Work
+
+It is easier to use an AI assistent if you first understand how they work (that's why this section comes first).
+
+The category label "AI coding assistant" currently covers everything from a light autocomplete plugin to a fully
+autonomous agent that can clone a repository, understand its architecture, write new features, run the tests and open a
+pull request. Choosing the right tool depends entirely on what you're trying to do.
+
+### The Spectrum of Assistance
+
+It helps to think of AI coding assistants as sitting on a spectrum from **ambient/reactive** at one end to **agentic**
+at the other.
+
+At the reactive end, tools like **GitHub Copilot** (in its traditional form) sit close to your cursor. They observe what
+you're typing, infer your intent from the surrounding code and comments, and suggest completions inline. The interaction
+model is passive: you write, it suggests, you accept or ignore.
+
+At the agentic end, tools like **Claude Code** and **Lovable** take a fundamentally different approach. Rather than
+predicting the next token of your code, they reason about goals, decompose tasks into steps, invoke tools, observe the
+results and decide what to do next. This is what makes them agents rather than autocomplete engines.
+
+### How Agentic Tools Work
+
+The agentic coding loop:
+
+<img src="/assets/images/notes/agentic_coding_loop.png">
+
+The engine underneath an agentic coding assistant is a large language model (an LLM) equipped with a set of tools it can
+call. When you give Claude Code a task, it doesn't just generate text — it generates _decisions about what actions to
+take_. These might include reading a file, running a shell command, searching the codebase for a pattern, fetching
+documentation from the web or editing a file. Each action produces a result that is fed back into the model's context,
+informing the next decision.
+
+An agentic tool reads your codebase, edits files, runs commands and integrates with your development tools. This
+description sounds simple, but the underlying mechanism is a continuous loop: the model maintains a running view of the
+task, decides on the next tool call, executes it, processes the result and iterates until the task is complete or it
+needs your input.
+
+The key insight is that the model's intelligence is applied repeatedly, with fresh information each time, informed by
+real results from the environment. This is what allows agentic tools to handle genuinely complex, multi-file tasks.
+Project-specific context can be injected into this loop at initialisation. Claude Code, for instance, reads a
+`CLAUDE.md` file from your project root at the start of every session, shaping every decision it makes.
+
+### Generation, Not Assistance
+
+Tools like Lovable occupy an interesting and distinct position on this spectrum. Where Claude Code is designed to work
+_within_ your existing codebase, Lovable is primarily a **generative** tool aimed at building applications from scratch
+through conversation. You describe what you want, and it produces a full-stack application.
+
+The difference in philosophy is significant. Lovable is optimised for the early, greenfield phase of a project, where
+you're moving quickly from idea to working prototype and the codebase doesn't yet have accumulated conventions or
+complexity. Claude Code is optimised for the sustained development phase. Both are powered by LLMs with tool access, but
+they are designed for different moments in a project's life and make different trade-offs.
+
+### AI-Native IDEs
+
+Tools like **Cursor** ([cursor.com](https://www.cursor.com)) replace the editor itself rather than operating in the
+terminal or as an extension. Built as a fork of VS Code, Cursor embeds AI as a first-class participant in how you
+navigate, write and refactor code.
+
+### The Role of the Context Window
+
+Every LLM-based tool, regardless of where it sits on the spectrum, is fundamentally constrained by its context window.
+For agentic tools, managing this window intelligently is one of the core engineering challenges.
+
+A large repository can contain millions of tokens worth of code. The model can't read all of it at once. Agentic tools
+therefore need strategies for deciding _what to include_ in the context at any moment. Common approaches include
+semantic search (finding the most relevant files by embedding similarity), language server protocol (LSP) integration to
+understand code structure and relationships and explicit user-directed context attachment (the `@filename` pattern).
+[OpenCode](https://opencode.ai/) automatically loads the right LSPs for the LLM, which is one example of how tools are
+increasingly automating this context management on your behalf.
+
+The context window also explains why session management matters. Longer sessions accumulate more history, which consumes
+window space that could otherwise be used for relevant code. Well-designed tools handle this through summarisation,
+selective history pruning and the ability to resume sessions with their key decisions intact without replaying every
+token.
+
+### Model Context Protocol
+
+One architectural development worth understanding is the **Model Context Protocol (MCP)**, an open standard for
+connecting AI agents to external data sources. With MCP, a coding assistant isn't limited to your local files. It can be
+connected to your Jira board, your Slack workspace, your Google Drive, your Figma designs or any custom internal tooling
+that exposes an MCP server.
+
+This is significant because it shifts the agent's effective context from "what's in this repository" to "what's in your
+entire development environment." The agent becomes a genuine participant in your workflow rather than an isolated tool
+that only knows about code files.
+
+This also speaks to the growing utility of AI coding tools to do a lot more than editing code.
+[OpenClaw](https://openclaw.ai/) is an agent that takes this paradigm to extremes.
+
+### Putting It Together
+
+The fundamental difference between a tool like GitHub Copilot and a tool like Claude Code or OpenCode is the degree to
+which reasoning is externalised from a single forward pass into a multi-step loop with real-world tool use. Copilot
+applies intelligence once, inline, in a fraction of a second. An agentic tool applies intelligence repeatedly, across
+minutes or longer, with each step informed by the results of the last.
+
+Both are useful. The right choice depends on the task. For fast, flow-state coding where you want suggestions without
+interruption, a reactive autocomplete tool is often the better fit. For complex, multi-file work where you need
+something that can genuinely understand a problem and work toward a solution, an agentic tool is more appropriate.
+
+For the earliest phase of a project, a generative tool like Lovable may be the right starting point before you hand the
+codebase over to something with deeper editing and reasoning capabilities.
+
 ## How to Use an AI Coding Assistant
 
-There's a temptation, when you first get access to an AI coding assistant, to treat it like a very fast search engine.
-You type a vague question, get something back and move on. That approach works for simple, isolated tasks, but it misses
-the point entirely. Getting real value from these tools requires a shift in how you think about the interaction — less
-like querying a database, and more like briefing a capable but context-blind colleague who has just walked into your
-project for the first time.
+**"_Imagine you're talking to a capable but context-blind colleague who has just walked into your project for the first
+time..."_**
 
 ### Starting with the Right Mental Model
 
-AI coding assistants operate within a **context window** — a finite amount of text they can "see" at any one time.
-Everything relevant to your task needs to fit within that window: your question, the code you're working on, any files
-you've shared, prior conversation and the assistant's own responses. When the context fills up, older information falls
-away. The assistant doesn't remember last session's decisions. It doesn't know your project's conventions, your team's
-opinions or the architectural choices made six months ago — unless you tell it.
+**Context is everything. Context costs tokens. Tokens cost money!**
 
-This is the most important thing to understand about working effectively with these tools. **Context is everything, and
-context costs tokens.**
+AI coding assistants operate within a finite amount of text they can "see" at any one time. Your questions, the code
+you're working on, any files you've shared, prior conversation and the assistant's own responses need to fit within that
+window. When the context fills up, older information falls away.
+
+The assistant doesn't remember last session's decisions. It doesn't know your project's conventions, your team's
+opinions or the architectural choices made six months ago, unless you tell it.
 
 ### Customising Your Assistant
 
 Most AI coding tools offer several layers of customisation, and taking the time to set these up properly pays dividends
-on every subsequent interaction.
+on every interaction.
 
 **System-level or project-level instructions** are the most powerful lever you have. In Claude Code, for instance, you
 can create a `CLAUDE.md` file in the root of your project. This file is read at the start of every session and can
-contain anything you'd want a new developer to know before touching your codebase: the tech stack, coding conventions,
-which directories to leave alone, how tests are structured, which commands to run to start the dev server. Think of it
-as your project's onboarding document for the AI. The difference between a session that starts with this context and one
-without is striking — you stop spending tokens re-explaining the basics every time.
+contain anything you'd want a new developer to know before touching your codebase, such as:
+
+- The tech stack
+- Coding conventions,
+- Which directories to leave alone
+- How tests are structured
+- Which commands to run to start the dev server
+
+... think of it as your project's onboarding document for the AI. The difference between a session that starts with this
+context and one without is you stop spending tokens and wasting time re-explaining the same thing.
 
 Beyond project-level files, most tools allow you to configure **permission levels** (whether the assistant can run shell
 commands, edit files autonomously or only make suggestions), **model selection** (trading off speed against quality
@@ -197,23 +310,23 @@ depending on the task) and **tool access** (whether the assistant can browse the
 or Google Drive via integrations such as MCP servers).
 
 **Custom commands and slash commands** are another underused feature. Claude Code lets you define custom `/commands`
-that encapsulate common workflows — running your test suite, generating a summary of recent changes or triggering a code
-review prompt against your own standards. These are tiny upfront investments that save disproportionate amounts of time
-over a project's life.
+that encapsulate common workflows like
+
+- Running your test suite
+- Generating a summary of recent changes
+- Triggering a code review prompt against your own standards
 
 ### The Token Economy: Where People Go Wrong
 
-Tokens are the currency of AI interactions. You're charged for them financially (if you're on a usage-based plan) and
-constrained by them architecturally. Wasting tokens on unnecessary content makes the tool slower, more expensive and
-sometimes less accurate as useful information gets crowded out. Here are the most common mistakes:
+Tokens are the currency of AI interactions. You're charged for them financially and constrained by them architecturally.
+Wasting tokens on unnecessary content makes the tool slower, more expensive and sometimes less accurate as useful
+information gets crowded out. Here are the most common mistakes:
 
 **Pasting entire files when only a function is relevant.** If you're asking about a bug in a 40-line function, you don't
-need to include the entire 800-line module. Be surgical. Use `@`-mentions in Claude Code or similar context-attachment
-features to include only what's needed.
+need to include the entire 800-line module. Be surgical.
 
 **Repeating context that's already been established.** Once you've explained your stack and architecture, you shouldn't
-keep re-stating it in every message. This is exactly what project-level markdown files solve — the context is loaded
-once, automatically.
+keep re-stating it in every message. This is also what project-level markdown files solve.
 
 **Ignoring conversation history bloat.** Long, meandering sessions accumulate tokens fast. Every message in the
 conversation history is re-sent to the model on each turn. If you've spent thirty messages debugging a side issue,
@@ -231,8 +344,6 @@ potentially made changes) on the wrong approach.
 ### Planning as a First-Class Activity
 
 One of the biggest mindset shifts in working well with AI coding assistants is learning to plan _before_ you prompt.
-This feels counterintuitive — wasn't the whole point to move faster? — but unplanned sessions are where the real time
-gets lost.
 
 Before starting a significant task, it's worth spending a few minutes writing down in plain language what you're trying
 to achieve, what constraints apply and what a successful outcome looks like. You can put this directly into your prompt,
@@ -248,176 +359,40 @@ logging why certain approaches were chosen and a `PROGRESS.md` tracking what's d
 every new session dramatically more productive because the assistant has genuine context to work with rather than having
 to infer everything from the code alone.
 
-The payoff is that you stop treating every session as a blank slate. The markdown files persist what the context window
-cannot.
-
 ### Asking Well
 
-Clear, specific prompts produce better results than vague ones. This isn't a character flaw in the AI — it's a
-reflection of how language models work. They generate responses based on the probability distribution of what plausibly
-follows your input. Vague inputs lead to generic outputs.
+Clear, specific prompts produce better results than vague ones. They generate responses based on the probability
+distribution of what plausibly follows your input. Vague inputs lead to generic outputs.
 
-Useful habits include: being explicit about what you already know (so the assistant doesn't explain it), specifying the
-format you want for the response, breaking complex tasks into discrete steps and using the `@filename` pattern to attach
-precise context rather than pasting content into the message body. If a response isn't quite right, it's almost always
-more efficient to refine the prompt than to argue with the output.
+Useful habits include:
 
-## How AI Coding Assistants Work
-
-Not all AI coding assistants are the same. The category label "AI coding assistant" currently covers everything from a
-light autocomplete plugin that suggests the next line of your function, to a fully autonomous agent that can clone a
-repository, understand its architecture, write new features, run the tests and open a pull request — all without you
-touching the keyboard. Understanding the differences matters, because the right tool depends entirely on what you're
-trying to do.
-
-### The Spectrum of Assistance
-
-It helps to think of AI coding assistants as sitting on a spectrum from **ambient/reactive** at one end to **agentic**
-at the other.
-
-At the reactive end, tools like **GitHub Copilot** (in its traditional form) sit close to your cursor. They observe what
-you're typing, infer your intent from the surrounding code and comments, and suggest completions inline. The interaction
-model is passive: you write, it suggests, you accept or ignore. Copilot is deeply integrated into the IDE and operates
-almost entirely on the immediate local context — the file you're editing, perhaps a few open tabs, your recent
-keystrokes. It does not browse the web, run your code or orchestrate multi-step tasks. Its intelligence is applied in a
-single forward pass: here is the context, what comes next?
-
-At the agentic end, tools like **Claude Code** and **Lovable** take a fundamentally different approach. Rather than
-predicting the next token of your code, they reason about goals, decompose tasks into steps, invoke tools, observe the
-results and decide what to do next. This loop — reason, act, observe, repeat — is what makes them agents rather than
-autocomplete engines.
-
-### How Agentic Tools Work
-
-The engine underneath an agentic coding assistant is a large language model (an LLM) equipped with a set of tools it can
-call. When you give Claude Code a task, it doesn't just generate text — it generates _decisions about what actions to
-take_. These might include reading a file, running a shell command, searching the codebase for a pattern, fetching
-documentation from the web or editing a file. Each action produces a result that is fed back into the model's context,
-informing the next decision.
-
-Claude Code reads your codebase, edits files, runs commands and integrates with your development tools. This description
-sounds simple, but the underlying mechanism is a continuous loop: the model maintains a running view of the task,
-decides on the next tool call, executes it, processes the result and iterates until the task is complete or it needs
-your input.
-
-The key insight is that the model's intelligence is not applied once, upfront — it's applied repeatedly, with fresh
-information each time, informed by real results from the environment. This is what allows agentic tools to handle
-genuinely complex, multi-file tasks that a reactive autocomplete tool simply couldn't approach. Project-specific context
-can be injected into this loop at initialisation — Claude Code, for instance, reads a `CLAUDE.md` file from your project
-root at the start of every session, shaping every subsequent decision the agent makes.
-
-### Lovable: Generation, Not Assistance
-
-Lovable occupies an interesting and distinct position on this spectrum. Where Claude Code is designed to work _within_
-your existing codebase — editing, debugging, extending — Lovable is primarily a **generative** tool aimed at building
-applications from scratch through conversation. You describe what you want, and it produces a full-stack application:
-component structure, styling, data model and deployment configuration.
-
-The difference in philosophy is significant. Lovable is optimised for the early, greenfield phase of a project, where
-you're moving quickly from idea to working prototype and the codebase doesn't yet have accumulated conventions or
-complexity. Claude Code is optimised for the sustained development phase — the much longer period where an existing
-codebase needs to be understood, extended and maintained. Both are powered by LLMs with tool access, but they are
-designed for different moments in a project's life and make different trade-offs.
-
-### OpenCode: Open Source Flexibility
-
-**OpenCode** ([opencode.ai](https://opencode.ai)) takes a different philosophical stance again. It is an open source AI
-coding agent that runs in your terminal, IDE or desktop, and is explicitly designed to be model-agnostic. Rather than
-locking you into a single LLM provider, OpenCode connects to any model from any provider — Claude, GPT, Gemini and more
-— with support for over 75 LLM providers and even locally running models. GitHub Copilot users can log in and use their
-existing subscription directly.
-
-This matters for developers who want the agent architecture — the reasoning loop, the tool access, the file editing —
-without being tethered to a single vendor's pricing or model quality decisions. OpenCode's approach reflects a broader
-trend in the tooling ecosystem: separating the _agent infrastructure_ (how the loop works, how tools are invoked, how
-results are processed) from the _model_ (which LLM does the reasoning). The two concerns are increasingly being treated
-as independent, and with over 100,000 GitHub stars and 2.5 million monthly developers, OpenCode is clearly meeting a
-real demand for that flexibility.
-
-### Cursor: The AI-Native IDE
-
-**Cursor** ([cursor.com](https://www.cursor.com)) takes yet another approach: rather than operating in the terminal or
-as an extension, it replaces the editor itself. Built as a fork of VS Code, Cursor embeds AI deeply into the editing
-experience — not as an add-on, but as a first-class participant in how you navigate, write and refactor code.
-
-Its most distinctive feature is **Composer**, which handles multi-file edits autonomously: you describe a goal, and it
-plans and applies changes across your codebase, showing you diffs before committing them. Tab completion goes beyond
-single lines, predicting entire functions based on surrounding context and your recent edits. The net effect is an
-editor that feels less like a tool you use and more like one that anticipates you.
-
-Cursor's commercial success — valued at around $29B — reflects how many developers prefer this deeply integrated model
-over a terminal agent. It occupies the same AI-native space as Claude Code and Windsurf but bets that most developers
-will ultimately want their AI inside their editor, not alongside it.
-
-### The Role of the Context Window
-
-Every LLM-based tool, regardless of where it sits on the spectrum, is fundamentally constrained by its context window —
-the maximum amount of text the model can process in a single pass. For agentic tools, managing this window intelligently
-is one of the core engineering challenges.
-
-A large repository can contain millions of tokens worth of code. The model can't read all of it at once. Agentic tools
-therefore need strategies for deciding _what to include_ in the context at any moment. Common approaches include
-semantic search (finding the most relevant files by embedding similarity), language server protocol (LSP) integration to
-understand code structure and relationships and explicit user-directed context attachment (the `@filename` pattern).
-OpenCode automatically loads the right LSPs for the LLM, which is one example of how tools are increasingly automating
-this context management on your behalf.
-
-The context window also explains why session management matters. Longer sessions accumulate more history, which consumes
-window space that could otherwise be used for relevant code. Well-designed tools handle this through summarisation,
-selective history pruning and the ability to resume sessions with their key decisions intact without replaying every
-token.
-
-### Model Context Protocol
-
-One architectural development worth understanding is the **Model Context Protocol (MCP)**, an open standard for
-connecting AI agents to external data sources. With MCP, a coding assistant isn't limited to your local files — it can
-be connected to your Jira board, your Slack workspace, your Google Drive, your Figma designs or any custom internal
-tooling that exposes an MCP server.
-
-This is significant because it shifts the agent's effective context from "what's in this repository" to "what's in your
-entire development environment." The agent becomes a genuine participant in your workflow rather than an isolated tool
-that only knows about code files.
-
-### Putting It Together
-
-The fundamental difference between a tool like GitHub Copilot and a tool like Claude Code or OpenCode is the degree to
-which reasoning is externalised from a single forward pass into a multi-step loop with real-world tool use. Copilot
-applies intelligence once, inline, in a fraction of a second. An agentic tool applies intelligence repeatedly, across
-minutes or longer, with each step informed by the results of the last.
-
-Both are useful. The right choice depends on the task. For fast, flow-state coding where you want suggestions without
-interruption, a reactive autocomplete tool is often the better fit. For complex, multi-file work where you need
-something that can genuinely understand a problem and work toward a solution, an agentic tool is more appropriate. And
-for the earliest phase of a project — when you're still figuring out what you're building — a generative tool like
-Lovable may be the right starting point before you hand the codebase over to something with deeper editing and reasoning
-capabilities.
-
-What's clear is that the category is moving rapidly in one direction: more agency, more tool access, more integration
-with the broader development environment and increasingly sophisticated strategies for managing the context that makes
-all of it possible.
+- Be explicit about what you already know
+- Specify the format you want for the response
+- Break complex tasks into discrete steps
+- Use the `@filename` pattern to attach precise context
+- If a response isn't right, refine the prompt rather than argue with the output
 
 ## The Landscape
 
-### 🛠️ AI Coding Tools
+### AI Coding Tools
 
-| Tool                                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Lovable](https://lovable.dev)                            | Uses Anthropic models. Browser-based vibe coding platform that turns natural language prompts into full-stack React/Supabase apps. No local setup required — ideal for rapid prototyping and non-developers. Free tier available; paid plans from around **$25/mo**.                                                                                                                                                                                                                     |
-| [Claude Code](https://www.anthropic.com/claude-code)      | Uses Anthropic models. Agentic coding tool that lives in your terminal. Reads, edits and reasons across entire codebases. Excels at large-scale refactoring and complex multi-file tasks with a 200K token context window. Pay-per-use via the Anthropic API — costs vary by usage, with a flat **$100/mo** option available.                                                                                                                                                            |
-| [GitHub Copilot](https://github.com/features/copilot)     | Supports multiple models — GPT-4o, Claude and Gemini are all switchable. The original AI coding assistant, deeply integrated into VS Code, JetBrains and the wider GitHub ecosystem. Covers inline completions, chat, agent mode and PR summaries. Free tier available; paid plans from around **$10/mo**.                                                                                                                                                                               |
-| [Cursor](https://www.cursor.com)                          | Uses a mix of GPT-4o, Claude and custom Cursor models. AI-native code editor (VS Code fork) purpose-built for AI-first development. Composer mode handles multi-file edits autonomously; Tab completion predicts entire functions. One of the most popular tools in the space, valued at ~$29B. Free trial; Pro around **$20/mo**.                                                                                                                                                       |
-| [Windsurf](https://windsurf.com)                          | Uses multiple models including Claude and GPT-4o — switchable. IDE built on VS Code with a unique "Cascade" agentic system that tracks your real-time actions and responds contextually. Acquired by OpenAI in May 2025. Strong value at its price point. Free tier; paid plans from around **$15/mo**. Codeium ([codeium.com](https://codeium.com)) is the underlying platform — it also offers a free standalone completion plugin for all major IDEs as a GitHub Copilot alternative. |
-| [Devin](https://devin.ai)                                 | Built on OpenAI models with proprietary RL fine-tuning. The original "autonomous AI software engineer" — operates independently via Slack or a VSCode-style interface, spawning its own environment to plan, code, test and open PRs. Famously launched at $500/mo before dropping prices with Devin 2.0. Entry plans are affordable but serious usage gets expensive quickly.                                                                                                           |
-| [Replit](https://replit.com)                              | Uses multiple models including Claude and GPT-4o. Browser-based IDE and agentic coding platform with built-in hosting, databases and deployments. Replit Agent can build and deploy full-stack apps from a prompt. Strong for beginners and rapid prototyping. Free tier available; paid plans from around **$25/mo**.                                                                                                                                                                   |
-| [Amazon Q Developer](https://aws.amazon.com/q/developer/) | Uses Amazon's proprietary models. AWS-native AI coding assistant for building, debugging and transforming code. Deep integration with AWS services and IDEs. Includes a `/transform` feature for upgrading Java/.NET/COBOL codebases. Free tier available; paid plans from around **$19/mo**.                                                                                                                                                                                            |
-| [Aider](https://aider.chat)                               | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). The most popular open-source terminal coding agent. Git-native by design — it stages changes and writes commit messages automatically. Excellent for multi-file refactors across an existing repo. Terminal-first, but terminal-native developers consistently rate it their most productive tool. **Free**; you pay for API calls.                                                         |
-| [Continue.dev](https://continue.dev)                      | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or run locally via Ollama). Open-source VS Code and JetBrains extension for building fully custom AI coding assistants. Highly configurable; 20K+ GitHub stars. The go-to choice for teams in regulated industries who need 100% on-premise AI. **Free**; you pay for API calls.                                                                                                                                         |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Uses Google's Gemini models. Open-source terminal coding agent that uses a ReAct loop to plan and execute multi-step tasks directly from your shell. Integrates with MCP servers and Google Search for real-time context. Made waves with its extremely generous free tier — **free** via a Google account, with pay-as-you-go or team plans available.                                                                                                                                  |
-| [OpenAI Codex CLI](https://github.com/openai/codex)       | Uses OpenAI's Codex models. Open-source terminal coding agent built in Rust. Reads, edits and runs code in your local directory with configurable approval modes. Supports multimodal input, web search and MCP. **Free to install**; usage is bundled with a ChatGPT subscription or pay-as-you-go via API.                                                                                                                                                                             |
-| [Cline](https://cline.bot)                                | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). Open-source VS Code extension that acts as a fully agentic coding assistant. Shows diffs inline before applying them and requires explicit approval before running terminal commands — agentic power with human-in-the-loop control. **Free**; you pay for API calls.                                                                                                                       |
-| [OpenCode](https://opencode.ai)                           | Model-agnostic — connects to any of 75+ providers including Claude, GPT, Gemini and local models; or log in with an existing Copilot or ChatGPT subscription. Open-source terminal, IDE and desktop coding agent with 100K+ GitHub stars. LSP-aware, multi-session and privacy-first. **Free** to use; a paid tier offers access to curated hosted models.                                                                                                                               |
+| Tool                                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Claude Code](https://www.anthropic.com/claude-code)      | Uses Anthropic models. Agentic coding tool that lives in your terminal. Reads, edits and reasons across entire codebases. Excels at large-scale refactoring and complex multi-file tasks. $20/month for Pro, $200/month for Max plans                                                                                                                                                                                            |
+| [OpenAI Codex CLI](https://github.com/openai/codex)       | Uses OpenAI's models. Open-source terminal coding agent built in Rust. Reads, edits and runs code in your local directory with configurable approval modes. Supports multimodal input, web search and MCP. **Free to install**; usage is bundled with a ChatGPT subscription or pay-as-you-go via API.                                                                                                                           |
+| [Cursor](https://www.cursor.com)                          | AI-native code editor (VS Code fork) purpose-built for AI-first development. Composer mode handles multi-file edits autonomously; Tab completion predicts entire functions. One of the most popular tools in the space, valued at ~$29B. Free trial; Pro around **$20/mo**.                                                                                                                                                      |
+| [Lovable](https://lovable.dev)                            | Uses Anthropic models. Browser-based vibe coding platform that turns natural language prompts into full-stack React/Supabase apps. No local setup required — ideal for rapid prototyping and non-developers. Free tier available; paid plans from around **$25/mo**.                                                                                                                                                             |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Uses Google's Gemini models. Open-source terminal coding agent that uses a ReAct loop to plan and execute multi-step tasks directly from your shell. Integrates with MCP servers and Google Search for real-time context. Made waves with its extremely generous free tier — **free** via a Google account, with pay-as-you-go or team plans available.                                                                          |
+| [GitHub Copilot](https://github.com/features/copilot)     | Supports multiple models — GPT-4o, Claude and Gemini are all switchable. The original AI coding assistant, deeply integrated into VS Code, JetBrains and the wider GitHub ecosystem. Covers inline completions, chat, agent mode and PR summaries. Free tier available; paid plans from around **$10/mo**.                                                                                                                       |
+| [Windsurf](https://windsurf.com)                          | Uses multiple models including Claude and GPT-4o — switchable. IDE built on VS Code with a unique "Cascade" agentic system that tracks your real-time actions and responds contextually. Acquired by OpenAI in May 2025. Strong value at its price point. Free tier; paid plans from around **$15/mo**.                                                                                                                          |
+| [Devin](https://devin.ai)                                 | Built on OpenAI models with proprietary RL fine-tuning. The original "autonomous AI software engineer" — operates independently via Slack or a VSCode-style interface, spawning its own environment to plan, code, test and open PRs. Famously launched at $500/mo before dropping prices with Devin 2.0. Entry plans are affordable but serious usage gets expensive quickly.                                                   |
+| [Replit](https://replit.com)                              | Uses multiple models including Claude and GPT-4o. Browser-based IDE and agentic coding platform with built-in hosting, databases and deployments. Replit Agent can build and deploy full-stack apps from a prompt. Strong for beginners and rapid prototyping. Free tier available; paid plans from around **$25/mo**.                                                                                                           |
+| [Amazon Q Developer](https://aws.amazon.com/q/developer/) | Uses Amazon's proprietary models. AWS-native AI coding assistant for building, debugging and transforming code. Deep integration with AWS services and IDEs. Includes a `/transform` feature for upgrading Java/.NET/COBOL codebases. Free tier available; paid plans from around **$19/mo**.                                                                                                                                    |
+| [Aider](https://aider.chat)                               | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). The most popular open-source terminal coding agent. Git-native by design — it stages changes and writes commit messages automatically. Excellent for multi-file refactors across an existing repo. Terminal-first, but terminal-native developers consistently rate it their most productive tool. **Free**; you pay for API calls. |
+| [Cline](https://cline.bot)                                | Model-agnostic — bring your own API key (Claude, GPT-4o, Gemini or local models via Ollama). Open-source VS Code extension that acts as a fully agentic coding assistant. Shows diffs inline before applying them and requires explicit approval before running terminal commands — agentic power with human-in-the-loop control. **Free**; you pay for API calls.                                                               |
+| [OpenCode](https://opencode.ai)                           | Model-agnostic — connects to any of 75+ providers including Claude, GPT, Gemini and local models; or log in with an existing Copilot or ChatGPT subscription. Open-source terminal, IDE and desktop coding agent with 100K+ GitHub stars. LSP-aware, multi-session and privacy-first. **Free** to use; a paid tier offers access to curated hosted models.                                                                       |
 
-### 🧠 Code-Specific Models
+### Models that perform well at coding
 
 Several benchmarks track coding and general model capability. The most useful ones:
 
