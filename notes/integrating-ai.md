@@ -268,6 +268,173 @@ RAG (Retrieval-Augmented Generation).
 **Long context is not free** - some providers charge more per token for very long contexts. Check the pricing page of
 the provider you are using.
 
+## Retrieval-Augmented Generation
+
+RAG is a pattern for giving an LLM access to external knowledge without baking that knowledge into its training data.
+Instead of hoping the model already knows the answer, you retrieve relevant information at query time and include it in
+the context. The model then generates a response grounded in what you retrieved.
+
+Three problems drive adoption of RAG.
+
+The first is stale knowledge. LLMs have a training cutoff. If your product documentation changed last week, the model
+does not know about it.
+
+The second is scale. Your entire document corpus almost certainly cannot fit in a context window. Even at 200,000
+tokens, there is a practical limit. Stuffing everything in is also expensive.
+
+The third is hallucination. Models fabricate plausible-sounding facts when they do not know something. RAG gives the
+model actual source material to work from, which significantly reduces this tendency and gives you sources to cite.
+
+### The basic pipeline
+
+A RAG system has two phases. The ingestion phase runs offline. The retrieval phase runs at query time.
+
+**Ingestion**
+
+1. Load your documents (PDFs, HTML pages, database records, whatever)
+2. Split them into chunks — smaller pieces of text that each represent a meaningful unit of information
+3. Convert each chunk into an embedding — a vector of numbers that encodes its meaning
+4. Store the chunks and their embeddings in a vector database
+
+**Retrieval**
+
+1. Take the user's query and convert it into an embedding using the same model
+2. Search the vector database for chunks whose embeddings are closest to the query
+3. Inject the top results into the context alongside the user's question
+4. The model generates a response with that retrieved material available
+
+This is the naive version. It works reasonably well but has enough failure modes that production systems add several
+layers on top.
+
+### Embeddings
+
+An embedding model converts text into a dense vector of floating-point numbers (commonly 768 to 3072 dimensions
+depending on the model). Semantically similar passages produce similar vectors, which makes it possible to search by
+meaning rather than by keyword.
+
+Embedding models are separate from generation models. You use one model to embed your corpus and the same model to embed
+queries at retrieval time. Mixing different embedding models or even different versions of the same model produces
+incompatible vectors.
+
+Popular options include OpenAI's `text-embedding-3-large`, Cohere's Embed, and open-weight options like
+`bge-large-en-v1.5` from BAAI. Domain-specific models can outperform general-purpose ones by 12 to 30 percent on
+industry-specific retrieval tasks, so it is worth evaluating on your own data before committing to one.
+
+### Chunking
+
+How you split documents into chunks matters more than most people expect. The chunk is the unit of retrieval. Too large
+and it dilutes the signal and wastes context budget. Too small and it loses the surrounding context that makes it
+interpretable.
+
+**Fixed-size chunking** splits text at a fixed token count (say, 512 tokens) with some overlap between adjacent chunks.
+Simple and predictable, but it can split a sentence in the middle.
+
+**Recursive character splitting** tries to split on natural boundaries first (paragraphs, then sentences, then words)
+before falling back to fixed size. This is a better default than pure fixed-size splitting and is what most frameworks
+use out of the box.
+
+**Semantic chunking** uses embeddings to detect where the topic shifts and places boundaries there. It produces more
+coherent chunks at the cost of more computation during ingestion.
+
+**Late chunking** embeds the full document first, so every token's representation reflects the whole document's context,
+and only then extracts chunk-level embeddings by averaging. This is a newer technique that improves retrieval quality
+for chunks that would lose meaning if extracted in isolation.
+
+For most projects, recursive splitting with a chunk size around 512 tokens and a 10 to 15 percent overlap is a
+reasonable starting point.
+
+### Retrieval
+
+Pure vector search (also called dense retrieval) is good at semantic matching. Ask "how do I cancel my subscription" and
+it retrieves text about account cancellation even if the word "cancel" does not appear. Where it struggles is exact
+matching. Product codes, version numbers, names and error codes often retrieve poorly with embeddings alone.
+
+BM25 is a classic keyword-based ranking algorithm. It works like a traditional search engine, scoring results by term
+frequency and rarity across the corpus. It is predictable, transparent and excellent at exact matches.
+
+In production, combining both outperforms either technique alone by 10 to 30 percent across most benchmarks. You run
+both searches and merge the ranked results using Reciprocal Rank Fusion (RRF), a simple algorithm that combines ranked
+lists without needing to tune score weights. Hybrid search is the safe default for production systems.
+
+**Reranking** is a second pass that runs after the initial fetch. A reranker model takes the query and each retrieved
+chunk and scores them together, producing a more precise relevance ranking. The standard approach is to retrieve a broad
+set (say, 50 results with hybrid search) and rerank down to the top 5 or 10 to pass to the model. The key insight is
+that a reranker only helps once retrieval recall is already solid. If the right document is not in your top 50 results,
+a reranker will not recover it.
+
+### Making retrieval smarter
+
+The query the user types is often not the ideal retrieval query. Several techniques address this.
+
+**Query rewriting** uses the LLM to rephrase the question before retrieval. A follow-up like "what about the pricing?"
+needs expanding to "what is the pricing for Product X?" to retrieve meaningfully. This can be a simple prompt asking the
+model to produce a standalone search query from the conversation context.
+
+**HyDE (Hypothetical Document Embeddings)** generates a hypothetical answer to the query and embeds that instead of the
+question itself. The idea is that an answer embedding is closer in vector space to a real answer than a question
+embedding is. It improves recall for vague or poorly phrased queries at the cost of an extra LLM call.
+
+**Query decomposition** breaks a complex question into simpler sub-queries that are each retrieved separately. Useful
+for questions that span multiple topics or require synthesising across several sources.
+
+### GraphRAG
+
+Standard RAG retrieves individual chunks. It handles pinpoint lookups well but struggles with questions that require
+synthesising across many documents, such as "what are the recurring themes in our customer complaints?"
+
+GraphRAG, developed by Microsoft Research and released as open source in 2024, builds a knowledge graph over your corpus
+during ingestion. It extracts entities and relationships using an LLM and organises documents around those nodes. At
+query time it can traverse the graph to answer theme-level questions with full traceability.
+
+The cost is significant. Ingestion requires three to five times more LLM calls than standard RAG, entity resolution
+accuracy ranges from 60 to 85 percent depending on the domain, and updating the corpus can trigger expensive
+recomputation. GraphRAG is not the right default. It is the right choice when your use case is about understanding and
+synthesising a corpus rather than retrieving specific facts from it.
+
+### Agentic RAG
+
+In basic RAG, retrieval happens once at query time. Agentic RAG puts retrieval under the control of an agent that can
+plan multiple retrieval steps, choose between different retrieval tools, evaluate whether it has enough information and
+retrieve again if not.
+
+This is more powerful for complex multi-step questions but also harder to build, evaluate and debug. See
+[AI Agents](./ai_agents) for more on the underlying patterns.
+
+### RAG vs fine-tuning
+
+These are often compared but they solve different problems.
+
+Fine-tuning changes the model's weights. It teaches the model new skills or behaviour by training it further on specific
+data. It does not reliably inject specific facts. Models fine-tuned on a dataset of facts will still hallucinate
+details. Fine-tuning is the right choice when you want to change how the model writes or what it is capable of.
+
+RAG injects facts into the context at query time without changing the model at all. The model's knowledge is only as
+current as your last ingestion run. RAG is the right choice when you need the model to know specific facts, especially
+facts that change.
+
+Using both together is also valid. Fine-tune for domain-specific style or terminology and use RAG to keep the model
+current.
+
+### Common pitfalls
+
+**Retrieving the wrong chunks** is the most common failure mode. If retrieval is poor, the model either hallucinates
+because it has no relevant context or gives a wrong answer based on a tangentially related chunk. Evaluate retrieval
+quality separately from answer quality.
+
+**Chunk boundaries that destroy meaning** are easy to introduce with naive splitting. If a chunk starts mid-sentence or
+contains an unresolvable reference ("it was discontinued in 2023" — what was?), retrieval may surface it but the model
+cannot use it.
+
+**Embedding drift** happens when you update your embedding model. The new model produces different vectors, so
+embeddings generated by the old model and the new model are not comparable. You need to re-embed the entire corpus after
+any model change.
+
+**Ignoring latency** is a common oversight at the prototype stage. A basic vector search might add 20ms. A hybrid search
+with reranking and query rewriting can add several hundred milliseconds. Measure it before going to production.
+
+**Too many chunks in context** can hurt as much as too few. Providing 20 loosely relevant chunks means the model has to
+work through noise. Precision matters more than recall by the time you are assembling the final context.
+
 ## What actually goes into the model
 
 It is worth tracing the full path from a user typing a message to the moment the model generates a response. There are
