@@ -445,6 +445,31 @@ Cons:
   [here](https://www.theregister.com/2026/02/24/anthropic_misanthropic_chinese_ai_labs/)). As this could be considered a
   form of intellectual property theft, their use may be frowned upon when working with certain clients
 
+## When a Client Wants to "Train an AI"
+
+When a client says they want to train an AI, they rarely mean what they think they mean. In practice there are three
+levels, and most businesses only ever need Level 1 or 2.
+
+**Level 1 — Prompt Engineering**
+
+Just talking to the model cleverly. A well-crafted system prompt with good examples solves more problems than people
+expect. No infrastructure. No data pipeline. Just an API key and clear thinking. The cost is almost nothing.
+
+**Level 2 — RAG (Retrieval Augmented Generation)**
+
+Your client has proprietary documents too large to fit in the context window. You embed them into a vector database and
+the AI reasons over them at query time. This is the "chat with your documents" pattern, and it is where most serious
+small business AI products actually live. Buildable in days by a competent developer.
+
+**Level 3 — Fine Tuning**
+
+You are actually adjusting model weights on your own data. The barrier to entry is high, real ML knowledge is required
+and the cost is genuine. Useful for consistent output formatting or very specialised behaviour, but rarely the right
+starting point.
+
+The honest truth? Most clients asking to "train an AI" need Level 2. And a surprising number just need Level 1. Know
+which level your client actually needs before you scope a single hour of work.
+
 ## Building in a Safety Net
 
 Vibe coding and other types of automated code generation introduce the risk that you end up with unmaintainable code,
