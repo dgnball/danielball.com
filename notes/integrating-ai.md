@@ -641,6 +641,137 @@ specific information, use RAG.
 **Underestimating maintenance** is easy to overlook. A fine-tuned model is another artefact to version, evaluate and
 retrain when the underlying base model is updated.
 
+## Development environments and evaluation
+
+The tooling landscape for AI development has matured quickly. There are now three distinct categories of environment
+depending on where you are in the development cycle: provider studios for interactive experimentation, visual builders
+for assembling pipelines without code and evaluation platforms for systematic testing.
+
+### Provider studios
+
+Every major provider ships a browser-based studio where you can iterate on prompts, try different models and inspect
+what the API is actually doing. These are the fastest way to experiment before writing any application code.
+
+**[Anthropic Console](https://console.anthropic.com/)** (Workbench) is the starting point for working with Claude. You
+can write system prompts, adjust parameters, compare model versions side by side and export working prompts directly as
+code. It also exposes token usage and cost estimates per request, which is useful for early sizing.
+
+**[OpenAI Playground](https://platform.openai.com/playground)** is the most mature of the provider studios, reflecting
+OpenAI's head start in the market. It supports chat, assistants and fine-tuning workflows in one interface and has the
+largest ecosystem of community examples to borrow from.
+
+**[Google AI Studio](https://aistudio.google.com/)** is Google's browser-based environment for Gemini models. It stands
+out for its multimodal capabilities, support for very long context windows and a fast path to deploying via Vertex AI
+for production workloads. Grounding with Google Search is available as an option.
+
+**[AWS Bedrock](https://aws.amazon.com/bedrock/)** gives access to models from multiple providers (Anthropic, Meta,
+Mistral and others) within AWS infrastructure. If your application already runs on AWS, it is often the most
+straightforward way to use Claude or Llama without introducing a new vendor relationship.
+
+**[Azure AI Foundry](https://ai.azure.com/)** (formerly Azure AI Studio) is Microsoft's unified environment for
+building, testing and deploying AI applications. It includes prompt flow, model catalogue, evaluation tooling and direct
+access to OpenAI models inside the Azure boundary.
+
+**[OpenRouter](https://openrouter.ai/)** is not a studio in the traditional sense but deserves a mention. It provides a
+single API that routes to over a hundred models across providers. For comparing how different models handle the same
+prompt, it removes a lot of setup friction.
+
+### No-code and visual builders
+
+If you want to wire together a retrieval pipeline, an agent or a multi-step workflow without writing code, visual
+builders are the fastest route. They are also useful for prototyping architectures before committing to a code
+implementation.
+
+**[Flowise](https://flowiseai.com/)** is an open-source canvas built on LangChain and LlamaIndex. You drag components
+onto a canvas — a vector store, an embedding model, a language model, a retriever — connect them and test in the same
+screen. It ships with three builders covering simple assistants, single-agent chatflows and multi-agent orchestration.
+
+**[Dify](https://dify.ai/)** is an open-source platform that blends a visual workflow builder with a
+backend-as-a-service approach. It is aimed at teams that want to get a RAG-backed application running quickly, with
+built-in support for knowledge bases, prompt management and model switching.
+
+**[LangFlow](https://www.langflow.org/)** is a visual canvas for agents and RAG pipelines with a live chat pane so you
+can test while you build. It integrates with all major LLMs and vector databases and has recently added support for
+building and deploying MCP servers.
+
+**[n8n](https://n8n.io/)** started as a general-purpose automation tool and has grown into a capable AI workflow
+builder. Its strength is integration breadth. It connects AI steps to hundreds of external services, supports branching
+and error paths and has a self-hosted option for teams where data residency matters.
+
+**[Azure PromptFlow](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/overview-what-is-prompt-flow)**
+is Microsoft's visual environment for building and evaluating LLM workflows. It is tightly integrated with Azure AI
+Foundry and fits naturally into teams already using Azure DevOps for CI/CD.
+
+**[Vertex AI Agent Builder](https://cloud.google.com/products/agent-builder)** is Google's no-code option for building
+grounded agents backed by Google Search or your own documents. It is aimed at enterprise teams on GCP rather than
+developers prototyping new things.
+
+### Evaluation platforms
+
+Testing an LLM application is different from testing conventional software. Outputs are non-deterministic. The same
+input can produce slightly different responses on different runs. Whether a response is "correct" is often a matter of
+judgement rather than an exact string comparison. This requires a different approach to quality assurance.
+
+**[LangSmith](https://www.langchain.com/langsmith)** is LangChain's observability and evaluation platform. It captures
+traces of every LLM call in your application, which means you can replay real production inputs in your test suite. Its
+playground and prompt hub handle versioning, and its evaluation runner lets you run datasets against prompts and score
+the results.
+
+**[Langfuse](https://langfuse.com/)** is an open-source alternative to LangSmith with strong self-hosting support. It
+covers tracing, monitoring, dataset management and evaluation in one place. Because it is MIT-licensed and API-first, it
+integrates cleanly with custom tooling and is a good choice when data control is a concern.
+
+**[Braintrust](https://www.braintrust.dev/)** is a closed-source platform built specifically around the eval-driven
+development loop. Production traces become test cases with one click. Eval results surface in pull requests via CI
+integration. It is designed for teams where product managers and engineers need to iterate on prompts together.
+
+**[Promptfoo](https://www.promptfoo.dev/)** is an open-source CLI and library for systematic prompt testing. You define
+test cases in YAML or JSON config files, which can be committed to git and run in CI like any other test suite. Its
+standout feature is red teaming — it can probe your prompts for vulnerabilities, test for prompt injection, check for
+PII leaks and identify guardrail failures.
+
+**[DeepEval](https://github.com/confident-ai/deepeval)** is an open-source framework built around LLM unit testing. The
+API is modelled after pytest and ships with metrics for answer relevancy, hallucination, faithfulness (does the response
+match retrieved context?), and task completion. You write test cases in Python and run them as part of your normal test
+suite.
+
+### How to evaluate LLM outputs
+
+The core challenge is defining what "correct" means for a given task.
+
+**Exact match** works only for tasks with a single correct answer. Classification labels, boolean decisions and
+structured JSON outputs can be tested this way. If your model should return `{"sentiment": "positive"}` and it does, the
+test passes.
+
+**Semantic similarity** compares the meaning of the output to an expected answer rather than the exact wording. An
+embedding model scores how close the two are. This works for summarisation or question answering where there are
+multiple acceptable phrasings of a correct answer.
+
+**LLM-as-judge** uses a capable model (typically GPT-4o or Claude) to score responses against criteria you define. You
+write a rubric — accuracy, tone, completeness, brevity — and the judge model rates each response. This handles
+subjective quality dimensions that rule-based metrics cannot capture. It is slower and costs more tokens, but for tasks
+where human judgement is the real ground truth it is the most practical automated proxy.
+
+**Human review** remains the ground truth for anything where nuance matters. Build a feedback mechanism into your
+application so you can capture when users mark a response as unhelpful or flag it as wrong. Those signals feed directly
+back into your evaluation dataset.
+
+### Building a test set
+
+A useful test set covers representative inputs, edge cases and known failure modes. Start building it from day one, not
+after you have a problem.
+
+The typical workflow looks like this. Pick 30 to 100 diverse inputs that represent real usage. Write down what a good
+response looks like for each — the expected output does not need to be a single correct answer but it should be specific
+enough to evaluate against. Run your current prompt and model against the set and record the scores. When you change a
+prompt, a model or a retrieval strategy, run the set again and compare.
+
+The goal is to catch regressions. A prompt change that improves one case often degrades another. Without a test set you
+will not notice until a user complains.
+
+For teams with a CI pipeline, tools like Promptfoo and Braintrust can run evaluations automatically on every pull
+request, blocking merges when quality scores drop below a threshold.
+
 ## What actually goes into the model
 
 It is worth tracing the full path from a user typing a message to the moment the model generates a response. There are
