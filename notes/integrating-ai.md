@@ -828,6 +828,93 @@ The practical implication is that you should be mindful of how much output you a
 answer, say so. If you need a structured JSON response, tell the model to keep it concise. Verbose model outputs cost
 more and take longer.
 
+## Language and architecture choices
+
+Integrating an LLM into an application is not a machine learning problem. It is an API integration problem, and the most
+important factor in choosing a language is SDK availability rather than raw language capability.
+
+### Python
+
+Python is the default for AI work and the safest choice if you do not have a strong reason to pick something else. Every
+provider ships a first-party Python SDK. Every orchestration framework — LangChain, LlamaIndex, LangGraph, AutoGen — is
+Python-first. Every evaluation tool, every vector database client and the vast majority of example code is Python.
+
+If your application involves a data pipeline, RAG ingestion, fine-tuning, embeddings or anything involving data
+processing alongside LLM calls, Python is the most productive choice by a significant margin. The ecosystem depth means
+you rarely hit a wall.
+
+The main weakness is that Python is not a natural fit for frontend work or for applications where startup time and
+concurrency matter at the edges.
+
+### TypeScript and JavaScript
+
+TypeScript is the strongest alternative to Python for AI application development, and for full-stack web applications it
+is often the better choice. All three major providers ship first-party TypeScript SDKs that are well-maintained and kept
+in step with their Python equivalents.
+
+The main advantage is that you can write the backend (Node.js or a framework like NestJS), the frontend (React, Vue,
+Svelte) and infrastructure as code in the same language. This matters in practice. It reduces context switching,
+simplifies the monorepo and means a single developer can work across the whole stack without language boundaries slowing
+them down.
+
+TypeScript also handles streaming well. LLM responses are inherently streamed, and TypeScript's async iterator model
+maps naturally to reading a streaming API response and forwarding it to the client.
+
+The gap with Python is in the broader ML ecosystem. If your project starts needing data pipeline work, fine-tuning or
+custom retrieval logic, you will eventually find Python libraries that have no TypeScript equivalent.
+
+### Go, Java and C#
+
+All three are viable options if you already have a codebase in one of them.
+
+**Go** has official SDKs from Anthropic and an OpenAI-compatible community SDK. Its concurrency model is well suited to
+building API proxies and services that sit between your application and LLM providers. For teams building backend
+services rather than data pipelines, Go is a solid choice.
+
+**Java** has mature support via the Spring AI framework, which provides a unified abstraction over multiple LLM
+providers. It is the right choice for enterprise codebases already on the Spring stack.
+
+**C#** is the natural choice on the Microsoft and Azure stack. The Azure OpenAI SDK is first-party and well integrated
+with the rest of the .NET ecosystem.
+
+### Rust
+
+Rust has thin AI library support compared to the options above. There are community SDKs but no first-party support from
+any major provider as of early 2026. For applications where performance is critical and you are comfortable building
+more from scratch, it is possible, but it is not the pragmatic default for most projects.
+
+### Backend or frontend
+
+Do not call LLM APIs directly from the browser. The reason is simple: you cannot call an LLM API from the frontend
+without exposing your API key in client-side code, where any user can read it. An exposed API key means anyone can make
+requests billed to your account.
+
+The correct pattern is to put a thin backend between your frontend and the LLM provider. The frontend sends the user's
+message to your backend. Your backend authenticates the request, assembles the full context, calls the LLM API and
+returns the response. Your API key never leaves the server.
+
+This backend can be a dedicated service, a serverless function or simply a route in your existing web application. The
+important thing is that the LLM call happens there, not in the browser.
+
+**Streaming** complicates this slightly but does not change the principle. Users expect to see tokens appear as they are
+generated rather than waiting for the full response. To achieve this, your backend proxies the streaming response from
+the LLM provider and forwards it to the frontend using Server-Sent Events or a WebSocket connection. All major LLM SDKs
+support streaming, and it is straightforward to proxy.
+
+The one exception worth noting is Anthropic's and OpenAI's client-side SDKs, which are designed for use in environments
+like React Native or Electron where you control the runtime. These are not for browser applications where the source is
+publicly accessible.
+
+### A practical starting point
+
+For a new web application with an AI feature, the simplest stack that covers most cases is a TypeScript backend
+(Node.js) with a TypeScript or React frontend. This gives you a single language across the stack, first-party SDK
+support, clean streaming support and a fast path from prototype to production.
+
+If the project involves significant data work, RAG ingestion, model evaluation or anything ML-adjacent, Python is the
+better backend language. In that case, a common split is Python for the AI backend service and TypeScript for the
+frontend, with a REST or WebSocket interface between them.
+
 ## Hosting choices
 
 Where you run the model has significant implications for cost, privacy, latency and capability. This builds on the
