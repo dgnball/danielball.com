@@ -11,15 +11,67 @@ come from treating LLMs like a black box when the underlying mechanics are actua
 - TOC
 {:toc}
 
-## TLDR
+## TLDR and Resources
 
-- Every LLM API call has three inputs: a system prompt, a list of messages and optionally a list of tools
-- Multimodal models accept images, audio and documents alongside text. Everything gets converted to tokens
-- A token is roughly 0.75 words. You are billed per token and the context window limits how many you can use at once
-- A chatbot is just your app assembling a context, calling an API and appending the response to a message list
-- Input tokens are processed in one parallel pass. Output tokens are generated one at a time, each requiring its own
-  forward pass. That is why output tokens cost more
-- For sensitive data, avoid commercial APIs unless you are on an enterprise tier with a data processing agreement
+Don’t want to read this or don’t have the time. Here’s a list of resources you might find generally useful or
+interesting...
+
+**Docs**
+
+- [OpenAI's guide to function calling](https://developers.openai.com/api/docs/guides/function-calling)
+
+## Glossary
+
+- **Autoregressive generation** — The process by which a model generates output one token at a time, with each new token
+  conditioned on all previous tokens. This is why output is slower and more expensive than input processing.
+
+- **Context window** — The maximum number of tokens a model can process in a single request. Includes the system prompt,
+  message history, tool definitions and the model's own output. Measured in tokens.
+
+- **Fine-tuning** — Additional training on a specific dataset after the initial pre-training phase. Used to specialise a
+  general-purpose model for a particular task or domain without training from scratch.
+
+- **Forward pass** — A single run of data through all the layers of a neural network from input to output. For
+  generation, each output token requires its own forward pass. Input tokens are processed in one parallel forward pass.
+
+- **Hallucination** — When a model generates content that is plausible-sounding but factually incorrect or entirely made
+  up. A consequence of the model predicting likely tokens rather than retrieving verified facts.
+
+- **Inference** — Running a trained model to generate a response. Distinct from training (where the model learns from
+  data). Every API call is an inference request.
+
+- **Input tokens** — The tokens in the request you send to the model. This includes the system prompt, conversation
+  history and any tool definitions. Cheaper to process than output tokens because they are handled in one parallel pass.
+
+- **Multimodal** — A model that can process more than one type of input. Most frontier models are now multimodal,
+  accepting text alongside images, audio or documents.
+
+- **Output tokens** — The tokens the model generates in its response. More expensive per token than input tokens because
+  each one requires its own forward pass through the model.
+
+- **RAG (Retrieval-Augmented Generation)** — A pattern where relevant documents or data are retrieved from an external
+  source and inserted into the context before the API call. Avoids stuffing the full corpus into the context window and
+  keeps responses grounded in specific sources.
+
+- **System prompt** — Instructions passed to the model before the conversation begins. Sets the model's role, tone,
+  constraints and any background context. Not visible to the end user but shapes every response.
+
+- **Temperature** — A parameter that controls how predictable the model's output is. A temperature of 0 makes the model
+  always pick the most probable next token. Higher values introduce more randomness. Useful for creative tasks but
+  should be lowered when you need consistent or structured output.
+
+- **Token** — The basic unit of text that an LLM processes. Not equivalent to a word. One token is roughly three to four
+  characters or 0.75 words in English. Pricing and context limits are both measured in tokens.
+
+- **Tokenisation** — The process of converting text into a sequence of integer tokens before it goes into the model. The
+  same process in reverse (detokenisation) converts the model's output back into readable text.
+
+- **Tool** — A function definition passed to the model as part of the request. When the model determines that calling
+  the function would help it respond, it returns a structured tool call instead of plain text. The calling application
+  executes the function and feeds the result back as a new message. See also [AI Agents](./ai_agents).
+
+- **Tool call** — The structured response a model returns when it decides to invoke a tool rather than generate text
+  directly. Contains the tool name and the arguments the model wants to pass to it.
 
 ## Anatomy of an LLM API call
 
@@ -83,6 +135,44 @@ message content.
 The key mental model is that all of these inputs eventually become tokens. Images are converted to a representation the
 model was trained on (vision transformers handle this). Audio is transcribed or embedded. Everything becomes part of the
 same flat token sequence the model processes.
+
+Here is an example of a multimodal call that sends an image URL alongside a text question:
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+response = client.messages.create(
+    model="claude-opus-4-6",
+    max_tokens=1024,
+    system="You are a helpful assistant.",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "url",
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
+                    },
+                },
+                {
+                    "type": "text",
+                    "text": "What is in this image?"
+                }
+            ],
+        }
+    ],
+)
+
+print(response.content[0].text)
+```
+
+The `content` field becomes a list instead of a plain string. Each item in the list is a block with a `type`. You can
+mix as many image and text blocks as you need in a single message. For images stored locally, use `"type": "base64"` and
+include the raw base64 data and media type instead of a URL.
 
 ## Tokens: the unit of everything
 
@@ -287,56 +377,3 @@ As volume grows or data sensitivity increases, it is worth revisiting.
 | Sensitive data, cloud infrastructure | Enterprise platform     |
 | Cost-sensitive at scale              | Open-weight via gateway |
 | Research or large open-weight models | GPU cloud compute       |
-
-## Glossary
-
-- **Autoregressive generation** — The process by which a model generates output one token at a time, with each new token
-  conditioned on all previous tokens. This is why output is slower and more expensive than input processing.
-
-- **Context window** — The maximum number of tokens a model can process in a single request. Includes the system prompt,
-  message history, tool definitions and the model's own output. Measured in tokens.
-
-- **Fine-tuning** — Additional training on a specific dataset after the initial pre-training phase. Used to specialise a
-  general-purpose model for a particular task or domain without training from scratch.
-
-- **Forward pass** — A single run of data through all the layers of a neural network from input to output. For
-  generation, each output token requires its own forward pass. Input tokens are processed in one parallel forward pass.
-
-- **Hallucination** — When a model generates content that is plausible-sounding but factually incorrect or entirely made
-  up. A consequence of the model predicting likely tokens rather than retrieving verified facts.
-
-- **Inference** — Running a trained model to generate a response. Distinct from training (where the model learns from
-  data). Every API call is an inference request.
-
-- **Input tokens** — The tokens in the request you send to the model. This includes the system prompt, conversation
-  history and any tool definitions. Cheaper to process than output tokens because they are handled in one parallel pass.
-
-- **Multimodal** — A model that can process more than one type of input. Most frontier models are now multimodal,
-  accepting text alongside images, audio or documents.
-
-- **Output tokens** — The tokens the model generates in its response. More expensive per token than input tokens because
-  each one requires its own forward pass through the model.
-
-- **RAG (Retrieval-Augmented Generation)** — A pattern where relevant documents or data are retrieved from an external
-  source and inserted into the context before the API call. Avoids stuffing the full corpus into the context window and
-  keeps responses grounded in specific sources.
-
-- **System prompt** — Instructions passed to the model before the conversation begins. Sets the model's role, tone,
-  constraints and any background context. Not visible to the end user but shapes every response.
-
-- **Temperature** — A parameter that controls how predictable the model's output is. A temperature of 0 makes the model
-  always pick the most probable next token. Higher values introduce more randomness. Useful for creative tasks but
-  should be lowered when you need consistent or structured output.
-
-- **Token** — The basic unit of text that an LLM processes. Not equivalent to a word. One token is roughly three to four
-  characters or 0.75 words in English. Pricing and context limits are both measured in tokens.
-
-- **Tokenisation** — The process of converting text into a sequence of integer tokens before it goes into the model. The
-  same process in reverse (detokenisation) converts the model's output back into readable text.
-
-- **Tool** — A function definition passed to the model as part of the request. When the model determines that calling
-  the function would help it respond, it returns a structured tool call instead of plain text. The calling application
-  executes the function and feeds the result back as a new message. See also [AI Agents](./ai_agents).
-
-- **Tool call** — The structured response a model returns when it decides to invoke a tool rather than generate text
-  directly. Contains the tool name and the arguments the model wants to pass to it.
