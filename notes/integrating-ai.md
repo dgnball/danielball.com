@@ -116,6 +116,63 @@ response = client.messages.create(
 print(response.content[0].text)
 ```
 
+## How the API got its shape
+
+The interface you are looking at today has a specific history, and understanding it helps explain some of its quirks.
+
+### The original Completions API
+
+When OpenAI opened GPT-3 to developers in 2020, the API was much simpler. You sent a prompt — a block of text — and the
+model completed it. There were no roles, no message lists. You might write "Translate the following English text to
+French: Hello, how are you?" and the model would produce the continuation. It was essentially a very sophisticated
+autocomplete.
+
+This worked, but it put a lot of burden on the developer to engineer prompts carefully. Role-play prompting ("You are a
+helpful assistant. User: ... Assistant: ...") was a common hack to get conversational behaviour out of a completion
+model.
+
+### Chat Completions and the chatbot era
+
+In March 2023, OpenAI introduced the Chat Completions API alongside GPT-3.5. Instead of a freeform prompt, you now sent
+a structured list of messages with roles. This was a direct response to the success of ChatGPT, which had launched a few
+months earlier. The new format formalised what developers had already been doing manually.
+
+The `system`, `user` and `assistant` roles are the fingerprints of that era. They are chatbot concepts. Even when you
+are using an LLM to process a CSV, analyse code or extract structured data, the API still asks you to frame your request
+as a user message and receive an assistant response. The abstraction leaks through.
+
+The Chat Completions format took over quickly. Within months it accounted for the vast majority of OpenAI's API usage,
+and the older Completions endpoints were deprecated in early 2024.
+
+### Industry convergence
+
+Because OpenAI was first and had the largest developer mindshare, everyone else followed their lead. Anthropic, Google,
+Mistral and most others adopted similar conventions. Messages arrays, role fields, system prompts — these became
+industry idioms even though no standards body defined them.
+
+The similarity goes deep enough that gateway services like [OpenRouter](https://openrouter.ai/) can proxy requests
+across multiple providers using a single OpenAI-compatible interface. You can often swap one provider's SDK for another
+with minimal code changes.
+
+Where providers diverged is mostly at the edges. Anthropic puts `system` as a top-level field in the request rather than
+a message with a `system` role, which is slightly cleaner. Google's Gemini uses `contents` instead of `messages` and
+calls the model turn `model` rather than `assistant`. These are cosmetic differences compared to the underlying shared
+shape.
+
+### The Responses API
+
+In 2025, OpenAI introduced a new interface called the
+[Responses API](https://platform.openai.com/docs/guides/responses-vs-chat-completions). It keeps the same conceptual
+model but adds server-side state. Rather than sending the full conversation history on every turn, you pass a
+`previous_response_id` and the provider reconstructs the context. It also ships built-in tools like web search and a
+code interpreter, blurring the line between API and agent platform.
+
+Chat Completions is not going away — OpenAI has committed to supporting it indefinitely — but the Responses API is the
+recommended path for new projects. Whether the rest of the industry follows is an open question.
+
+For most applications you build today, Chat Completions is what you will use. The chatbot flavour is just something to
+be aware of, not a limitation in practice.
+
 ## Multimodal inputs
 
 Modern frontier models are not limited to text. Most now accept a mixture of input types in the same request.
