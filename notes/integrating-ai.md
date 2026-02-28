@@ -116,6 +116,118 @@ response = client.messages.create(
 print(response.content[0].text)
 ```
 
+## Prompt engineering
+
+Prompt engineering is the practice of structuring your inputs to get better outputs from a model. It is the first thing
+to reach for before considering RAG or fine-tuning. Frontier models are capable of surprising things if you ask clearly,
+and a lot of apparently bad model behaviour turns out to be bad prompting.
+
+### The system prompt is your primary lever
+
+The system prompt runs before anything else and shapes every response in the conversation. Most of the heavy lifting
+belongs here. A well-designed system prompt covers the model's role, the task it is performing, any constraints, and the
+format you want back.
+
+Vague system prompts produce vague behaviour. Compare these two:
+
+- "You are a helpful assistant."
+- "You are a support agent for a B2B SaaS product. Answer only questions about the product. If a question is outside
+  scope, apologise and redirect to the sales team. Always respond in plain English. Keep answers under 150 words."
+
+The second leaves much less room for the model to improvise.
+
+### Be explicit about output format
+
+Models will produce whatever format seems most natural unless you tell them otherwise. If you need a specific structure,
+describe it precisely. Better still, use your provider's structured output feature, which constrains the response to a
+JSON schema and validates it before it reaches your application.
+
+If you cannot use structured outputs, show the model an example of the exact format you want. The pattern "Respond in
+this format: ..." followed by a concrete example is one of the most reliable techniques in prompting.
+
+### Few-shot examples
+
+Few-shot prompting gives the model examples of input/output pairs to imitate. It is particularly effective for tasks
+where the desired behaviour is easier to demonstrate than to describe, such as classification, extraction or a specific
+writing style.
+
+One well-chosen example often beats several paragraphs of description. The examples do not need to cover every case.
+They just need to show the model the pattern.
+
+```
+Classify the following customer message as either "billing", "technical" or "other".
+
+Message: "I was charged twice last month."
+Category: billing
+
+Message: "The dashboard won't load on my laptop."
+Category: technical
+
+Message: "{{ customer_message }}"
+Category:
+```
+
+### Chain-of-thought
+
+By default, models jump to an answer. For complex tasks this means they sometimes get it wrong in ways that would have
+been caught by reasoning through the steps. Asking the model to think through the problem first before giving a final
+answer reliably improves accuracy on tasks involving logic, maths or multi-step reasoning.
+
+The simplest version is adding "Think through this step by step before giving your answer." A more structured version
+gives the model a specific sequence of steps to follow.
+
+For tasks where you want the reasoning hidden from the user, you can instruct the model to produce its reasoning in a
+separate field or XML tag and only surface the conclusion.
+
+### XML tags for structure
+
+When a prompt contains multiple distinct sections — instructions, retrieved context, conversation history, the current
+question — mixing them in plain prose makes it harder for the model to separate them. Wrapping sections in XML tags
+gives clear boundaries.
+
+```
+<instructions>
+You are a legal research assistant. Summarise the key points of the provided document.
+</instructions>
+
+<document>
+{{ document_text }}
+</document>
+
+Produce a structured summary with headings.
+```
+
+This technique is particularly recommended by Anthropic for Claude but it works well across providers. It is especially
+useful as prompts grow longer and more complex.
+
+### Temperature and other parameters
+
+Temperature controls how deterministic the output is. At zero the model picks the highest-probability token every time,
+producing consistent and predictable output. Higher values introduce randomness, which is useful for creative tasks but
+harmful for tasks needing reliable structured output or factual accuracy.
+
+For classification, extraction, code generation or anything you need to parse programmatically, set temperature to zero
+or close to it. For creative writing or brainstorming, raise it.
+
+`max_tokens` sets a ceiling on response length. Setting it too low will cause the model to truncate mid-sentence. Set it
+comfortably above your expected output length.
+
+### Iterating on prompts
+
+Treat prompts like code. Write them down, version them and test them against a set of representative inputs. One of the
+most common mistakes is tuning a prompt on a single example until it works and then being surprised when it fails on
+others.
+
+Build a small evaluation set of 20 to 50 inputs with expected outputs. When you change a prompt, run it against the set.
+Most providers have a playground for interactive iteration; most production systems should have something more
+systematic.
+
+### When prompting is not enough
+
+Prompting has real limits. It cannot give the model knowledge it does not have. It cannot reliably teach it new facts.
+It cannot fundamentally change its capabilities. If you are hitting these limits, the next options are RAG for external
+knowledge and fine-tuning for deep behavioural change.
+
 ## How the API got its shape
 
 The interface you are looking at today has a specific history, and understanding it helps explain some of its quirks.
@@ -434,6 +546,100 @@ with reranking and query rewriting can add several hundred milliseconds. Measure
 
 **Too many chunks in context** can hurt as much as too few. Providing 20 loosely relevant chunks means the model has to
 work through noise. Precision matters more than recall by the time you are assembling the final context.
+
+## Fine-tuning
+
+Fine-tuning is continued training on a pre-trained model using your own data. It adjusts the model's weights rather than
+injecting information into the context. This is what distinguishes it from RAG and from prompt engineering, both of
+which leave the model itself unchanged.
+
+It is also the most expensive and complex option. The standard advice is to exhaust prompt engineering and RAG before
+reaching for fine-tuning, because those two cover the majority of practical use cases at a fraction of the cost and
+complexity.
+
+### What fine-tuning can and cannot do
+
+Fine-tuning is good at changing how a model behaves. You can teach it to write in a specific style, follow a particular
+output format, adopt a domain-specific tone or decline certain types of requests. You can specialise a general-purpose
+model to behave like an expert in a narrow domain.
+
+Fine-tuning is not a reliable way to inject facts. A model fine-tuned on a dataset of facts will still hallucinate. The
+training process does not store facts the way a database does. If you need the model to answer accurately from specific
+documents, use RAG.
+
+### Types of fine-tuning
+
+**Supervised Fine-Tuning (SFT)** is the foundation. You provide pairs of inputs and ideal outputs and train the model to
+reproduce that behaviour. This is how base models are turned into instruction-following assistants, and it is the
+starting point for most fine-tuning projects. Quality matters far more than quantity. Around 1,000 well-crafted examples
+will outperform 100,000 noisy ones.
+
+**LoRA (Low-Rank Adaptation)** is a parameter-efficient technique that avoids updating all of the model's weights.
+Instead, it trains small adapter matrices that sit alongside the original weights. The result is a much smaller set of
+trainable parameters, which means lower memory requirements, lower compute cost and faster training. QLoRA adds 4-bit
+quantisation on top, reducing memory further. For most practitioners, LoRA or QLoRA is the practical default rather than
+full fine-tuning.
+
+**Full fine-tuning** updates every parameter in the model. It is more powerful but requires significantly more compute
+and carries a higher risk of catastrophic forgetting, where the model loses capabilities it had before training. Most
+application-level fine-tuning does not need it.
+
+**RLHF (Reinforcement Learning from Human Feedback)** is the technique that turned base models into ChatGPT-style
+assistants. It involves training a separate reward model on human preference data and then using reinforcement learning
+to steer the main model towards higher-reward outputs. It is complex to implement, requires managing several model
+copies during training and is prone to instability. It is generally not something you implement yourself.
+
+**DPO (Direct Preference Optimisation)** achieves similar alignment goals to RLHF with significantly less complexity.
+Instead of a reward model and RL training loop, DPO trains directly on preference pairs — examples where a human has
+indicated which of two responses is better. Research from Stanford and others shows it achieves comparable or better
+results than PPO-based RLHF at roughly half the compute. DPO is the approach most teams use when they need to align
+model behaviour with human preferences.
+
+**RFT (Reinforcement Fine-Tuning)** is a newer approach suited to tasks with verifiable outcomes, such as coding or
+maths. The model is rewarded when its outputs are provably correct, which drives improvement on reasoning-heavy tasks.
+OpenAI introduced this in late 2024 and it underpins much of the improvement in their o-series reasoning models.
+
+### Data requirements
+
+The data is usually the hardest part. The format is typically JSONL, where each line contains a prompt/completion pair
+or a conversation thread. Providers like OpenAI, Anthropic and Google all have specific schemas for their fine-tuning
+endpoints.
+
+A few hundred to a few thousand high-quality examples is a reasonable starting point for SFT. The examples need to be
+representative of what you actually want the model to do. If your examples are inconsistent or contain errors, the model
+will learn the noise.
+
+For DPO you need preference pairs — the same prompt with two responses, one preferred and one not. Collecting this data
+is slower but the results are more targeted at behavioural alignment.
+
+### Managed fine-tuning
+
+All three major providers offer managed fine-tuning APIs where you upload your data, kick off a training job and receive
+a fine-tuned model identifier to use in your application. This removes the infrastructure burden entirely. OpenAI's
+fine-tuning API supports GPT-4o and GPT-4o mini. Anthropic offers fine-tuning for Claude. Google offers it via Vertex
+AI.
+
+Managed fine-tuning is the right default for most application developers. Rolling your own training infrastructure is
+only worth it if you have very specific requirements around hardware, data privacy or model architecture.
+
+### Common pitfalls
+
+**Fine-tuning to compensate for bad prompts** is a common waste of effort. If you have not first tried a well-crafted
+system prompt with examples, you are skipping a cheaper and faster fix.
+
+**Catastrophic forgetting** happens when fine-tuning on a narrow dataset degrades the model's general capabilities. The
+model gets better at your specific task but worse at everything else. Using LoRA reduces this risk because the original
+weights are preserved.
+
+**Overfitting** on a small dataset produces a model that handles training examples well but fails on anything slightly
+different. A small, high-quality dataset is better than a large inconsistent one, but you still need enough variety to
+cover realistic inputs.
+
+**Expecting facts to stick** is a fundamental misunderstanding of what fine-tuning does. If you need accurate recall of
+specific information, use RAG.
+
+**Underestimating maintenance** is easy to overlook. A fine-tuned model is another artefact to version, evaluate and
+retrain when the underlying base model is updated.
 
 ## What actually goes into the model
 
