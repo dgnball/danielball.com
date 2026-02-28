@@ -14,11 +14,58 @@ come from treating LLMs like a black box when the underlying mechanics are actua
 ## TLDR and Resources
 
 Don’t want to read this or don’t have the time. Here’s a list of resources you might find generally useful or
-interesting...
+interesting.
 
-**Docs**
+**Provider docs**
 
-- [OpenAI's guide to function calling](https://developers.openai.com/api/docs/guides/function-calling)
+- [Build with Claude](https://www.anthropic.com/learn/build-with-claude) — Anthropic’s starting point for developers
+- [Anthropic prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview)
+  — Anthropic’s official prompting reference
+- [OpenAI API reference](https://platform.openai.com/docs/api-reference/introduction) — OpenAI’s API docs
+- [OpenAI’s guide to function calling](https://developers.openai.com/api/docs/guides/function-calling)
+- [OpenAI Cookbook](https://cookbook.openai.com/) — practical recipes and worked examples from OpenAI
+- [Gemini API docs](https://ai.google.dev/gemini-api/docs) — Google’s developer documentation for Gemini
+
+**Playgrounds and studios**
+
+- [Anthropic Console](https://console.anthropic.com/) — iterate on prompts and export code for Claude
+- [OpenAI Playground](https://platform.openai.com/playground) — interactive prompt testing for GPT models
+- [Google AI Studio](https://aistudio.google.com/) — browser-based environment for Gemini
+- [OpenRouter](https://openrouter.ai/) — single API to access and compare models from many providers
+- [Tiktokenizer](https://tiktokenizer.vercel.app/) — see how text tokenises before it hits the model
+
+**Learning**
+
+- [Anthropic interactive prompt engineering tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial) —
+  hands-on Jupyter notebooks for prompting Claude
+- [AI Python for Beginners](https://www.deeplearning.ai/short-courses/ai-python-for-beginners/) — DeepLearning.AI short
+  course
+- [Real Python AI tutorials](https://realpython.com/tutorials/ai/) — practical AI tutorials for Python developers
+
+**Evaluation and observability**
+
+- [LangSmith](https://www.langchain.com/langsmith) — tracing, evaluation and prompt versioning from LangChain
+- [Langfuse](https://langfuse.com/) — open-source observability and evaluation platform
+- [Promptfoo](https://www.promptfoo.dev/) — open-source CLI for prompt testing and red teaming
+- [Braintrust](https://www.braintrust.dev/) — eval-driven development platform with CI integration
+
+**Visual builders**
+
+- [Flowise](https://flowiseai.com/) — open-source drag-and-drop canvas for LLM pipelines
+- [Dify](https://dify.ai/) — open-source RAG application builder
+- [LangFlow](https://www.langflow.org/) — visual canvas for agents and retrieval pipelines
+- [n8n](https://n8n.io/) — automation tool with strong AI workflow support and self-hosting option
+
+**Self-hosting**
+
+- [Ollama](https://ollama.com/) — run open-weight models locally with minimal setup
+- [LM Studio](https://lmstudio.ai/) — desktop app for running and chatting with local models
+- [Hugging Face](https://huggingface.co/) — model hub, datasets and hosted inference
+
+**Community**
+
+- [r/RAG](https://www.reddit.com/r/Rag/) — subreddit for retrieval-augmented generation discussion
+- [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/) — self-hosting, open-weight models and hardware
 
 ## Glossary
 
