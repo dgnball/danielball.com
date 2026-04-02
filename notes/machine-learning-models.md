@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Machine Learning Models
+canonical_url: https://westsmith.co.uk/articles/machine-learning-models
 ---
 
 <img src="/assets/images/notes/models.png" alt="models">

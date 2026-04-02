@@ -1,6 +1,7 @@
 ---
 layout: page
 title: AI Agents
+canonical_url: https://westsmith.co.uk/articles/ai-agents
 ---
 
 What follows is my attempt to explain what is meant by the term "AI agent", list out some examples and resources and
