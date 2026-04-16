@@ -1,6 +1,7 @@
 ---
 layout: page
 title: AI Assisted Coding
+canonical_url: https://westsmith.co.uk/articles/ai-assisted-coding
 ---
 
 <div style="font-family:monospace;background:#111;color:#ccc;border-radius:8px;padding:1.25rem 1.5rem;margin:1.5rem 0;max-width:480px;font-size:0.82rem;line-height:1.7;">
