@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Glossary of AI Terms (with a focus on LLMs)
+canonical_url: https://westsmith.co.uk/articles/ai-glossary
 ---
 
 What follows is my attempt to explain AI through the medium of a glossary, with a focus on LLMs (Large Language Models).
