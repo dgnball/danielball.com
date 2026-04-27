@@ -33,3 +33,8 @@ When writing or editing content for this site, follow these rules.
 - Passive voice where active voice is cleaner
 - Padding sentences that don't add information
 - Starting bullets with the same word repeatedly
+
+## Content decisions
+
+- Do not change the homepage H1 from "About Me 🧐". The SEO penalty is accepted; skip this heading in any SEO
+  improvement suggestions.
