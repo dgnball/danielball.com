@@ -7,10 +7,10 @@ title: Skills 🛠️
 
 ## Qualifications
 
-- [HashiCorp Certified: Terraform Associate - March 2023](https://www.credly.com/badges/7517918a-6e79-4f92-8a35-456a9185f36d/public_url)
-- [Google Professional Cloud Developer - November 2022](https://www.credly.com/badges/ffabea96-6a85-4ee6-97ee-52e36ae0aa59)
-- [AWS Certified Solutions Architect Associate - March 2019, March 2022 (renewed)](https://www.credly.com/badges/8f39efb0-c84c-404d-8aac-dc6e59ccdbac)
-- [Certified ScrumMaster, Scrum Alliance - October 2016](https://www.scrumalliance.org/community/profile/dball21)
+- [HashiCorp Certified: Terraform Associate](https://www.credly.com/badges/7517918a-6e79-4f92-8a35-456a9185f36d/public_url) (previously certified) - March 2023
+- [Google Professional Cloud Developer](https://www.credly.com/badges/ffabea96-6a85-4ee6-97ee-52e36ae0aa59) (previously certified) - November 2022
+- [AWS Certified Solutions Architect Associate](https://www.credly.com/badges/8f39efb0-c84c-404d-8aac-dc6e59ccdbac) (previously certified) - March 2019, March 2022 (renewed)
+- Certified ScrumMaster, Scrum Alliance (previously certified) - October 2016
 - BSc Computer Science, University of Exeter - June 2004
 
 ## Programming languages
@@ -24,6 +24,9 @@ title: Skills 🛠️
 
 ## Areas of expertise
 
+- AI Integration
+- RAG (Retrieval-Augmented Generation)
+- LLM Application Development
 - Prompt Engineering
 - Software architecture
 - API development
@@ -72,6 +75,7 @@ title: Skills 🛠️
 
 ## Other tools
 
+- Claude (Anthropic)
 - ChatGPT (OpenAI)
 - IntelliJ
 - Pycharm

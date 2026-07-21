@@ -13,7 +13,7 @@ software project.
 
 🌟 A strong track record in crafting solutions for a wide range of organisations. See my [portfolio](portfolio)
 
-🌟 20 years of experience in software development, agile management and system architecture. See my [journey](journey)
+🌟 20+ years of experience in software development, agile management and system architecture. See my [journey](journey)
 
 🌟 A lifelong dedication to learning and improving my [skills](skills)
 
@@ -22,7 +22,7 @@ software project.
 🌟 **I deliver working software systems!** This includes requirements gathering, system architecture design and
 full-scale implementation
 
-🌟 Skills are T-shaped (broad knowledge) but I specialise in **Python** and **Google Cloud** implementations
+🌟 Skills are T-shaped (broad knowledge) but I specialise in **Python** and **AI** implementations
 
 ### Want to hire me?
 
@@ -34,10 +34,9 @@ If you would like to discuss a project, please get in touch. The best place to r
 
 ### Noteworthy
 
-🌟 Recently, I have worked with the **University of Cambridge** 🎓 and the **Office for National Statistics** 📊
+🌟 Recently, I've been building AI-powered products like [Verdanta](https://verdanta.report) 🤖, alongside consultancy work for UK government and enterprise clients
 
-🌟 I hold the
-[Google Cloud Certified Professional Cloud Developer certification](https://www.credly.com/badges/ffabea96-6a85-4ee6-97ee-52e36ae0aa59)
+🌟 I previously earned the Google Cloud Certified Professional Cloud Developer credential
 
 ### Tech I've worked with ⬇️
 

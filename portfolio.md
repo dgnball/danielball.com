@@ -8,6 +8,12 @@ While my primary work involves private enterprise software, I maintain several o
 
 For a deeper dive into some of the commercial projects I've worked on in the last 5 years, click the headings below:
 
+### [Verdanta](https://verdanta.report)
+
+AI-powered ESG reports for UK small businesses, built on Anthropic's Claude.
+
+<img src="/assets/images/projects/verdanta.png" width="120" height="60">
+
 ### [ONS Integrated Data Service](/projects/ons-integrated-data-service)
 
 A service that provides secure access to high-quality data.
