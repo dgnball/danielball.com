@@ -34,7 +34,8 @@ If you would like to discuss a project, please get in touch. The best place to r
 
 ### Noteworthy
 
-🌟 Recently, I've been building AI-powered products like [Verdanta](https://verdanta.report) 🤖, alongside consultancy work for UK government and enterprise clients
+🌟 Recently, I've been building AI-powered products like [Verdanta](https://verdanta.report) 🤖, alongside consultancy
+work for UK government and enterprise clients
 
 🌟 I previously earned the Google Cloud Certified Professional Cloud Developer credential
 
