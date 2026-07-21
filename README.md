@@ -18,9 +18,9 @@ You'll need Ruby and Jekyll. If you're on macOS and starting from scratch:
 ```bash
 brew install rbenv
 echo 'eval "$(rbenv init -)"' >> ~/.zshrc
-source ~/.zshrc
 rbenv install 3.3.10
 rbenv global 3.3.10
+source ~/.zshrc
 ruby -v
 gem install jekyll bundler
 bundle install

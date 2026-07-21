@@ -35,3 +35,6 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 # Security: pin addressable to patched version (ReDoS fix)
 gem "addressable", ">= 2.9.0"
+
+# Security: pin concurrent-ruby to patched version (AtomicReference#update NaN livelock fix)
+gem "concurrent-ruby", ">= 1.3.7"
