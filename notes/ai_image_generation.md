@@ -283,21 +283,22 @@ model costing a tenth of a cent more saved several retries.
 
 ### Describe the camera, not the view
 
-I needed card table backgrounds for a game. A table seen from directly above, a few props around the edges and the
-middle kept clear for the cards. My first prompt said "seen from directly above, flat with no perspective".
+I wanted card table backgrounds for a game. That meant a table seen from directly above, with a few props around the
+edges and the middle kept clear for the cards.
 
-FLUX 3 Klein gave me a lovely oak table photographed at an angle, with the cabin wall and a rainy window across the top.
-The props were all fully in frame and bunched down one side. Nice picture, wrong brief.
+Asking for "seen from directly above" isn't enough. Models learn from photos, and most photos of tables are taken at an
+angle. My first attempts came back as nice pictures of a table with a wall and a window behind it, and every prop
+bunched down one side.
 
 Two changes fixed most of it.
 
 1. **Describe the camera.** "An orthographic flat lay. The camera points straight down at the tabletop, with no
    perspective and no horizon. The table surface fills the entire frame edge to edge. No walls, windows, floor or table
    edges are visible."
-2. **Spell out the distribution.** "Spread these around all four edges (top, bottom, left and right) rather than
-   bunching them on one side or in the corners. Each one should be small and cut off by the edge of the image."
+2. **Spell out where things go.** "Spread these around all four edges (top, bottom, left and right) rather than bunching
+   them on one side or in the corners. Each one should be small and cut off by the edge of the image."
 
-Here's the same kitchen table prompt on two models.
+Here's the same prompt for a pine kitchen table, with both changes, run on two different models.
 
 <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
   <figure style="margin: 0; flex: 1 1 280px;">
