@@ -47,10 +47,9 @@ generated. Every image here came from those experiments.
   recognition inside out. The results are full of
   [psychedelic dog faces](https://www.fastcompany.com/3048941/why-googles-deep-dream-ai-hallucinates-in-dog-faces),
   because the network was trained on a dataset with a lot of dogs in it.
-- **2018 - AI art goes to auction.** A blurry GAN portrait called _Edmond de Belamy_ [sells at Christie's for
-  $432,500](https://www.bloomberg.com/news/articles/2018-10-25/ai-generated-portrait-is-sold-for-432-500-in-an-auction-first),
-  against an estimate of $7,000
-  to $10,000.
+- **2018 - AI art goes to auction.** A blurry GAN portrait called _Edmond de Belamy_
+  [sells at Christie's for $432,500](https://www.bloomberg.com/news/articles/2018-10-25/ai-generated-portrait-is-sold-for-432-500-in-an-auction-first),
+  more than 40 times its top estimate.
 - **2019 - Faces that don't exist.** NVIDIA's [StyleGAN](https://arxiv.org/abs/1812.04948) powers
   [thispersondoesnotexist.com](https://thispersondoesnotexist.com), a new photorealistic fake face on every refresh.
 - **2021 - DALL-E.** OpenAI links text and images in one model. You can type a sentence and get a picture, even if it's
