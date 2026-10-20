@@ -13,3 +13,5 @@ on things I've learned, what I'm working on and stuff I find interesting.
   classical models and when to use what.
 - [AI Assisted Coding](notes/ai_assisted_coding) - The tools, the models, the risks and the trade-offs of the
   AI-assisted coding landscape
+- [AI Image Generation](notes/ai_image_generation) - What I learned generating images with AI, from picking a model
+  to making a poster that doesn't look AI generated
