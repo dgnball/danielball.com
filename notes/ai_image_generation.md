@@ -64,7 +64,8 @@ generated. Every image here came from those experiments.
   actually read. SDXL raises the bar for open models and DALL-E 3 moves into ChatGPT.
 - **2024 - Flux and the backlash.** Former Stable Diffusion researchers found Black Forest Labs and
   [release Flux](https://bfl.ai/announcements/24-08-01-bfl), which becomes the default open-weight model. Meanwhile AI
-  posters become a byword for cutting corners (more on that [below](#posters-are-where-ai-images-go-wrong)).
+  posters become a byword for cutting corners (more on that
+  [below](#marketing-is-where-ai-images-get-the-most-criticism)).
 - **2025 - Native image models.** OpenAI builds image generation into GPT-4o itself and the "Studio Ghibli" trend takes
   over social media. Google's
   [Gemini 2.5 Flash Image](https://developers.googleblog.com/en/introducing-gemini-2-5-flash-image/), nicknamed Nano
@@ -314,13 +315,14 @@ Here's the same prompt for a pine kitchen table, with both changes, run on two d
 Both are now top-down. Flux leaves the props whole and pushes them into the corners. Muse, a multimodal model that plans
 before it draws, put one item on each edge, cropped each one and left the middle clear.
 
-### Posters are where AI images go wrong
+### Marketing is where AI images get the most criticism
 
 Posters, flyers and infographics are one of the most common uses for AI images. They're also where it most often looks
 cheap.
 
-- **Gibberish.** The Willy's Chocolate Experience posters promised "catgacating" and "exarserdray". The event itself was
-  so far from the pictures that people called the police.
+- **Gibberish.** The [Willy's Chocolate Experience](https://en.wikipedia.org/wiki/Willy%27s_Chocolate_Experience)
+  posters promised "catgacating" and "exarserdray". The event itself was so far from the pictures that people called the
+  police.
 - **Poor taste.** A24's AI-generated posters for _Civil War_
   [drew criticism](https://petapixel.com/2024/04/23/a24-criticized-for-using-ai-generated-movie-posters-for-civil-war)
   in April 2024. They showed scenes that weren't in the film and had obvious errors, like a Chicago landmark rebuilt at
@@ -370,10 +372,10 @@ with a slightly too-even drop shadow and plain heavy italic type. I even asked f
 bland". That one would pass a casual glance. It isn't quite 1996, because the shake is in a dome-lid cup you'd see in
 the 2010s.
 
-For balance, I asked for the worst version I could think of. 8K, Unreal Engine, volumetric god rays, floating
-ingredients and a galaxy. It delivered a dozen patties with no bottom bun, a shake with no glass and fries raining down
-from space. It also spelled every word correctly. The giveaway now isn't the spelling. It's that every element is turned
-up to the maximum.
+For balance, I asked for the worst version I could think of. Unreal Engine, volumetric god rays, floating ingredients
+and a galaxy. It delivered a dozen patties with no bottom bun, a shake with no glass and fries raining down from space.
+Unlike AI posters of old (2 years ago), the spelling is correct these days. The giveaway now isn't the spelling. It's
+that every element is turned up to the maximum.
 
 ### Prompting rules of thumb
 
@@ -384,7 +386,7 @@ up to the maximum.
 - **Real design is restrained.** Asking for "slightly bland" did more than any amount of detail.
 - **Keep text short and exact.** Put it in quotes, add "spell every word exactly as written" and proofread the result.
 - **Name period details.** The model drifts towards modern objects unless you name the old ones.
-- **Generate two or three.** Variants of the same prompt often differ a lot, and at a cent each it's cheaper than
+- **Generate two or three.** Variants of the same prompt often differ a lot, and at a cent each, it's cheaper than
   rewriting the prompt.
 - **Lock in a template for batches.** Use the same style suffix and seed for every asset in a category so the batch
   doesn't drift.
