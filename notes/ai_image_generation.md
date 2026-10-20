@@ -10,7 +10,7 @@ bit of history, what you actually get from ChatGPT and how to build image genera
 
 It's based on my own experiments calling a handful of image providers from Python. I've generated pixel art sprites,
 photorealistic card table backgrounds and a series of restaurant posters, trying to make one that doesn't look AI
-generated. Every image here came from those experiments and the whole lot cost well under a dollar.
+generated. Every image here came from those experiments.
 
 <!-- prettier-ignore -->
 - TOC
@@ -187,8 +187,7 @@ LoRA trained for it or a tiling option in the tool.
 | Aggregators    | [OpenRouter](https://openrouter.ai/models?output_modalities=image), [Replicate](https://replicate.com/), [fal.ai](https://fal.ai/) | Trying many models with one key    | Markup on some, models come and go          |
 | Local          | Flux or SDXL with [mflux](https://github.com/filipstrand/mflux) or [ComfyUI](https://github.com/comfyanonymous/ComfyUI)            | Free bulk generation, full control | Needs a decent GPU or Apple Silicon, slower |
 
-For my experiments I deliberately avoided subscriptions. Everything was pay per image through an API or free on my
-MacBook.
+For my experiments I deliberately avoided subscriptions. Everything was pay per image through an API or was run locally.
 
 ## What you get with ChatGPT
 
@@ -301,7 +300,7 @@ Two changes fixed most of it.
 
 Here's the same kitchen table prompt on two models.
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
   <figure style="margin: 0; flex: 1 1 280px;">
     <img src="/assets/images/notes/ai_images/kitchen_flux.jpg" alt="Pine kitchen table from FLUX 3 Klein with props bunched into the corners">
     <figcaption>FLUX 3 Klein, $0.009</figcaption>
@@ -342,13 +341,13 @@ and a named design tradition.
 
 <img src="/assets/images/notes/ai_images/poster_trattoria.jpg" alt="Screenprint style poster for Trattoria Bruno with a linocut plate of spaghetti and a wine carafe" style="width: 360px;">
 
-The ink texture is convincing. The bottom line looks like clean digital type and the fold crease is too much.
+The ink texture is convincing. The bottom line looks like clean digital type but the fold crease may be too much.
 
 The harder test was a 90s burger poster with food that looks real. AI food tends to be too perfect, too glossy and too
 heroic. I asked for 1996 medium-format film photography and deliberately imperfect food, like a lopsided bun and pale
 winter tomatoes.
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
   <figure style="margin: 0; flex: 1 1 200px;">
     <img src="/assets/images/notes/ai_images/poster_burger_retro.jpg" alt="Retro burger poster with comic lettering and a scuffed finish">
     <figcaption>Retro pastiche</figcaption>
@@ -390,10 +389,10 @@ up to the maximum.
 - **Lock in a template for batches.** Use the same style suffix and seed for every asset in a category so the batch
   doesn't drift.
 
-## Pixel art, a case study in what AI is and isn't good at
+## Pixel art
 
-Pixel art game sprites look like the easiest possible job for an image model. Small, simple, few colours. They turn out
-to be a great example of where to use AI and where not to.
+Pixel art and game sprites look like the easiest possible job for an image model. Small, simple, few colours. They turn
+out to be a great example of how AI image generation is harder than you would expect.
 
 ### Pixel art is a style, not a format
 
@@ -415,7 +414,7 @@ For a set of different objects it works brilliantly. I asked for 100 fantasy inv
 them distinct, for one $0.039 call. That's about $0.00025 per icon. Ordinary code then slices them by shape, removes the
 background and repacks them on a clean grid.
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
   <figure style="margin: 0; flex: 1 1 280px;">
     <img src="/assets/images/notes/ai_images/sheet-items-10x10.png" alt="156 varied fantasy item icons">
     <figcaption>Raw output, 156 icons in one image</figcaption>
@@ -429,7 +428,7 @@ background and repacks them on a clean grid.
 For one character in many poses it falls apart quickly. A 4 x 4 grid gave me about 13 distinct poses of the same knight.
 Asking for 10 x 10 gave me the same knight stamped 120 times.
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
   <figure style="margin: 0; flex: 1 1 280px;">
     <img src="/assets/images/notes/ai_images/sheet-knight-4x4.png" alt="4x4 knight sheet with 16 varied poses">
     <figcaption>4 x 4, real variety</figcaption>
@@ -449,19 +448,32 @@ Here is what I learned from seven calls and about $0.27.
 - **Scale everything together.** If each sprite is resized to fill its own cell, a character grows and shrinks between
   animation frames.
 
+### Doing pixel art properly
+
+What I did was a basic experiment with general models. If you need pixel art (a very specific type of image generation),
+there are better routes.
+
+[PixelLab](https://www.pixellab.ai/) is built for game developers. It draws real sprites at their actual size rather
+than a large picture that looks like pixel art. Palette, outline, camera angle and transparency are settings rather than
+prompt wording, and it can animate and rotate a character. It's a subscription, so I didn't use it here.
+[Retro Diffusion](https://www.retrodiffusion.ai/) is a similar commercial option.
+
+To do it yourself, use a model add-on trained for pixel art such as
+[Pixel Art XL](https://huggingface.co/nerijs/pixel-art-xl), then shrink the result onto a clean grid and fix the palette
+in code. [PixelOE](https://github.com/KohakuBlueleaf/PixelOE) can also turn any image into pixel art without AI. That
+works well for still images. Consistent animation is where the commercial tools are still ahead.
+
 ### Where the line falls
 
 Vectors are another format that looks easier than it is. An LLM can write SVG code cheaply, but characters come out
 crude because it's describing a picture without seeing it. Dedicated text-to-vector models like
-[Recraft](https://www.recraft.ai/) look much better but cost more than raster images.
+[Recraft](https://www.recraft.ai/ai-vector-generator) look much better but cost more than raster images.
 
 The general lesson from pixel art is that AI is good at "what should this look like?" and bad at "put exactly this in
 exactly this cell". What matters isn't how simple the output looks. It's whether the hard part is creative or
 structural. Use the model for the creative part and code for the structure.
 
 ## Integrating image generation into a coding project
-
-This is the advice I'd give anyone adding image generation to an app.
 
 ### Put a thin interface in front of every provider
 
@@ -543,11 +555,6 @@ code. It's the one way to guarantee it's spelled right.
 Use a fake provider that returns a fixed image in your unit tests. Keep real API calls for a small set of smoke tests.
 Use a cheap model for development and switch to the better one in production config.
 
-### Think about user prompts
-
-If users can type prompts, providers will moderate some content but you're still responsible for what your app produces.
-Add your own checks, rate limits and a way to report bad output. Be clear with users when an image is AI generated.
-
 ## Integrating with an agent
 
 Image generation and AI agents fit together well. A multimodal agent can write a detailed prompt, call the model, look
@@ -555,16 +562,14 @@ at the result, critique it and try again. That loop is the part that used to nee
 
 ### Claude doesn't generate images
 
-Claude is the agent I use most, and it can't make images itself. Anthropic's
-[help centre](https://support.claude.com/en/articles/9002504-can-claude-produce-images) says so plainly. Claude can view
-and analyse images and it can draw diagrams, charts and interactive visuals with code like SVG and HTML. It doesn't
-generate photos or illustrations.
+If you are using Claude code, you should bear in mind that the built-in model won't generate raster images like photos
+or paintings. Anthropic's [help centre](https://support.claude.com/en/articles/9002504-can-claude-produce-images) says
+so plainly. Claude can view and analyse images and it can draw diagrams, charts and interactive visuals with code like
+SVG and HTML.
 
-Anthropic hasn't said publicly why. My guess is focus. Its models are aimed at text, code and agents, and image
-generation brings its own costs and misuse risks, from deepfakes to copyright. Whatever the reason, it doesn't matter
-much in practice. Claude is very good at the parts around image generation, like writing a detailed prompt and judging
-whether the result matches the brief. You connect it to a specialist image model through a tool and let each do what
-it's good at.
+Its models are aimed at text, code and agents. Claude is very good at the parts around image generation, like writing a
+detailed prompt and judging whether the result match the brief. You connect it to a specialist image model through a
+tool and let each do what it's good at.
 
 ### Three ways to wire it up
 
@@ -621,63 +626,6 @@ changed its API mid-session it found the error, fixed the code and carried on.
   the agent that spotted the 2010s milkshake cup in my 1996 poster.
 - **Keep the human on taste.** The agent is good at checking an image against a brief. Deciding whether the brief was
   right in the first place is still your job.
-
-## Pros, cons and ownership
-
-### Pros
-
-- **Speed of exploration.** Twenty style directions in ten minutes, against days of an artist's time.
-- **Cheap at the margin.** Fractions of a cent to a few cents per image. Free locally.
-- **Good enough for prototypes and placeholders**, and often for final assets once post-processed.
-- **Style range.** The same pipeline produces pixel art, concept art, photorealistic backgrounds and posters.
-- **Editing.** Multimodal models can take an existing image and change one thing, which used to be the hardest part to
-  automate.
-
-### Cons
-
-- **Consistency is the hard problem.** Keeping one character identical across eight animation frames takes reference
-  images, templates and manual curation.
-- **Weak at exact structure.** Precise counts, symmetry, seamless tiling, exact grids and exact layouts are all
-  unreliable.
-- **No determinism across providers**, and sometimes not even within one.
-- **Platform churn.** Models get delisted, renamed and repriced. Your config will rot unless something checks it.
-- **The AI look.** Audiences are getting better at spotting it, and as A24 found, it can cheapen a brand.
-
-### Who owns the output?
-
-Provider terms generally give you the rights to what you generate. But in the US, purely AI-generated images aren't
-copyrightable. The [Copyright Office's January 2025 report](https://www.copyright.gov/ai/) says a prompt alone generally
-isn't enough, although human selection, arrangement and modification can be protected. In March 2026 the Supreme Court
-[declined to hear _Thaler v. Perlmutter_](https://www.scotusblog.com/cases/thaler-v-perlmutter/), leaving the human
-authorship requirement in place. The UK has its own provision for computer-generated works, so the answer depends on
-where you are.
-
-In practice, assets you substantially rework are on firmer ground than raw outputs, and a competitor could probably
-reuse your unmodified ones. This isn't legal advice. Check before relying on it for a commercial product.
-
-## A workflow that works
-
-1. **Explore on a cheap or free model.** Try the idea and see what goes wrong.
-2. **Fix the prompt before switching model.** Most of my problems were the prompt being vague about camera and layout.
-3. **Pay for the better model only where it earns it.** Layout, reference-image edits and character consistency.
-4. **Generate a couple of variants and pick one.**
-5. **Lock in a prompt template and seed** once you're happy, so a batch stays consistent.
-6. **Do the exact work in code.** Background removal, resizing, palettes, layout and any text that must be exact.
-7. **Log every run** so you can measure cost per usable image and reproduce good results.
-
-## What this guide cost
-
-| Experiment                           | Model                      | Cost            |
-| ------------------------------------ | -------------------------- | --------------- |
-| Pixel art knight                     | Gemini 2.5 Flash Image     | $0.039          |
-| Sprite sheet tests (seven sheets)    | Gemini 2.5 Flash Image     | ~$0.27          |
-| Card table backgrounds (four images) | FLUX 3 Klein and Meta Muse | $0.038          |
-| Trattoria poster                     | Meta Muse                  | $0.01           |
-| Burger posters (five images)         | Meta Muse                  | $0.05           |
-| **Total**                            |                            | **about $0.41** |
-
-At these prices the cost of an image barely matters. The time spent writing and checking prompts is the real cost, which
-is exactly why handing that loop to an agent works so well.
 
 ## Glossary
 
