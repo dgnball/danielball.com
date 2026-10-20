@@ -33,3 +33,10 @@ bundle exec jekyll serve --livereload
 ```
 
 The site will be available at `http://localhost:4000`.
+
+Pre-commit hooks run locally and via GitHub Actions. Not applicable on the VDI.
+
+```bash
+pre-commit install
+pre-commit run --all-files
+```
