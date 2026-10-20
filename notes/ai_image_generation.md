@@ -8,9 +8,9 @@ title: AI Image Generation
 This is my general guide to AI image generation. It covers how the models work at a high level, the different types, a
 bit of history, what you actually get from ChatGPT and how to build image generation into your own code and agents.
 
-It's based on building a small Python tool that generates images through whichever provider I point it at. I've used it
-for 8-bit game sprites, photorealistic card table backgrounds and a challenge to make a restaurant poster that doesn't
-look AI generated. Every image here came out of that tool and the whole lot cost well under a dollar.
+It's based on my own experiments calling a handful of image providers from Python. I've generated pixel art sprites,
+photorealistic card table backgrounds and a series of restaurant posters, trying to make one that doesn't look AI
+generated. Every image here came from those experiments and the whole lot cost well under a dollar.
 
 <!-- prettier-ignore -->
 - TOC
@@ -30,8 +30,8 @@ look AI generated. Every image here came out of that tool and the whole lot cost
   model in config and log what you actually got back.
 - **Describe how it was made, not how it should look.** Camera, film, print process and layout get better results than
   "stunning" and "hyper-detailed".
-- **Spelling is no longer the giveaway.** The tell now is taste. Too much glow, too much drama and nothing allowed to be
-  plain.
+- **Spelling and fingers are no longer the giveaway.** The tell now is taste. Too much glow, too much drama and nothing
+  allowed to be plain.
 - **Agents are good at this.** A multimodal agent can write the prompt, call the API, look at the result and try again.
   You still need to supply the taste.
 - **The best pipelines are hybrids.** Let AI do the creative part. Let ordinary code do the exact parts like sizing,
@@ -39,24 +39,67 @@ look AI generated. Every image here came out of that tool and the whole lot cost
 
 ## A short history
 
-- **2014 - GANs.** Ian Goodfellow's generative adversarial networks pit two networks against each other, one making
-  images and one spotting fakes. They produce the first convincing synthetic faces but are hard to steer with text.
-- **2015 - DeepDream.** Google's psychedelic dog-faces show the public that neural networks "see" things.
-- **2018 to 2019 - StyleGAN.** NVIDIA's model powers thispersondoesnotexist.com. A GAN portrait sells at Christie's for
-  $432,500.
-- **2021 - DALL-E and CLIP.** OpenAI links text and images in one model. You can type a sentence and get a picture, even
-  if it's a blurry one.
-- **2022 - The breakout year.** DALL-E 2, Midjourney and Stable Diffusion all arrive within a few months. Stable
-  Diffusion is open source and runs on a gaming PC, which kicks off a huge community of fine-tunes and tools.
-- **2023 - Photorealism.** Midjourney v5 produces the viral "Pope in a puffer jacket". SDXL raises the bar for open
-  models. Adobe launches Firefly. DALL-E 3 moves into ChatGPT, so you can ask for an image in conversation.
-- **2024 - Flux.** Former Stable Diffusion researchers found Black Forest Labs and release Flux, which becomes the
-  default open-weight model.
+- **2014 - GANs.** Ian Goodfellow's [generative adversarial networks](https://arxiv.org/abs/1406.2661) pit two networks
+  against each other, one making images and one spotting fakes. They go on to produce convincing synthetic faces but are
+  hard to steer with text.
+- **2015 - DeepDream.** Google's
+  [Inceptionism experiments](https://research.google/blog/inceptionism-going-deeper-into-neural-networks/) turn image
+  recognition inside out. The results are full of
+  [psychedelic dog faces](https://www.fastcompany.com/3048941/why-googles-deep-dream-ai-hallucinates-in-dog-faces),
+  because the network was trained on a dataset with a lot of dogs in it.
+- **2018 - AI art goes to auction.** A blurry GAN portrait called _Edmond de Belamy_ [sells at Christie's for
+  $432,500](https://www.bloomberg.com/news/articles/2018-10-25/ai-generated-portrait-is-sold-for-432-500-in-an-auction-first),
+  against an estimate of $7,000
+  to $10,000.
+- **2019 - Faces that don't exist.** NVIDIA's [StyleGAN](https://arxiv.org/abs/1812.04948) powers
+  [thispersondoesnotexist.com](https://thispersondoesnotexist.com), a new photorealistic fake face on every refresh.
+- **2021 - DALL-E.** OpenAI links text and images in one model. You can type a sentence and get a picture, even if it's
+  a small, blurry one.
+- **2022 - The breakout year.** DALL-E 2, [Midjourney](https://en.wikipedia.org/wiki/Midjourney) and
+  [Stable Diffusion](https://stability.ai/news/stable-diffusion-public-release) all arrive within a few months. Stable
+  Diffusion is open source and runs on a gaming PC with about 7GB of video memory, which kicks off a huge community of
+  fine-tunes and tools.
+- **2023 - Photorealism and readable text.** A Midjourney image of the
+  [Pope in a white puffer jacket](https://www.snopes.com/fact-check/not-real-photo-pope-in-puffy-coat) fools much of the
+  internet. [Ideogram](<https://en.wikipedia.org/wiki/Ideogram_(text-to-image_model)>) launches with text you can
+  actually read. SDXL raises the bar for open models and DALL-E 3 moves into ChatGPT.
+- **2024 - Flux and the backlash.** Former Stable Diffusion researchers found Black Forest Labs and
+  [release Flux](https://bfl.ai/announcements/24-08-01-bfl), which becomes the default open-weight model. Meanwhile AI
+  posters become a byword for cutting corners (more on that [below](#posters-are-where-ai-images-go-wrong)).
 - **2025 - Native image models.** OpenAI builds image generation into GPT-4o itself and the "Studio Ghibli" trend takes
-  over social media. Google's Gemini 2.5 Flash Image, nicknamed Nano Banana, makes conversational editing cheap.
-  Readable text in images goes from impossible to normal.
-- **2026 - Abundance and churn.** OpenRouter alone lists over 60 image models from a dozen companies. Older models are
-  being retired every few months.
+  over social media. Google's
+  [Gemini 2.5 Flash Image](https://developers.googleblog.com/en/introducing-gemini-2-5-flash-image/), nicknamed Nano
+  Banana, makes conversational editing cheap at $0.039 an image.
+- **2026 - Abundance and churn.** OpenAI
+  [switches off DALL-E](https://community.openai.com/t/deprecation-reminder-dall-e-will-be-shut-down-on-may-12-2026/1378754)
+  in its API. OpenRouter alone lists over 60 image models from a dozen companies, and older models are retired every few
+  months.
+
+### Six fingers and gibberish text
+
+For a few years the easiest way to spot an AI image was to count the fingers or try to read the sign in the background.
+Both problems are now mostly fixed, and why they happened says a lot about how these models work.
+
+**Hands** are complicated, flexible and usually partly hidden in photos. Behind a cup, in a pocket, half out of frame.
+The models learned what hands look like as a texture, not how many fingers they have.
+[Midjourney v5](https://hyperallergic.com/ai-image-generators-finally-figured-out-hands) in March 2023 was widely
+reported as the turning point. Experts suspected better curated training data with clearer pictures of hands, plus
+bigger models and higher resolutions. It wasn't perfect. People in the background still had
+[alien anatomy](https://www.creativebloq.com/news/ai-hands) for a while.
+
+**Text** had a more specific cause. Most models read your prompt through a tokeniser that splits it into chunks of words
+rather than letters. The model never sees that "chocolate" is spelled c-h-o-c-o-l-a-t-e, so it can't draw it letter by
+letter. A 2022 paper, [Character-Aware Models Improve Visual Text Rendering](https://arxiv.org/abs/2212.10562), showed
+that giving the model access to individual characters fixed much of the problem. Ideogram, whose team included former
+Google Imagen researchers, made text a selling point in 2023. By 2025 the multimodal models from OpenAI and Google,
+which understand language as well as any chatbot, had made readable text normal.
+
+The fix arrived in stages, and the old problem leaked into the real world in between. The
+[Willy's Chocolate Experience](https://en.wikipedia.org/wiki/Willy%27s_Chocolate_Experience) in Glasgow in February 2024
+promised "a pasadise of sweet teats" on its AI-generated posters. Long text is still not completely solved. In December
+2025 Nano Banana Pro turned "Lived experience" into
+[Liver experience](https://wonderingaboutai.substack.com/p/i-tried-using-nano-banana-pro-to) on an otherwise good
+infographic.
 
 ## How it works
 
@@ -74,20 +117,30 @@ A text encoder turns your prompt into numbers that steer each step towards an im
 
 Two details matter in practice.
 
-- **They work in a compressed space.** Diffusion models paint on a "latent" canvas about 8 times smaller on each side
-  than the final image, then decode it. That's why you can't ask for a 32 x 32 image. The internal canvas would be 4
-  x 4.
+- **They work in a compressed space.** [Latent diffusion](https://arxiv.org/abs/2112.10752), the approach behind Stable
+  Diffusion, paints on an internal canvas about 8 times smaller on each side than the final image, then decodes it.
+  That's why you can't ask for a 32 x 32 image. The internal canvas would be 4 x 4.
 - **Steps cost time.** More steps is slower and usually better, up to a point. "Distilled" models like Flux Schnell and
   SDXL Turbo are trained to get a good image in 4 steps instead of 30.
 
-### Multimodal and token-based models
+### Multimodal models
 
-The newer approach treats an image like a sentence. The model generates the image as a sequence of tokens, the same way
-a chat model generates text. Some do this directly and some combine a language model with a diffusion decoder.
+The newer approach puts image generation inside a model that also understands language. Because the same model reads
+your prompt and makes the picture, these are much better at following instructions, rendering text and editing an image
+you give them. GPT Image, Gemini's image models and Meta's Muse work this way. Some reason about the layout before they
+draw, which makes a real difference when the prompt is about where things go.
 
-Because the same model understands language and images, these are much better at following instructions, rendering text
-and editing an image you give them. GPT Image, Gemini's image models and Meta's Muse work this way. Some of them reason
-about the layout before they draw, which makes a real difference when the prompt is about where things go.
+### Are multimodal models diffusion under the hood?
+
+Often partly, and the line is blurrier than the marketing suggests.
+
+OpenAI's launch post for GPT-4o image generation hints at a hybrid. A language model plans the image as a sequence of
+tokens, the same way it writes a sentence, and a diffusion-style decoder paints the final pixels. Google hasn't
+published how its Gemini image models work. Going the other way, modern "diffusion" models like Flux use transformer
+blocks that process text and image together, which is the same building block as a chat model.
+
+So the useful distinction isn't the maths. It's how deeply the image model understands language. That's what gives you
+instruction following, readable text and editing.
 
 ### How they compare
 
@@ -108,40 +161,45 @@ depends on them without checking.
 
 "Image generation" covers several different jobs. Most providers support some of them, not all.
 
-| Type               | What it does                                    | Example use                                  |
-| ------------------ | ----------------------------------------------- | -------------------------------------------- |
-| Text to image      | A prompt becomes a picture                      | Concept art, backgrounds, placeholders       |
-| Image editing      | "Make the mug blue" on an existing image        | Iterating on a design without starting again |
-| Reference images   | Keep a character, product or style consistent   | The same knight in eight poses               |
-| Inpainting         | Regenerate one masked area                      | Removing an object, fixing a hand            |
-| Outpainting        | Extend an image past its edges                  | Turning a square into a banner               |
-| Structural control | Follow a sketch, pose or depth map (ControlNet) | Matching a layout exactly                    |
-| Fine-tuning (LoRA) | Teach an open model a new style or subject      | A consistent house style or product          |
-| Upscaling          | Add detail at a higher resolution               | Finishing the keepers from a cheap batch     |
-| Background removal | Cut the subject out                             | Transparent sprites and product shots        |
-| Text to vector     | Produce SVG instead of pixels                   | Icons and logos                              |
+| Type               | What it does                                  | Example use                                  | Where to try it                                                                                                                                               |
+| ------------------ | --------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Text to image      | A prompt becomes a picture                    | Concept art, backgrounds, placeholders       | [OpenAI image guide](https://platform.openai.com/docs/guides/image-generation)                                                                                |
+| Image editing      | "Make the mug blue" on an existing image      | Iterating on a design without starting again | [Gemini image docs](https://ai.google.dev/gemini-api/docs/image-generation)                                                                                   |
+| Reference images   | Keep a character, product or style consistent | The same knight in eight poses               | [Gemini image docs](https://ai.google.dev/gemini-api/docs/image-generation)                                                                                   |
+| Inpainting         | Regenerate one masked area                    | Removing an object, fixing a hand            | [Diffusers inpainting guide](https://huggingface.co/docs/diffusers/using-diffusers/inpaint)                                                                   |
+| Outpainting        | Extend an image past its edges                | Turning a square into a banner               | [ComfyUI inpaint and outpaint examples](https://comfyanonymous.github.io/ComfyUI_examples/inpaint/)                                                           |
+| Structural control | Follow a sketch, pose or depth map            | Matching a layout exactly                    | [ControlNet](https://github.com/lllyasviel/ControlNet) and the [Diffusers ControlNet guide](https://huggingface.co/docs/diffusers/using-diffusers/controlnet) |
+| Fine-tuning (LoRA) | Teach an open model a new style or subject    | A consistent house style or product          | [Diffusers LoRA training](https://huggingface.co/docs/diffusers/training/lora)                                                                                |
+| Upscaling          | Add detail at a higher resolution             | Finishing the keepers from a cheap batch     | [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)                                                                                                         |
+| Background removal | Cut the subject out                           | Transparent sprites and product shots        | [rembg](https://github.com/danielgatis/rembg)                                                                                                                 |
+| Text to vector     | Produce SVG instead of pixels                 | Icons and logos                              | [Recraft](https://www.recraft.ai/)                                                                                                                            |
 
 Tileable textures are worth a special mention. Plain models won't reliably produce a seamless tile. You need a model or
 LoRA trained for it or a tiling option in the tool.
 
 ## Ways to use it
 
-| Route          | Examples                                                                 | Good for                           | Watch out for                               |
-| -------------- | ------------------------------------------------------------------------ | ---------------------------------- | ------------------------------------------- |
-| Chat apps      | ChatGPT, Gemini                                                          | One-off images, quick edits        | Little control, usage limits                |
-| Creative tools | Midjourney, Adobe Firefly, Canva                                         | Designers, polished results        | Subscriptions, hard to automate             |
-| Direct APIs    | OpenAI, Google Gemini and Vertex AI                                      | Production code                    | Each API is different                       |
-| Aggregators    | OpenRouter, Replicate, fal.ai                                            | Trying many models with one key    | Markup on some, models come and go          |
-| Local          | Flux or SDXL with [mflux](https://github.com/filipstrand/mflux), ComfyUI | Free bulk generation, full control | Needs a decent GPU or Apple Silicon, slower |
+| Route          | Examples                                                                                                                           | Good for                           | Watch out for                               |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------------------------------- |
+| Chat apps      | ChatGPT, Gemini                                                                                                                    | One-off images, quick edits        | Little control, usage limits                |
+| Creative tools | Midjourney, Adobe Firefly, Canva                                                                                                   | Designers, polished results        | Subscriptions, hard to automate             |
+| Direct APIs    | OpenAI, Google Gemini and Vertex AI                                                                                                | Production code                    | Each API is different                       |
+| Aggregators    | [OpenRouter](https://openrouter.ai/models?output_modalities=image), [Replicate](https://replicate.com/), [fal.ai](https://fal.ai/) | Trying many models with one key    | Markup on some, models come and go          |
+| Local          | Flux or SDXL with [mflux](https://github.com/filipstrand/mflux) or [ComfyUI](https://github.com/comfyanonymous/ComfyUI)            | Free bulk generation, full control | Needs a decent GPU or Apple Silicon, slower |
 
-For my own tool I deliberately avoided subscriptions. Everything is pay per image through an API or free on my MacBook.
+For my experiments I deliberately avoided subscriptions. Everything was pay per image through an API or free on my
+MacBook.
 
 ## What you get with ChatGPT
 
 Most people's first experience of AI images is typing a request into ChatGPT. It's worth knowing what you're getting.
 
-ChatGPT uses OpenAI's own GPT Image model, which has been built into the chat since March 2025. Before that it used
-DALL-E 3.
+ChatGPT uses OpenAI's own GPT Image models, which have been built into the chat since March 2025.
+
+**Is DALL-E still a thing?** Not really. DALL-E 3 was ChatGPT's image generator from October 2023 until the switch to
+GPT-4o image generation in March 2025. OpenAI then
+[removed DALL-E 2 and 3 from its API](https://community.openai.com/t/deprecation-reminder-dall-e-will-be-shut-down-on-may-12-2026/1378754)
+on 12 May 2026. The name lives on mostly as a generic term for AI images.
 
 **What it's good at**
 
@@ -156,16 +214,20 @@ DALL-E 3.
   x 512.
 - **Speed.** Each image takes anything from a few seconds to over a minute, and there are usage limits, especially on
   the free plan.
-- **A house style.** Left to itself it drifts towards a recognisable look. Earlier versions were known for a warm,
-  slightly yellow cast. Describe the lighting and colour you want rather than leaving it to the defaults.
+- **A house style.** Left to itself it drifts towards a recognisable look. The 2025 model was known for a warm yellow
+  cast nicknamed the ["piss filter"](https://www.popularai.org/p/chatgpts-piss-filter-why-ai-images). Describe the
+  lighting and colour you want rather than leaving it to the defaults.
 - **Content rules.** It will refuse some requests, like real public figures in certain contexts or close copies of
   copyrighted characters.
 
-**Provenance.** OpenAI adds C2PA metadata to generated images, which records that they were made with AI. Google adds an
-invisible SynthID watermark to Gemini images. Metadata is stripped by plenty of tools, so don't rely on it either way.
+**Provenance.** OpenAI adds both [C2PA](https://c2pa.org/) metadata and a SynthID watermark to its images, according to
+its [help centre](https://help.openai.com/en/articles/8912793). Google adds
+[SynthID](https://deepmind.google/models/synthid/) to Gemini images. Metadata is easily stripped. Watermarks survive
+screenshots better, but neither is something to rely on if you're trying to prove an image is or isn't AI.
 
-**ChatGPT or the API?** The same family of models is available through OpenAI's API, billed per image. The API gives you
-exact sizes from a fixed list, quality tiers, transparent backgrounds and batching from code. If you need more than a
+**ChatGPT or the API?** The same family of models is available through
+[OpenAI's API](https://platform.openai.com/docs/guides/image-generation), billed per image. The API gives you sizes from
+a fixed list, quality tiers, batching from code and, on some models, transparent backgrounds. If you need more than a
 few images or the same kind of image repeatedly, use the API. The Gemini app versus the Gemini API is the same story.
 
 ## What it costs
@@ -183,12 +245,12 @@ square inch with the same care. A flat blue sky gets as much effort as a face.
 
 ### Four ways you get billed
 
-| Billing model                         | Examples                                     | Does making it smaller help?    |
-| ------------------------------------- | -------------------------------------------- | ------------------------------- |
-| Flat per image                        | Gemini 2.5 Flash Image, Recraft              | No                              |
-| Per image, tiered by size and quality | Newer Gemini models, OpenAI GPT Image        | Partly                          |
-| Per megapixel or GPU-second           | Replicate, fal.ai, most models on OpenRouter | Yes                             |
-| Your own electricity                  | Local Flux                                   | Yes, and speed is what you save |
+| Billing model                         | Examples                                     | Does making it smaller help?                                     |
+| ------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------- |
+| Flat per image                        | Gemini 2.5 Flash Image, Recraft              | No                                                               |
+| Per image, tiered by size and quality | Newer Gemini models, OpenAI GPT Image        | A little. The smallest tier is still a big canvas for most needs |
+| Per megapixel or GPU-second           | Replicate, fal.ai, most models on OpenRouter | Yes                                                              |
+| Your own electricity                  | Local Flux                                   | Yes, and speed is what you save                                  |
 
 ### The landscape in October 2026
 
@@ -205,7 +267,8 @@ square inch with the same care. A flat blue sky gets as much effort as a face.
 | Nano Banana Pro (Gemini 3 Pro Image)   | ~$0.134 and up                         | Final, hero quality               |
 
 Newer flagship models cost more per image, not less. The cheap end of the market is open-weight models and the "flash",
-"mini" and "lite" tiers.
+"mini" and "lite" tiers. [OpenRouter's model list](https://openrouter.ai/models?output_modalities=image) is the easiest
+place to compare current prices.
 
 ### Cost per usable image
 
@@ -252,9 +315,26 @@ Here's the same kitchen table prompt on two models.
 Both are now top-down. Flux leaves the props whole and pushes them into the corners. Muse, a multimodal model that plans
 before it draws, put one item on each edge, cropped each one and left the middle clear.
 
-### Making something that doesn't look AI generated
+### Posters are where AI images go wrong
 
-Then I set myself a challenge. Could I get a restaurant poster that wouldn't immediately read as AI?
+Posters, flyers and infographics are one of the most common uses for AI images. They're also where it most often looks
+cheap.
+
+- **Gibberish.** The Willy's Chocolate Experience posters promised "catgacating" and "exarserdray". The event itself was
+  so far from the pictures that people called the police.
+- **Poor taste.** A24's AI-generated posters for _Civil War_
+  [drew criticism](https://petapixel.com/2024/04/23/a24-criticized-for-using-ai-generated-movie-posters-for-civil-war)
+  in April 2024. They showed scenes that weren't in the film and had obvious errors, like a Chicago landmark rebuilt at
+  the wrong angle. A lot of the anger was about a studio using AI instead of paying artists.
+- **Getting the facts wrong.** Karen Spinner's
+  [experiment turning a research paper into an infographic](https://wonderingaboutai.substack.com/p/i-tried-using-nano-banana-pro-to)
+  is a great example with all the prompts and source material shown. It ended up "basically usable", but only after six
+  attempts. Along the way the model misspelled words, ignored instructions about white space and filled every gap it
+  could find. Her advice was to keep the copy short and proofread everything.
+
+### Making a poster that doesn't look AI generated
+
+So I set myself a challenge. Could I get a restaurant poster that wouldn't immediately read as AI?
 
 My first attempt was a screenprinted trattoria poster. Rather than describe a look, I described a real print process.
 Three flat spot inks on uncoated paper, slight misregistration, a scan rather than a photo, an off-centre composition
@@ -293,8 +373,8 @@ the 2010s.
 
 For balance, I asked for the worst version I could think of. 8K, Unreal Engine, volumetric god rays, floating
 ingredients and a galaxy. It delivered a dozen patties with no bottom bun, a shake with no glass and fries raining down
-from space. It also spelled every word correctly. Garbled text used to be the surest sign of an AI image. That's mostly
-gone. The giveaway now is that every element is turned up to the maximum.
+from space. It also spelled every word correctly. The giveaway now isn't the spelling. It's that every element is turned
+up to the maximum.
 
 ### Prompting rules of thumb
 
@@ -303,21 +383,21 @@ gone. The giveaway now is that every element is turned up to the maximum.
 - **Leave out the hype words.** "Stunning", "hyper-detailed" and "8K" push the model straight into the AI look.
 - **Be blunt about layout.** Say what fills the frame, what's visible and where each element goes.
 - **Real design is restrained.** Asking for "slightly bland" did more than any amount of detail.
-- **Keep text short and exact.** Put it in quotes and add "spell every word exactly as written".
+- **Keep text short and exact.** Put it in quotes, add "spell every word exactly as written" and proofread the result.
 - **Name period details.** The model drifts towards modern objects unless you name the old ones.
 - **Generate two or three.** Variants of the same prompt often differ a lot, and at a cent each it's cheaper than
   rewriting the prompt.
 - **Lock in a template for batches.** Use the same style suffix and seed for every asset in a category so the batch
   doesn't drift.
 
-## Case study with game sprites
+## Pixel art, a case study in what AI is and isn't good at
 
-My original reason for building the tool was 8-bit sprites. It taught me more about the limits of these models than
-anything else.
+Pixel art game sprites look like the easiest possible job for an image model. Small, simple, few colours. They turn out
+to be a great example of where to use AI and where not to.
 
 ### Pixel art is a style, not a format
 
-My first knight took 7.5 seconds on Gemini 2.5 Flash Image and cost about $0.039. It's clean and convincingly retro.
+A pixel art knight on Gemini 2.5 Flash Image took 7.5 seconds and cost about $0.039. It's clean and convincingly retro.
 
 <img src="/assets/images/notes/ai_images/knight-reference.png" alt="8-bit pixel art knight with a sword and shield" style="width: 128px; image-rendering: pixelated;">
 
@@ -369,27 +449,15 @@ Here is what I learned from seven calls and about $0.27.
 - **Scale everything together.** If each sprite is resized to fill its own cell, a character grows and shrinks between
   animation frames.
 
-### Simple output is often harder
+### Where the line falls
 
-Vectors and ASCII art look like they should be easier than a photo. They aren't.
+Vectors are another format that looks easier than it is. An LLM can write SVG code cheaply, but characters come out
+crude because it's describing a picture without seeing it. Dedicated text-to-vector models like
+[Recraft](https://www.recraft.ai/) look much better but cost more than raster images.
 
-- **Vectors.** An LLM can write SVG code cheaply, but characters come out crude because it's describing a picture
-  without seeing it. Dedicated text-to-vector models like Recraft look much better but cost more than raster images.
-- **ASCII art.** Image models paint pixels, so a picture of ASCII art isn't ASCII art. Language models can output text
-  but struggle to keep columns aligned. The best result came from a hybrid. Take the knight image I'd already paid for
-  and convert it to characters with 20 lines of Python.
-
-```
-   #-+=#        *#####*++%*##%####
-   #-+=#     #=-=+#@*###*##%+=--==+#*
- * #=*+%#    *++*#*+*****++##*+=+++#%
-*+**######%  ####%-:+-====**+++*******#%
-   #+%*###+*%##*#%++*+++==*+---++++=-=*%
-   %+#@###++%%###%*+*+==+*#+---+***==+*%
-```
-
-The general lesson is that AI is good at "what should this look like?" and bad at "put exactly this in exactly this
-cell". What matters isn't how simple the output looks. It's whether the hard part is creative or structural.
+The general lesson from pixel art is that AI is good at "what should this look like?" and bad at "put exactly this in
+exactly this cell". What matters isn't how simple the output looks. It's whether the hard part is creative or
+structural. Use the model for the creative part and code for the structure.
 
 ## Integrating image generation into a coding project
 
@@ -432,11 +500,12 @@ These all happened to me within a few months.
 
 - **Models disappeared.** The Flux 2 models I planned to use vanished from OpenRouter between planning and building.
   Imagen 4 was shut down on the Gemini API. Gemini 2.5 Flash Image and gpt-image-1 got retirement dates, some with only
-  weeks of notice.
+  weeks of notice. The [Gemini deprecations page](https://ai.google.dev/gemini-api/docs/deprecations) is worth
+  bookmarking.
 - **Endpoints changed.** OpenRouter moved dedicated image models to a separate `/api/v1/images` endpoint. Calling them
-  the old way returns a 404. My provider now tries one and falls back to the other.
-- **Parameters were ignored or rejected.** Gemini ignored size and seed. OpenAI snaps to the nearest of three sizes.
-  FLUX 3 Klein rejects a seed outright. Muse returned 1600 x 1600 when I asked for 1024 x 1024.
+  the old way returns a 404. My code now tries one and falls back to the other.
+- **Parameters were ignored or rejected.** Gemini ignored size and seed. OpenAI snaps to the nearest of a few fixed
+  sizes. FLUX 3 Klein rejects a seed outright. Muse returned 1600 x 1600 when I asked for 1024 x 1024.
 
 So keep the provider and model in config, never in code. Check the size and format of what came back rather than
 trusting what you asked for. Run a scheduled smoke test against each provider so you hear about a retirement before your
@@ -463,8 +532,11 @@ Keeping the prompt and parameters with each image also means you can reproduce o
 
 Use the model for the creative part only. Background removal ([rembg](https://github.com/danielgatis/rembg)), resizing,
 palette reduction, cropping, compositing text and packing sprite sheets are all free, fast and deterministic in Python.
-Most models can't produce real transparency, so generate on a plain background and remove it. OpenAI's API is an
-exception with a transparent background option.
+Most models can't produce real transparency, so generate on a plain background and remove it. Some of OpenAI's GPT Image
+models are an exception with a transparent background option.
+
+If your image needs exact text, like prices or dates, consider generating the artwork without it and adding the text in
+code. It's the one way to guarantee it's spelled right.
 
 ### Test without spending money
 
@@ -481,19 +553,27 @@ Add your own checks, rate limits and a way to report bad output. Be clear with u
 Image generation and AI agents fit together well. A multimodal agent can write a detailed prompt, call the model, look
 at the result, critique it and try again. That loop is the part that used to need a human.
 
-Every experiment in this guide was run that way. I used Claude Code as the agent and gave it access to my image tool. I
-described what I wanted in plain English. It wrote the detailed prompts, picked models from OpenRouter's price list, ran
-the tool, opened each image and told me honestly what was wrong with it. When OpenRouter changed its API mid-session it
-found the error, fixed my provider code and carried on.
+### Claude doesn't generate images
+
+Claude is the agent I use most, and it can't make images itself. Anthropic's
+[help centre](https://support.claude.com/en/articles/9002504-can-claude-produce-images) says so plainly. Claude can view
+and analyse images and it can draw diagrams, charts and interactive visuals with code like SVG and HTML. It doesn't
+generate photos or illustrations.
+
+Anthropic hasn't said publicly why. My guess is focus. Its models are aimed at text, code and agents, and image
+generation brings its own costs and misuse risks, from deepfakes to copyright. Whatever the reason, it doesn't matter
+much in practice. Claude is very good at the parts around image generation, like writing a detailed prompt and judging
+whether the result matches the brief. You connect it to a specialist image model through a tool and let each do what
+it's good at.
 
 ### Three ways to wire it up
 
-1. **A command line tool.** The simplest option. If your agent can run shell commands, give it a CLI like
-   `python -m image_gen generate --provider openrouter --model meta/muse-image --prompt "..."` and tell it where the
-   output goes. That's what I did.
+1. **A command line tool.** The simplest option. If your agent can run shell commands, give it a script like
+   `python -m image_gen generate --model meta/muse-image --prompt "..."` and tell it where the output goes. That's what
+   I did.
 2. **An MCP server.** The [Model Context Protocol](https://modelcontextprotocol.io/) lets you expose image generation as
    a tool to any MCP-compatible agent, such as Claude Code, Claude Desktop or Cursor. The agent sees a typed tool with a
-   description rather than having to learn your CLI.
+   description rather than having to learn your script.
 3. **Function calling in your own agent.** If you're building the agent yourself, define a `generate_image` tool in your
    LLM API call and run the generation when the model asks for it.
 
@@ -520,6 +600,13 @@ if __name__ == "__main__":
 ```
 
 Returning the image itself, not just a file path, lets the agent see what it made.
+
+### How the experiments in this guide were run
+
+Every image in this guide was made that way, using Claude Code as the agent with a small Python script for calling the
+providers. I described what I wanted in plain English. Claude wrote the detailed prompts, picked models from
+OpenRouter's price list, ran the script, opened each image and told me honestly what was wrong with it. When OpenRouter
+changed its API mid-session it found the error, fixed the code and carried on.
 
 ### Tips for agent-driven generation
 
@@ -554,15 +641,16 @@ Returning the image itself, not just a file path, lets the agent see what it mad
   unreliable.
 - **No determinism across providers**, and sometimes not even within one.
 - **Platform churn.** Models get delisted, renamed and repriced. Your config will rot unless something checks it.
-- **The AI look.** Audiences are getting better at spotting it, and it can cheapen a brand.
+- **The AI look.** Audiences are getting better at spotting it, and as A24 found, it can cheapen a brand.
 
 ### Who owns the output?
 
 Provider terms generally give you the rights to what you generate. But in the US, purely AI-generated images aren't
-copyrightable. The Copyright Office's January 2025 report says a prompt alone generally isn't enough, although human
-selection, arrangement and modification can be protected. In March 2026 the Supreme Court declined to hear _Thaler_,
-leaving the human authorship requirement in place. The UK has its own provision for computer-generated works, so the
-answer depends on where you are.
+copyrightable. The [Copyright Office's January 2025 report](https://www.copyright.gov/ai/) says a prompt alone generally
+isn't enough, although human selection, arrangement and modification can be protected. In March 2026 the Supreme Court
+[declined to hear _Thaler v. Perlmutter_](https://www.scotusblog.com/cases/thaler-v-perlmutter/), leaving the human
+authorship requirement in place. The UK has its own provision for computer-generated works, so the answer depends on
+where you are.
 
 In practice, assets you substantially rework are on firmer ground than raw outputs, and a competitor could probably
 reuse your unmodified ones. This isn't legal advice. Check before relying on it for a commercial product.
@@ -574,14 +662,14 @@ reuse your unmodified ones. This isn't legal advice. Check before relying on it 
 3. **Pay for the better model only where it earns it.** Layout, reference-image edits and character consistency.
 4. **Generate a couple of variants and pick one.**
 5. **Lock in a prompt template and seed** once you're happy, so a batch stays consistent.
-6. **Do the exact work in code.** Background removal, resizing, palettes and layout.
+6. **Do the exact work in code.** Background removal, resizing, palettes, layout and any text that must be exact.
 7. **Log every run** so you can measure cost per usable image and reproduce good results.
 
 ## What this guide cost
 
 | Experiment                           | Model                      | Cost            |
 | ------------------------------------ | -------------------------- | --------------- |
-| First knight sprite                  | Gemini 2.5 Flash Image     | $0.039          |
+| Pixel art knight                     | Gemini 2.5 Flash Image     | $0.039          |
 | Sprite sheet tests (seven sheets)    | Gemini 2.5 Flash Image     | ~$0.27          |
 | Card table backgrounds (four images) | FLUX 3 Klein and Meta Muse | $0.038          |
 | Trattoria poster                     | Meta Muse                  | $0.01           |
@@ -600,12 +688,14 @@ See also [AI Glossary](./ai_glossary).
 - **Steps** - How many denoising passes a diffusion model makes. More is slower and usually better, up to a point.
 - **Distilled model** - A model trained to produce good results in a few steps, like Flux Schnell or SDXL Turbo.
 - **Seed** - The random starting point. Same seed, prompt and model gives the same image, where supported.
+- **Tokeniser** - The part of a model that splits text into chunks. The reason older models couldn't spell.
 - **Tokens** - The unit a multimodal model counts output in. For images, a fixed number per size and quality.
 - **Open weights** - A model you can download and run yourself, like Flux or SDXL.
 - **LoRA** - A small add-on that teaches an open model a new style or subject without retraining it.
 - **ControlNet** - A way to make a diffusion model follow a sketch, pose or depth map.
 - **Inpainting** - Regenerating only a masked part of an image.
 - **C2PA** - A metadata standard that records how an image was made, including whether AI was involved.
+- **SynthID** - Google's invisible watermark for AI-generated content.
 - **MCP** - The Model Context Protocol, a standard way to give AI agents access to tools.
 - **Nearest-neighbour** - A resize method that copies pixels rather than blending them. Essential for pixel art.
 - **Orthographic** - A view with no perspective. Useful prompt language for top-down shots.
@@ -620,10 +710,13 @@ See also [AI Glossary](./ai_glossary).
   Gemini model
 - [mflux](https://github.com/filipstrand/mflux) - run Flux locally on Apple Silicon
 - [ComfyUI](https://github.com/comfyanonymous/ComfyUI) - node-based local workflows, including ControlNet and LoRAs
+- [Hugging Face Diffusers](https://huggingface.co/docs/diffusers) - the Python library behind most open-model tooling
 - [rembg](https://github.com/danielgatis/rembg) - background removal in Python
 - [Replicate](https://replicate.com/) and [fal.ai](https://fal.ai/) - cheap hosted open-weight models for big batches
 - [Model Context Protocol](https://modelcontextprotocol.io/) - for exposing image generation to agents
 - [C2PA](https://c2pa.org/) - the content provenance standard
+- [Why AI image generators struggle to get text right](https://petapixel.com/2024/03/06/why-ai-image-generators-struggle-to-get-text-right/) -
+  a readable explainer on the spelling problem
 
 See also [AI Agents](./ai_agents), [AI Assisted Coding](./ai_assisted_coding) and
 [Machine Learning Models](./machine-learning-models).
