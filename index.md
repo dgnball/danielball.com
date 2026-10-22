@@ -41,7 +41,7 @@ work for UK government and enterprise clients
 
 ### Tech I've worked with ⬇️
 
-[![My Skills](https://skillicons.dev/icons?i=python,django,fastapi,flask,gcp,firebase,aws,dynamodb,git,md,linux,github,githubactions,gitlab,docker,postgres,sqlite,ts,js,react,idea,java,cpp,jenkins&theme=light)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=python,django,fastapi,flask,gcp,firebase,aws,dynamodb,git,md,linux,github,githubactions,gitlab,docker,postgres,sqlite,ts,js,react,idea,java,kotlin,cpp,jenkins&theme=light)](https://skillicons.dev)
 
 ### Organisations I've worked for ⬇️
 
